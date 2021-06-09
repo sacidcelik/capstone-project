@@ -32,8 +32,9 @@ const NavWrapper = styled.footer`
   display: flex;
   height: 100px;
   justify-content: space-around;
+  margin: ${(props) => (props.isStatic ? 'auto' : '')};
   position: ${(props) => (props.isStatic ? 'static' : 'fixed')};
-  width: ${(props) => (props.isStatic ? 'auto' : '100vw')};
+  width: ${(props) => (props.isStatic ? '414px' : '100vw')};
 `;
 
 const NavHome = styled.div`
