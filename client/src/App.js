@@ -1,5 +1,11 @@
+import NavFooter from './components/NavFooter';
+
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <NavFooter />
+    </div>
+  );
 }
 
 export default App;
