@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 export default function GlobalSearch() {
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState('');
   const [searchedBooks, setSearchedBooks] = useState([]);
   const focusSearch = useRef(null);
 
@@ -12,7 +12,7 @@ export default function GlobalSearch() {
 
   const getBooks = async (query) => {
     const searchResults = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q={${query}}`
+      `https://www.googleapis.com/books/v1/volumes?q=${query}`
     );
     const bookData = await searchResults.json();
     return bookData.items;
@@ -50,13 +50,14 @@ export default function GlobalSearch() {
           src={book.volumeInfo?.imageLinks?.thumbnail}
           width="128"
           height="199"
+          alt={book.volumeInfo.title || 'Book Cover'}
         />
         {book.volumeInfo.title}
       </div>
     );
   });
 
-  console.log(query);
+  console.log(apiKey);
   console.log(searchedBooks);
 
   return (
