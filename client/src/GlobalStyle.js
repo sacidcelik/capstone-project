@@ -26,6 +26,7 @@ export default createGlobalStyle`
         line-height: 1.5;
         font-size: 1.1rem;
         font-family: sans-serif;
-        background-color: var(--background)
+        background-color: var(--background);
+        padding: 0;
     }
 `;
