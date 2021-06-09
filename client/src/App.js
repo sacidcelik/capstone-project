@@ -6,7 +6,7 @@ import MyBooks from './pages/MyBooks';
 
 function App() {
   return (
-    <div>
+    <>
       <Switch>
         <Route path="/home">
           <Home />
@@ -19,7 +19,7 @@ function App() {
         </Route>
       </Switch>
       <NavFooter />
-    </div>
+    </>
   );
 }
 

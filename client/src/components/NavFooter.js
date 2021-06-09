@@ -1,24 +1,20 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
-
-import HomeButton from '../images/navHome.svg';
-import HomeButtonActive from '../images/navHomeActive.svg';
-import ShelfButton from '../images/navShelves.svg';
-import ShelfButtonActive from '../images/navShelvesActive.svg';
-import BooksButton from '../images/navBooks.svg';
-import BooksButtonActive from '../images/navBooksActive.svg';
+import { ReactComponent as HomeButton } from '../images/navHome.svg';
+import { ReactComponent as ShelfButton } from '../images/navShelves.svg';
+import { ReactComponent as BooksButton } from '../images/navBooks.svg';
 
 export default function NavFooter({ isStatic }) {
   return (
     <NavWrapper isStatic={isStatic}>
-      <NavLink to="/home" activeClassName="active">
-        <NavHome role="img" aria-label="Home"></NavHome>
+      <NavLink to="/home">
+        <HomeButtonStyled title="Home" role="img" />
       </NavLink>
-      <NavLink to="/myshelves" activeClassName="active">
-        <NavShelves role="img" aria-label="My Shelves"></NavShelves>
+      <NavLink to="/myshelves">
+        <ShelfButtonStyled title="My Shelves" role="img" />
       </NavLink>
-      <NavLink to="/mybooks" activeClassName="active">
-        <NavBooks role="img" aria-label="My Books"></NavBooks>
+      <NavLink to="/mybooks">
+        <BooksButtonStyled title="My Books" role="img" />
       </NavLink>
     </NavWrapper>
   );
@@ -37,34 +33,29 @@ const NavWrapper = styled.footer`
   width: ${(props) => (props.isStatic ? '414px' : '100vw')};
 `;
 
-const NavHome = styled.div`
-  background: center / contain no-repeat url(${HomeButton});
-  background-repeat: no-repeat;
-  background-size: contain;
-  height: 70px;
-  width: 70.59px;
-
-  .active & {
-    background-image: url(${HomeButtonActive});
+const HomeButtonStyled = styled(HomeButton)`
+  .active & path {
+    fill: var(--tertiary);
+    stroke: none;
   }
 `;
 
-const NavShelves = styled.div`
-  background: center / contain no-repeat url(${ShelfButton});
+const ShelfButtonStyled = styled(ShelfButton)`
   height: 60px;
   width: 70px;
-
-  .active & {
-    background-image: url(${ShelfButtonActive});
+  .active & path,
+  .active & rect {
+    fill: var(--tertiary);
+    stroke: none;
+  }
+  .active & .e {
+    stroke: #fff;
   }
 `;
 
-const NavBooks = styled.div`
-  background: center / contain no-repeat url(${BooksButton});
-  height: 60px;
-  width: 77.14px;
-
-  .active & {
-    background-image: url(${BooksButtonActive});
+const BooksButtonStyled = styled(BooksButton)`
+  .active & path {
+    fill: var(--tertiary);
+    stroke: none;
   }
 `;

@@ -27,6 +27,5 @@ export default createGlobalStyle`
         font-size: 1.1rem;
         font-family: sans-serif;
         background-color: var(--background);
-        padding: 0;
     }
 `;
