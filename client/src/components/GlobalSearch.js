@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 
 export default function GlobalSearch() {
   const [query, setQuery] = useState('');
@@ -57,7 +56,6 @@ export default function GlobalSearch() {
     );
   });
 
-  console.log(apiKey);
   console.log(searchedBooks);
 
   return (
