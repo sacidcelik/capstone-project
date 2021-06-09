@@ -1,33 +1,69 @@
 import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
 
-import HomeButton from '../images/Nav-Home.svg';
-import ShelfButton from '../images/Bookshelf Logo.svg';
-import BooksButton from '../images/Nav-Books.svg';
+import HomeButton from '../images/navHome.svg';
+import HomeButtonActive from '../images/navHomeActive.svg';
+import ShelfButton from '../images/navShelves.svg';
+import ShelfButtonActive from '../images/navShelvesActive.svg';
+import BooksButton from '../images/navBooks.svg';
+import BooksButtonActive from '../images/navBooksActive.svg';
 
-export default function NavFooter() {
+export default function NavFooter({ isStatic }) {
   return (
-    <NavWrapper>
-      <NavLink to="/home">
-        <img src={HomeButton} alt="Home" width="70.59" height="70" />
+    <NavWrapper isStatic={isStatic}>
+      <NavLink to="/home" activeClassName="active">
+        <NavHome role="img" aria-label="Home"></NavHome>
       </NavLink>
-      <NavLink to="/myshelves">
-        <img src={ShelfButton} alt="My Shelves" width="70" height="60" />
+      <NavLink to="/myshelves" activeClassName="active">
+        <NavShelves role="img" aria-label="My Shelves"></NavShelves>
       </NavLink>
-      <NavLink to="/mybooks">
-        <img src={BooksButton} alt="My Books" width="77.14" height="60" />
+      <NavLink to="/mybooks" activeClassName="active">
+        <NavBooks role="img" aria-label="My Books"></NavBooks>
       </NavLink>
     </NavWrapper>
   );
 }
 
 const NavWrapper = styled.footer`
-  position: fixed;
+  align-items: center;
+  background-color: var(--background);
+  border-top: 1px solid var(--secondary);
   bottom: 0;
   display: flex;
-  justify-content: space-around;
   height: 100px;
-  border-top: 1px solid var(--secondary);
-  width: 100vw;
-  align-items: center;
+  justify-content: space-around;
+  position: ${(props) => (props.isStatic ? 'static' : 'fixed')};
+  width: ${(props) => (props.isStatic ? 'auto' : '100vw')};
+`;
+
+const NavHome = styled.div`
+  background: center / contain no-repeat url(${HomeButton});
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 70px;
+  width: 70.59px;
+
+  .active & {
+    background-image: url(${HomeButtonActive});
+  }
+`;
+
+const NavShelves = styled.div`
+  background: center / contain no-repeat url(${ShelfButton});
+  height: 60px;
+  width: 70px;
+
+  .active & {
+    background-image: url(${ShelfButtonActive});
+  }
+`;
+
+const NavBooks = styled.div`
+  background: center / contain no-repeat url(${BooksButton});
+  height: 60px;
+  width: 77.14px;
+
+  .active & {
+    background-image: url(${BooksButtonActive});
+  }
 `;

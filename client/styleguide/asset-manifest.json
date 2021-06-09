@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.js": "/build/main.8edb6e35.js",
+    "runtime-main.js": "/build/bundle.3527ec54.js",
+    "build/2.b3e23d2b.js": "/build/2.b3e23d2b.js",
+    "build/2.b3e23d2b.js.LICENSE.txt": "/build/2.b3e23d2b.js.LICENSE.txt",
+    "index.html": "/index.html",
+    "static/media/navBooks.fb956e10.svg": "/static/media/navBooks.fb956e10.svg",
+    "static/media/navBooksActive.239092c6.svg": "/static/media/navBooksActive.239092c6.svg",
+    "static/media/navHome.f8d0339a.svg": "/static/media/navHome.f8d0339a.svg",
+    "static/media/navHomeActive.569e15f5.svg": "/static/media/navHomeActive.569e15f5.svg",
+    "static/media/navShelves.05dde69f.svg": "/static/media/navShelves.05dde69f.svg",
+    "static/media/navShelvesActive.af4d64bd.svg": "/static/media/navShelvesActive.af4d64bd.svg"
+  },
+  "entrypoints": [
+    "build/bundle.3527ec54.js",
+    "build/2.b3e23d2b.js",
+    "build/main.8edb6e35.js"
+  ]
+}
