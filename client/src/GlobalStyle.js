@@ -7,6 +7,11 @@ export default createGlobalStyle`
   --secondary: #343f56;
   --tertiary: #387c6d;
   --background: #f8f5f1;
+  --box-shadow-offset-x: 5px;
+  --box-shadow-offset-y: 5px;
+  --box-shadow-blur: 10px;
+  --box-shadow-color: #00000029;
+  --border-radius: 5px;
 }
     *,
     *::before,
@@ -23,8 +28,7 @@ export default createGlobalStyle`
     }
 
     body {
-        line-height: 1.5;
-        font-size: 1.1rem;
+        line-height: 1.2;
         font-family: sans-serif;
         background-color: var(--background);
     }
