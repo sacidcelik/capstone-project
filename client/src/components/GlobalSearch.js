@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+
+import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
 
 export default function GlobalSearch() {
@@ -44,42 +45,12 @@ export default function GlobalSearch() {
     };
   }, [query]);
 
-  /*   const bookSearchResults = searchedBooks.map((book, index) => {
-    return (
-      <div key={index}>
-        <img
-          src={book.volumeInfo?.imageLinks?.thumbnail}
-          width="128"
-          height="199"
-          alt={book.volumeInfo.title || 'Book Cover'}
-        />
-        <p>{book.volumeInfo.title}</p>
-      </div>
-    );
-  }); */
-
   console.log(searchedBooks);
 
   return (
     <>
-      <form>
-        <input
-          type="text"
-          placeholder="Search for your book"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          ref={focusSearch}
-        />
-      </form>
-      <SearchResultSection>
-        {searchedBooks.map((book, index) => (
-          <SearchResult book={book} index={index} />
-        ))}
-      </SearchResultSection>
+      <SearchBar query={query} setQuery={setQuery} focusSearch={focusSearch} />
+      <SearchResult searchedBooks={searchedBooks} />
     </>
   );
 }
-
-const SearchResultSection = styled.section`
-  padding-bottom: 7rem;
-`;
