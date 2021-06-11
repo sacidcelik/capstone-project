@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
 
-export default function GlobalSearch() {
+export default function GlobalSearch({ onAddToLibrary }) {
   const [query, setQuery] = useState('');
   const [searchedBooks, setSearchedBooks] = useState([]);
   const focusSearch = useRef(null);
@@ -53,7 +54,13 @@ export default function GlobalSearch() {
   return (
     <>
       <SearchBar query={query} setQuery={setQuery} focusSearch={focusSearch} />
-      <SearchResult searchedBooks={searchedBooks} />
+      <SearchResult
+        searchedBooks={searchedBooks}
+        onAddToLibrary={onAddToLibrary}
+      />
     </>
   );
 }
+GlobalSearch.propTypes = {
+  onAddToLibrary: PropTypes.func,
+};

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export default function AddButton() {
-  return <ToggleButton>Add</ToggleButton>;
+export default function AddButton({ onAddToLibrary }) {
+  return <ToggleButton onClick={onAddToLibrary}>Add</ToggleButton>;
 }
 
-const ToggleButton = styled.button`
+const ToggleButton = styled.div`
   background: var(--tertiary);
   color: var(--background);
   border: none;

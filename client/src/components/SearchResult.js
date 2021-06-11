@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 
 import AddButton from './AddButton';
 
-export default function SearchResult({ searchedBooks, isStatic }) {
+export default function SearchResult({
+  searchedBooks,
+  isStatic,
+  onAddToLibrary,
+}) {
   return (
     <SearchResultSection isStatic={isStatic}>
       {searchedBooks.map((book, index) => (
@@ -25,7 +29,7 @@ export default function SearchResult({ searchedBooks, isStatic }) {
 
             <p>{book.volumeInfo?.authors?.[0]}</p>
           </BookInfo>
-          <AddButton />
+          <AddButton onAddToLibrary={() => onAddToLibrary(book.volumeInfo)} />
         </SearchResultCard>
       ))}
     </SearchResultSection>
