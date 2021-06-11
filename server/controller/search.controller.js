@@ -5,7 +5,7 @@ dotenv.config();
 
 const apiKey = process.env.API_KEY;
 
-const searchAddress = `https://www.googleapis.com/books/v1/volumes?key=${apiKey}&q=`;
+const searchAddress = `https://www.googleapis.com/books/v1/volumes?key=${apiKey}&maxResults=25&q=`;
 
 async function googleSearch(req, res) {
   const searchQuery = req.body;
