@@ -2,27 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 
 import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
+import getBooks from '../services/getDataFromAPI';
 
 export default function GlobalSearch() {
-  const [query, setQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [searchedBooks, setSearchedBooks] = useState([]);
   const focusSearch = useRef(null);
 
   useEffect(() => {
     focusSearch.current.focus();
   }, []);
-
-  const getBooks = async (query) => {
-    if (query.length > 2) {
-      const searchResults = await fetch('http://localhost:4000/searchAPI', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query }),
-      });
-      const bookData = await searchResults.json();
-      return bookData.items;
-    }
-  };
 
   useEffect(() => {
     const sleep = (ms) => {
@@ -33,10 +22,10 @@ export default function GlobalSearch() {
     const controller = new AbortController();
 
     const loadBooks = async () => {
-      if (!query) return setSearchedBooks([]);
+      if (!searchQuery) return setSearchedBooks([]);
       await sleep(350);
       if (currentQuery) {
-        const books = await getBooks(query, controller);
+        const books = await getBooks(searchQuery, controller);
         books !== undefined && setSearchedBooks(books);
       }
     };
@@ -46,13 +35,15 @@ export default function GlobalSearch() {
       currentQuery = false;
       controller.abort();
     };
-  }, [query]);
-
-  console.log(searchedBooks);
+  }, [searchQuery]);
 
   return (
     <>
-      <SearchBar query={query} setQuery={setQuery} focusSearch={focusSearch} />
+      <SearchBar
+        query={searchQuery}
+        setSearchQuery={setSearchQuery}
+        focusSearch={focusSearch}
+      />
       <SearchResult searchedBooks={searchedBooks} />
     </>
   );

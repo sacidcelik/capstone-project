@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-export default function SearchBar({ query, setQuery, focusSearch }) {
+export default function SearchBar({ query, setSearchQuery, focusSearch }) {
   return (
     <SearchWrapper>
       <SearchInput
         type="text"
         placeholder="Search for your book"
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={(e) => setSearchQuery(e.target.value)}
         ref={focusSearch}
         data-testid="searchbar"
       />
@@ -26,6 +26,7 @@ const SearchWrapper = styled.div`
   margin: 1rem auto;
   background: white;
   display: flex;
+  align-items: center;
   padding-left: 1rem;
 `;
 
@@ -33,11 +34,11 @@ const SearchInput = styled.input`
   border: none;
   display: inline;
   width: 80%;
-  height: 50px;
+  height: 46px;
   font-size: 1rem;
 
   :focus {
-    outline: none;
+    outline-color: white;
   }
 `;
 
