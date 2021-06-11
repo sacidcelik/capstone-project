@@ -12,10 +12,24 @@ export default function GlobalSearch() {
     focusSearch.current.focus();
   }, []);
 
+  /*   useEffect(() => {
+    query.length > 1 &&
+      fetch('http://localhost:4000/searchAPI', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/JSON' },
+        body: JSON.stringify({ query }),
+      })
+        .then((result) => result.json())
+        .then((data) => console.log(data.items))
+        .catch((error) => console.error(error));
+  }, [query]); */
+
   const getBooks = async (query) => {
-    const searchResults = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=40`
-    );
+    const searchResults = await fetch('http://localhost:4000/searchAPI', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/JSON' },
+      body: JSON.stringify({ query }),
+    });
     const bookData = await searchResults.json();
     return bookData.items;
   };
