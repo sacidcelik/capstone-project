@@ -7,7 +7,11 @@ export default function SearchResult({ searchedBooks, isStatic }) {
   return (
     <SearchResultSection isStatic={isStatic}>
       {searchedBooks.map((book, index) => (
-        <SearchResultCard key={index} isStatic={isStatic}>
+        <SearchResultCard
+          key={index}
+          isStatic={isStatic}
+          data-testid="searchresult"
+        >
           <img
             src={book.volumeInfo?.imageLinks?.thumbnail}
             width="128"

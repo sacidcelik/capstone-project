@@ -13,26 +13,27 @@ export default function GlobalSearch() {
   }, []);
 
   const getBooks = async (query) => {
-    const searchResults = await fetch('http://localhost:4000/searchAPI', {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: query,
-    });
-    const bookData = await searchResults.json();
-    return bookData.items;
-  };
-
-  const sleep = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    if (query.length > 2) {
+      const searchResults = await fetch('http://localhost:4000/searchAPI', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query }),
+      });
+      const bookData = await searchResults.json();
+      return bookData.items;
+    }
   };
 
   useEffect(() => {
+    const sleep = (ms) => {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    };
+
     let currentQuery = true;
     const controller = new AbortController();
 
     const loadBooks = async () => {
       if (!query) return setSearchedBooks([]);
-
       await sleep(350);
       if (currentQuery) {
         const books = await getBooks(query, controller);
