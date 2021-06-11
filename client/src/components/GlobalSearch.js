@@ -12,18 +12,6 @@ export default function GlobalSearch() {
     focusSearch.current.focus();
   }, []);
 
-  /*   useEffect(() => {
-    query.length > 1 &&
-      fetch('http://localhost:4000/searchAPI', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/JSON' },
-        body: JSON.stringify({ query }),
-      })
-        .then((result) => result.json())
-        .then((data) => console.log(data.items))
-        .catch((error) => console.error(error));
-  }, [query]); */
-
   const getBooks = async (query) => {
     const searchResults = await fetch('http://localhost:4000/searchAPI', {
       method: 'POST',
@@ -48,7 +36,7 @@ export default function GlobalSearch() {
       await sleep(350);
       if (currentQuery) {
         const books = await getBooks(query, controller);
-        setSearchedBooks(books);
+        books !== undefined && setSearchedBooks(books);
       }
     };
     loadBooks();
