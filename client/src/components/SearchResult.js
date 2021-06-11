@@ -14,8 +14,8 @@ export default function SearchResult({ searchedBooks, isStatic }) {
         >
           <img
             src={book.volumeInfo?.imageLinks?.thumbnail}
-            width="128"
-            height="199"
+            width="58"
+            height="90"
             alt={book.volumeInfo.title || 'Book Cover'}
           />
           <BookInfo>
@@ -49,8 +49,6 @@ const SearchResultCard = styled.article`
   width: ${(props) => (props.isStatic ? '350px' : '90vw')};
 
   img {
-    height: 90px;
-    width: 58px;
     margin-right: 1rem;
   }
 
