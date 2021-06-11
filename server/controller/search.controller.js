@@ -10,7 +10,7 @@ const searchAddress = `https://www.googleapis.com/books/v1/volumes?key=${apiKey}
 async function googleSearch(req, res) {
   const searchQuery = req.body;
   try {
-    const response = await fetch(searchAddress + searchQuery.query);
+    const response = await fetch(searchAddress + searchQuery);
     const body = await response.json();
     res.json(body);
   } catch (error) {

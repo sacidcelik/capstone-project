@@ -15,8 +15,8 @@ export default function GlobalSearch() {
   const getBooks = async (query) => {
     const searchResults = await fetch('http://localhost:4000/searchAPI', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/JSON' },
-      body: JSON.stringify({ query }),
+      headers: { 'Content-Type': 'text/plain' },
+      body: query,
     });
     const bookData = await searchResults.json();
     return bookData.items;
