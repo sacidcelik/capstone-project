@@ -3,27 +3,21 @@ import PropTypes from 'prop-types';
 
 import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
+import getBooks from '../services/getDataFromAPI';
 
+<<<<<<< HEAD
 export default function GlobalSearch({ onAddToLibrary }) {
   const [query, setQuery] = useState('');
+=======
+export default function GlobalSearch() {
+  const [searchQuery, setSearchQuery] = useState('');
+>>>>>>> main
   const [searchedBooks, setSearchedBooks] = useState([]);
   const focusSearch = useRef(null);
 
   useEffect(() => {
     focusSearch.current.focus();
   }, []);
-
-  const getBooks = async (query) => {
-    if (query.length > 2) {
-      const searchResults = await fetch('http://localhost:4000/searchAPI', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query }),
-      });
-      const bookData = await searchResults.json();
-      return bookData.items;
-    }
-  };
 
   useEffect(() => {
     const sleep = (ms) => {
@@ -34,10 +28,10 @@ export default function GlobalSearch({ onAddToLibrary }) {
     const controller = new AbortController();
 
     const loadBooks = async () => {
-      if (!query) return setSearchedBooks([]);
+      if (!searchQuery) return setSearchedBooks([]);
       await sleep(350);
       if (currentQuery) {
-        const books = await getBooks(query, controller);
+        const books = await getBooks(searchQuery, controller);
         books !== undefined && setSearchedBooks(books);
       }
     };
@@ -47,17 +41,24 @@ export default function GlobalSearch({ onAddToLibrary }) {
       currentQuery = false;
       controller.abort();
     };
-  }, [query]);
-
-  console.log(searchedBooks);
+  }, [searchQuery]);
 
   return (
     <>
+<<<<<<< HEAD
       <SearchBar query={query} setQuery={setQuery} focusSearch={focusSearch} />
       <SearchResult
         searchedBooks={searchedBooks}
         onAddToLibrary={onAddToLibrary}
       />
+=======
+      <SearchBar
+        query={searchQuery}
+        setSearchQuery={setSearchQuery}
+        focusSearch={focusSearch}
+      />
+      <SearchResult searchedBooks={searchedBooks} />
+>>>>>>> main
     </>
   );
 }
