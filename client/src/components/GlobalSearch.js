@@ -5,7 +5,7 @@ import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
 import getBooks from '../services/getDataFromAPI';
 
-export default function GlobalSearch() {
+export default function GlobalSearch({ onAddToLibrary }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchedBooks, setSearchedBooks] = useState([]);
   const focusSearch = useRef(null);
@@ -45,7 +45,10 @@ export default function GlobalSearch() {
         setSearchQuery={setSearchQuery}
         focusSearch={focusSearch}
       />
-      <SearchResult searchedBooks={searchedBooks} />
+      <SearchResult
+        searchedBooks={searchedBooks}
+        onAddToLibrary={onAddToLibrary}
+      />
     </>
   );
 }

@@ -4,7 +4,7 @@ export default function AddButton({ onAddToLibrary }) {
   return <ToggleButton onClick={onAddToLibrary}>Add</ToggleButton>;
 }
 
-const ToggleButton = styled.div`
+const ToggleButton = styled.button`
   background: var(--tertiary);
   color: var(--background);
   border: none;

@@ -9,10 +9,9 @@ function App() {
   const [library, setLibrary] = useState([]);
 
   function addToLibrary(book) {
-    setLibrary(book);
+    setLibrary([...library, book]);
   }
 
-  console.log('library', library);
   return (
     <>
       <Switch>
