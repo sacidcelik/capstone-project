@@ -27,18 +27,18 @@ const SearchWrapper = styled.div`
   background: white;
   display: flex;
   align-items: center;
-  padding-left: 1rem;
+  justify-content: center;
 `;
 
 const SearchInput = styled.input`
   border: none;
   display: inline;
-  width: 80%;
+  width: 99.9%;
   height: 46px;
   font-size: 1rem;
 
   :focus {
-    outline-color: white;
+    outline-color: var(--background);
   }
 `;
 
