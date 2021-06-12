@@ -1,12 +1,13 @@
 import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
 
-import AddButton from './AddButton';
+import AddAndRemoveButton from './AddAndRemoveButton';
 
 export default function SearchResult({
   searchedBooks,
   isStatic,
-  onAddToLibrary,
+  onToggleToAndFromLibrary,
+  isInLibrary,
 }) {
   return (
     <SearchResultSection isStatic={isStatic}>
@@ -29,7 +30,10 @@ export default function SearchResult({
 
             <p>{book.volumeInfo?.authors?.[0]}</p>
           </BookInfo>
-          <AddButton onAddToLibrary={() => onAddToLibrary(book.volumeInfo)} />
+          <AddAndRemoveButton
+            onToggleToAndFromLibrary={() => onToggleToAndFromLibrary(book)}
+            isInLibrary={isInLibrary(book)}
+          />
         </SearchResultCard>
       ))}
     </SearchResultSection>
@@ -85,4 +89,6 @@ const BookTitle = styled.div`
 
 SearchResult.propTypes = {
   searchedBooks: PropTypes.array,
+  onToggleToAndFromLibrary: PropTypes.func,
+  isInLibrary: PropTypes.func,
 };

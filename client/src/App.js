@@ -8,15 +8,36 @@ import MyBooks from './pages/MyBooks';
 function App() {
   const [library, setLibrary] = useState([]);
 
-  function addToLibrary(book) {
-    setLibrary([...library, book]);
+  function toggleToAndFromLibrary(focusedBook) {
+    isInLibrary(focusedBook)
+      ? removeFromLibrary(focusedBook)
+      : addToLibrary(focusedBook);
   }
 
+  function addToLibrary(focusedBook) {
+    setLibrary([...library, focusedBook]);
+  }
+
+  function removeFromLibrary(focusedBook) {
+    const remainingLibrary = library.filter(
+      (book) => book.id !== focusedBook.id
+    );
+    setLibrary(remainingLibrary);
+  }
+
+  function isInLibrary(focusedBook) {
+    return library.find((book) => book.id === focusedBook.id);
+  }
+
+  console.log(library);
   return (
     <>
       <Switch>
         <Route path="/home">
-          <Home onAddToLibrary={addToLibrary} />
+          <Home
+            onToggleToAndFromLibrary={toggleToAndFromLibrary}
+            isInLibrary={isInLibrary}
+          />
         </Route>
         <Route path="/myshelves">
           <MyShelves />

@@ -5,7 +5,10 @@ import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
 import getBooks from '../services/getDataFromAPI';
 
-export default function GlobalSearch({ onAddToLibrary }) {
+export default function GlobalSearch({
+  onToggleToAndFromLibrary,
+  isInLibrary,
+}) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchedBooks, setSearchedBooks] = useState([]);
   const focusSearch = useRef(null);
@@ -47,11 +50,13 @@ export default function GlobalSearch({ onAddToLibrary }) {
       />
       <SearchResult
         searchedBooks={searchedBooks}
-        onAddToLibrary={onAddToLibrary}
+        onToggleToAndFromLibrary={onToggleToAndFromLibrary}
+        isInLibrary={isInLibrary}
       />
     </>
   );
 }
 GlobalSearch.propTypes = {
-  onAddToLibrary: PropTypes.func,
+  onToggleToAndFromLibrary: PropTypes.func,
+  isInLibrary: PropTypes.func,
 };
