@@ -42,7 +42,7 @@ function App() {
           <MyShelves />
         </Route>
         <Route path="/mybooks">
-          <MyBooks />
+          <MyBooks library={library} />
         </Route>
       </Switch>
       <NavFooter />
