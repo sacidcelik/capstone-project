@@ -26,7 +26,7 @@ const BooksWrapper = styled.section`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  justify-content: space-around;
+  justify-content: space-between;
   padding-bottom: 7rem;
   margin: 1rem auto;
   width: 90%;
