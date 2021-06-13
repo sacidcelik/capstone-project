@@ -29,7 +29,6 @@ function App() {
     return library.find((book) => book.id === focusedBook.id);
   }
 
-  console.log(library);
   return (
     <>
       <Switch>
