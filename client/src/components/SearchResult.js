@@ -15,7 +15,7 @@ export default function SearchResult({
         <SearchResultCard
           key={index}
           isStatic={isStatic}
-          data-testid="searchresult"
+          data-testid="search-result"
         >
           <img
             src={book.volumeInfo?.imageLinks?.thumbnail}
@@ -33,6 +33,7 @@ export default function SearchResult({
           <AddAndRemoveButton
             onToggleToAndFromLibrary={() => onToggleToAndFromLibrary(book)}
             isInLibrary={isInLibrary(book)}
+            data-testid="add-and-remove-button"
           />
         </SearchResultCard>
       ))}
