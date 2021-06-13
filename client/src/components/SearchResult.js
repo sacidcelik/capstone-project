@@ -33,7 +33,6 @@ export default function SearchResult({
           <AddAndRemoveButton
             onToggleToAndFromLibrary={() => onToggleToAndFromLibrary(book)}
             isInLibrary={isInLibrary(book)}
-            data-testid="add-and-remove-button"
           />
         </SearchResultCard>
       ))}
