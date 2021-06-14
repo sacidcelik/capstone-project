@@ -1,3 +1,7 @@
 export default function MyShelves() {
-  return <h2>My Shelves</h2>;
+  return (
+    <main>
+      <h2>My Shelves</h2>
+    </main>
+  );
 }
