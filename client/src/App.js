@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Home from './pages/Home';
 import MyShelves from './pages/MyShelves';
 import MyBooks from './pages/MyBooks';
+import Header from './components/Header';
 
 function App() {
   const [library, setLibrary] = useState([]);
@@ -31,6 +32,7 @@ function App() {
 
   return (
     <>
+      <Header />
       <Switch>
         <Route path="/home">
           <Home
