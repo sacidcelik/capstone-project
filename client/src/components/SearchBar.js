@@ -33,9 +33,10 @@ const SearchWrapper = styled.div`
 const SearchInput = styled.input`
   border: none;
   display: inline;
-  width: 99.9%;
-  height: 46px;
   font-size: 1rem;
+  height: 46px;
+  padding: 0 1rem;
+  width: 99.9%;
 
   :focus {
     outline-color: var(--background);
