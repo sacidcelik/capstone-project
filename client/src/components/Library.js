@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
-export default function Library({ library }) {
+export default function Library({ library, isStatic }) {
   return (
-    <BooksWrapper>
+    <BooksWrapper isStatic={isStatic}>
       {library.map((book) => {
         return (
           <BookCard key={book.id}>
@@ -30,7 +30,7 @@ const BooksWrapper = styled.section`
   justify-content: space-between;
   padding-bottom: 7rem;
   margin: 1rem auto;
-  width: 90%;
+  width: ${(props) => (props.isStatic ? '338px' : '90%')};
 `;
 
 const BookCard = styled.article`
