@@ -13,9 +13,7 @@ export default function Library({ library, isStatic }) {
               width="102.4"
               height="159.2"
             />
-            <div>
-              <p>{book.volumeInfo.title}</p>
-            </div>
+            <p>{book.volumeInfo.title}</p>
           </BookCard>
         );
       })}
@@ -47,11 +45,12 @@ const BookCard = styled.article`
 
   div {
     height: 3.6rem;
-    overflow: hidden;
   }
 
   p {
     text-align: center;
+    height: 3.6rem;
+    overflow: hidden;
   }
 `;
 
