@@ -22,5 +22,9 @@ const searchedBooks = [
   },
 ];
 
-<SearchResult searchedBooks={searchedBooks} isStatic />;
+<SearchResult
+  searchedBooks={searchedBooks}
+  isStatic
+  isInLibrary={() => true}
+/>;
 ```

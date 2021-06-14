@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
 import getBooks from '../services/getDataFromAPI';
 
-export default function GlobalSearch() {
+export default function GlobalSearch({
+  onToggleToAndFromLibrary,
+  isInLibrary,
+}) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchedBooks, setSearchedBooks] = useState([]);
   const focusSearch = useRef(null);
@@ -44,7 +48,15 @@ export default function GlobalSearch() {
         setSearchQuery={setSearchQuery}
         focusSearch={focusSearch}
       />
-      <SearchResult searchedBooks={searchedBooks} />
+      <SearchResult
+        searchedBooks={searchedBooks}
+        onToggleToAndFromLibrary={onToggleToAndFromLibrary}
+        isInLibrary={isInLibrary}
+      />
     </>
   );
 }
+GlobalSearch.propTypes = {
+  onToggleToAndFromLibrary: PropTypes.func,
+  isInLibrary: PropTypes.func,
+};
