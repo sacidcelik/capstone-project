@@ -6,7 +6,7 @@ export default function Library({ library, isStatic }) {
     <BooksWrapper isStatic={isStatic}>
       {library.map((book) => {
         return (
-          <BookCard key={book.id}>
+          <BookCard key={book.id} data-testid="library-book">
             <img
               src={book.volumeInfo.imageLinks.thumbnail}
               alt="Book Cover"
