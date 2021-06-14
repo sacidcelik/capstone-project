@@ -23,12 +23,15 @@ describe('Display added Books', () => {
     clickAddButton();
     checkForBook();
   });
+});
+
+describe('Remove Books Frim Library', () => {
   it('removes book from /mybooks when clicking remove', () => {
     clickAddButton();
     checkForBook();
     cy.get('[href="/home"]').click();
     cy.get(SEARCH_BAR).type('Die Furcht des Weisen / Band 1');
-    cy.get(ADD_REMOVE_BUTTON).first().contains('Remove').click();
+    cy.get(ADD_REMOVE_BUTTON).contains('Remove').click();
     cy.get('[href="/mybooks"]').click();
     cy.get(LIBRARY_BOOK).should('not.exist');
   });
