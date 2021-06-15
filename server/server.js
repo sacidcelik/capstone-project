@@ -20,10 +20,12 @@ server.get('/health', (request, response) =>
 server.use(searchRoutes);
 
 server.use(express.static(path.join(__dirname, '../client/build')));
-
 server.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
 const port = process.env.PORT || 4000;
-server.listen(port);
+
+server.listen(port, () =>
+  console.log(`server is up and running on port ${port}`)
+);
