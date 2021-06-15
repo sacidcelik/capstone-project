@@ -13,16 +13,17 @@ const server = express();
 
 server.use(cors());
 server.use(express.json());
-server.use(searchRoutes);
-
-server.use(express.static(path.join(__dirname, '../client/build')));
-server.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-});
-
 server.get('/health', (request, response) =>
   response.json({ status: 'alive' })
 );
+
+server.use(searchRoutes);
+
+server.use(express.static(path.join(__dirname, '../client/build')));
+
+server.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
 
 const port = process.env.PORT || 4000;
 server.listen(port);
