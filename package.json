@@ -10,7 +10,8 @@
     "start": "node ./server/server.js",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cy:open": "cd ./client && npm run cy:open"
+    "cy:open": "cd ./client && npm run cy:open",
+    "postinstall": "cd ./client && npm install && cd ../server && npm install"
   },
   "keywords": [],
   "author": "",
