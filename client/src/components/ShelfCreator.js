@@ -67,15 +67,17 @@ export default function ShelfCreator() {
     return columnHeight;
   }
 
-  function getColor(element) {
-    const shelfColors = {
-      white: 'lightgrey',
-      black: 'black',
-      wood: '#CD8500',
-      default: 'red',
+  function getShelfBorders(element) {
+    const shelfBorders = {
+      white: '3px ridge lightgrey',
+      black: '3px ridge black',
+      wood: '3px ridge #CD8500',
+      default: '3px dotted red',
     };
 
-    return shelfColors[element] ? shelfColors[element] : shelfColors['default'];
+    return shelfBorders[element]
+      ? shelfBorders[element]
+      : shelfBorders['default'];
   }
 
   console.log(shelf);
@@ -97,7 +99,12 @@ export default function ShelfCreator() {
           </div>
           <div>
             <label htmlFor="columns">Columns</label>
-            <select name="columns" id="columns" onChange={updateShelf}>
+            <select
+              name="columns"
+              id="columns"
+              onChange={updateShelf}
+              data-testid="column-picker"
+            >
               <option value="0">-Columns-</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -113,6 +120,7 @@ export default function ShelfCreator() {
               id="color"
               value={shelf.color}
               onChange={updateShelf}
+              data-testid="color-picker"
             >
               <option value="">-Color-</option>
               <option value="black">Black</option>
@@ -132,7 +140,7 @@ export default function ShelfCreator() {
           )}
           {shelf.columns.map((column, index) => {
             return (
-              <ShelfConfig key={index}>
+              <ShelfConfig key={index} data-testid="shelf-config">
                 <p>{`Column ${shelf.columns[index].column}`}</p>
                 <div>
                   <label htmlFor="width">Width</label>
@@ -165,6 +173,7 @@ export default function ShelfCreator() {
                   <select
                     name="compartments"
                     id="compartments"
+                    data-testid="compartment-picker"
                     value={column.compartments.length}
                     onChange={(e) => updateColumn(e, index)}
                   >
@@ -190,7 +199,8 @@ export default function ShelfCreator() {
                 shelfWidth={shelfWidth(index)}
                 shelfHeight={shelfHeight(index)}
                 child={index}
-                getColor={getColor(shelf.color)}
+                getColor={getShelfBorders(shelf.color)}
+                data-testid="sub-shelf"
               >
                 {column.compartments &&
                   column.compartments.length > 0 &&
@@ -198,7 +208,8 @@ export default function ShelfCreator() {
                     return (
                       <Compartment
                         key={'compartment' + index}
-                        getColor={getColor(shelf.color)}
+                        getColor={getShelfBorders(shelf.color)}
+                        data-testid="compartment"
                       />
                     );
                   })}
@@ -227,6 +238,7 @@ const ShelfArea = styled.section`
 const ShelfStarter = styled.section`
   display: flex;
   justify-content: space-around;
+  margin: 1rem auto 2rem;
   label {
     display: block;
     font-size: 0.8rem;
@@ -243,7 +255,7 @@ const ShelfStarter = styled.section`
 
 const ShelfConfigWrapper = styled.section`
   width: 90%;
-  margin: 1rem auto;
+  margin: 1rem auto 2rem;
 `;
 
 const ShelfConfigHeader = styled.div`
@@ -313,19 +325,10 @@ const ShelfPreview = styled.section`
 const SubShelf = styled.div`
   height: ${(props) => props.shelfHeight}%;
   width: ${(props) => props.shelfWidth}%;
-  border: ${(props) => `3px ridge ${props.getColor}`};
+  border: ${(props) => props.getColor};
   margin: 0;
   display: flex;
   flex-direction: column;
-
-  /*   :not(:first-child),
-  :first-child {
-    border-right: 0px solid red;
-  }
-
-  :last-child {
-    border: 1px solid red;
-  } */
 
   :nth-child(${(props) => props.child}) {
     width: ${(props) => props.shelfWidth}%;
@@ -335,7 +338,7 @@ const SubShelf = styled.div`
 
 const Compartment = styled.div`
   width: 100%;
-  border: ${(props) => `3px ridge ${props.getColor}`};
+  border: ${(props) => props.getColor};
   border-left: none;
   border-right: none;
   height: 100%;
