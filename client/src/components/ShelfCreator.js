@@ -16,7 +16,12 @@ export default function ShelfCreator() {
     if (event.target.id === 'columns') {
       fieldValue = [];
       for (let i = 0; i < event.target.value; i++) {
-        fieldValue.push({ column: i + 1 });
+        fieldValue.push({
+          column: i + 1,
+          compartments: [],
+          width: 1,
+          height: 1,
+        });
       }
     }
 
@@ -62,6 +67,19 @@ export default function ShelfCreator() {
     return columnHeight;
   }
 
+  function getColor(element) {
+    const shelfColors = {
+      white: 'lightgrey',
+      black: 'black',
+      wood: '#CD8500',
+      default: 'red',
+    };
+
+    return shelfColors[element] ? shelfColors[element] : shelfColors['default'];
+  }
+
+  console.log(shelf);
+
   return (
     <>
       <ShelfArea>
@@ -73,13 +91,14 @@ export default function ShelfCreator() {
               name="name"
               id="name"
               placeholder="Name your shelf"
+              value={shelf.name}
               onChange={updateShelf}
             />
           </div>
           <div>
             <label htmlFor="columns">Columns</label>
             <select name="columns" id="columns" onChange={updateShelf}>
-              <option value="">---Columns---</option>
+              <option value="0">-Columns-</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -89,8 +108,13 @@ export default function ShelfCreator() {
           </div>
           <div>
             <label htmlFor="color">Color</label>
-            <select name="color" id="color" onChange={updateShelf}>
-              <option value="">---Color---</option>
+            <select
+              name="color"
+              id="color"
+              value={shelf.color}
+              onChange={updateShelf}
+            >
+              <option value="">-Color-</option>
               <option value="black">Black</option>
               <option value="white">White</option>
               <option value="wood">Wood</option>
@@ -100,7 +124,7 @@ export default function ShelfCreator() {
         <ShelfConfigWrapper>
           {shelf.columns.length > 0 && (
             <ShelfConfigHeader>
-              <p> Set Columns </p>
+              <p>Set Columns</p>
               <p>Width</p>
               <p>Height</p>
               <p>Compartments</p>
@@ -118,7 +142,6 @@ export default function ShelfCreator() {
                     value={column.width}
                     onChange={(e) => updateColumn(e, index)}
                   >
-                    <option value="0">-</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -132,7 +155,6 @@ export default function ShelfCreator() {
                     value={column.height}
                     onChange={(e) => updateColumn(e, index)}
                   >
-                    <option value="">-</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -143,10 +165,9 @@ export default function ShelfCreator() {
                   <select
                     name="compartments"
                     id="compartments"
-                    value={column.compartments && column.compartments.length}
+                    value={column.compartments.length}
                     onChange={(e) => updateColumn(e, index)}
                   >
-                    <option value="">-</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -169,14 +190,16 @@ export default function ShelfCreator() {
                 shelfWidth={shelfWidth(index)}
                 shelfHeight={shelfHeight(index)}
                 child={index}
+                getColor={getColor(shelf.color)}
               >
                 {column.compartments &&
                   column.compartments.length > 0 &&
                   column.compartments.map((compartment, index) => {
                     return (
-                      <Compartment key={'compartment' + index}>
-                        <p></p>
-                      </Compartment>
+                      <Compartment
+                        key={'compartment' + index}
+                        getColor={getColor(shelf.color)}
+                      />
                     );
                   })}
               </SubShelf>
@@ -290,7 +313,7 @@ const ShelfPreview = styled.section`
 const SubShelf = styled.div`
   height: ${(props) => props.shelfHeight}%;
   width: ${(props) => props.shelfWidth}%;
-  border: 3px ridge red;
+  border: ${(props) => `3px ridge ${props.getColor}`};
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -312,7 +335,7 @@ const SubShelf = styled.div`
 
 const Compartment = styled.div`
   width: 100%;
-  border: 3px ridge red;
+  border: ${(props) => `3px ridge ${props.getColor}`};
   border-left: none;
   border-right: none;
   height: 100%;
