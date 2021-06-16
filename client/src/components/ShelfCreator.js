@@ -50,10 +50,6 @@ export default function ShelfCreator() {
 
   function checkForHeight(value) {
     return shelf.columns.some((column) => column.height === value);
-
-    /* shelf.columns.forEach((column) => {
-      return column.height == value ? true : false;
-    }); */
   }
 
   function shelfHeight(index) {
@@ -65,8 +61,6 @@ export default function ShelfCreator() {
 
     return columnHeight;
   }
-
-  console.log(checkForHeight('3'));
 
   return (
     <>
@@ -104,6 +98,14 @@ export default function ShelfCreator() {
           </div>
         </ShelfStarter>
         <ShelfConfigWrapper>
+          {shelf.columns.length > 0 && (
+            <ShelfConfigHeader>
+              <p> Set Columns </p>
+              <p>Width</p>
+              <p>Height</p>
+              <p>Compartments</p>
+            </ShelfConfigHeader>
+          )}
           {shelf.columns.map((column, index) => {
             return (
               <ShelfConfig key={index}>
@@ -173,7 +175,7 @@ export default function ShelfCreator() {
                   column.compartments.map((compartment, index) => {
                     return (
                       <Compartment key={'compartment' + index}>
-                        <p>{index + 1}</p>
+                        <p></p>
                       </Compartment>
                     );
                   })}
@@ -188,7 +190,8 @@ export default function ShelfCreator() {
 
 const ShelfArea = styled.section`
   width: 95%;
-  margin: 1rem auto 7rem;
+
+  margin: 1rem auto 9rem;
   height: 100%;
   input,
   select {
@@ -203,6 +206,8 @@ const ShelfStarter = styled.section`
   justify-content: space-around;
   label {
     display: block;
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
   }
 
   input,
@@ -216,6 +221,16 @@ const ShelfStarter = styled.section`
 const ShelfConfigWrapper = styled.section`
   width: 90%;
   margin: 1rem auto;
+`;
+
+const ShelfConfigHeader = styled.div`
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+
+  p {
+    font-size: 0.6rem;
+  }
 `;
 
 const ShelfConfig = styled.div`
@@ -238,6 +253,12 @@ const ShelfConfig = styled.div`
     margin-bottom: 0.2rem;
   }
 
+  :not(:first-child) {
+    label {
+      display: none;
+    }
+  }
+
   :nth-child(odd) {
     background: var(--primary);
 
@@ -258,12 +279,12 @@ const ShelfConfig = styled.div`
 
 const ShelfPreview = styled.section`
   display: flex;
+  gap: 1px;
   margin: 1rem auto;
   justify-content: center;
   align-items: flex-end;
   width: 90%;
-  height: 200px;
-  gap: 1px;
+  height: 150px;
 `;
 
 const SubShelf = styled.div`
@@ -296,15 +317,12 @@ const Compartment = styled.div`
   border-right: none;
   height: 100%;
 
-  :not(:first-child),
-  :first-child {
-    border-bottom: none;
+  :not(:first-child) {
+    border-bottom: 3px solid var(--background);
   }
 
   :first-child {
     border-top: none;
-  }
-  :last-child {
-    border-bottom: none;
+    border-bottom: 3px solid var(--background);
   }
 `;
