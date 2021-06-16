@@ -1,6 +1,8 @@
 import styled from 'styled-components/macro';
 import { useState } from 'react';
 
+import getShelfBorders from '../lib/shelfBorders';
+
 export default function ShelfCreator() {
   const initialShelf = {
     name: '',
@@ -66,21 +68,6 @@ export default function ShelfCreator() {
 
     return columnHeight;
   }
-
-  function getShelfBorders(element) {
-    const shelfBorders = {
-      white: '3px ridge lightgrey',
-      black: '3px ridge black',
-      wood: '3px ridge #CD8500',
-      default: '3px dotted red',
-    };
-
-    return shelfBorders[element]
-      ? shelfBorders[element]
-      : shelfBorders['default'];
-  }
-
-  console.log(shelf);
 
   return (
     <>
@@ -223,15 +210,14 @@ export default function ShelfCreator() {
 }
 
 const ShelfArea = styled.section`
+  height: 100%;
+  margin: 1rem auto 9rem;
   width: 95%;
 
-  margin: 1rem auto 9rem;
-  height: 100%;
   input,
   select {
     border: 1px solid var(--primary);
     border-radius: var(--border-radius);
-
     background: var(--background);
   }
 `;
@@ -254,14 +240,14 @@ const ShelfStarter = styled.section`
 `;
 
 const ShelfConfigWrapper = styled.section`
-  width: 90%;
   margin: 1rem auto 2rem;
+  width: 90%;
 `;
 
 const ShelfConfigHeader = styled.div`
   display: flex;
-  justify-content: space-around;
   gap: 1rem;
+  justify-content: space-around;
 
   p {
     font-size: 0.6rem;
@@ -269,15 +255,16 @@ const ShelfConfigHeader = styled.div`
 `;
 
 const ShelfConfig = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
   align-items: center;
-  margin: 0.5rem auto;
-  padding: 0.5rem;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
     var(--box-shadow-blur) var(--box-shadow-color);
+  display: flex;
+  justify-content: space-around;
+  margin: 0.5rem auto;
+  padding: 0.5rem;
+  width: 100%;
+
   p {
     font-size: 0.9rem;
   }
@@ -313,42 +300,42 @@ const ShelfConfig = styled.div`
 `;
 
 const ShelfPreview = styled.section`
+  align-items: flex-end;
   display: flex;
   gap: 1px;
-  margin: 1rem auto;
   justify-content: center;
-  align-items: flex-end;
-  width: 90%;
+  margin: 1rem auto;
   height: 150px;
+  width: 90%;
 `;
 
 const SubShelf = styled.div`
-  height: ${(props) => props.shelfHeight}%;
-  width: ${(props) => props.shelfWidth}%;
   border: ${(props) => props.getColor};
-  margin: 0;
   display: flex;
   flex-direction: column;
+  height: ${(props) => props.shelfHeight}%;
+  margin: 0;
+  width: ${(props) => props.shelfWidth}%;
 
   :nth-child(${(props) => props.child}) {
-    width: ${(props) => props.shelfWidth}%;
     height: ${(props) => props.shelfHeight}%;
+    width: ${(props) => props.shelfWidth}%;
   }
 `;
 
 const Compartment = styled.div`
-  width: 100%;
   border: ${(props) => props.getColor};
   border-left: none;
   border-right: none;
   height: 100%;
+  width: 100%;
 
   :not(:first-child) {
     border-bottom: 3px solid var(--background);
   }
 
   :first-child {
-    border-top: none;
     border-bottom: 3px solid var(--background);
+    border-top: none;
   }
 `;
