@@ -7,7 +7,6 @@ const COMPARTMENT = testId('compartment');
 const COLOR_PICKER = testId('color-picker');
 const COLUMN_PICKER = testId('column-picker');
 const COMPARTMENT_PICKER = testId('compartment-picker');
-const SHELF_CONFIG = testId('shelf-config');
 
 describe('Create Shelves', () => {
   it('Draws the number of shelves that the user selects', () => {
