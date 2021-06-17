@@ -12,7 +12,7 @@ export default function BookDetails({
   onAddRating,
 }) {
   return (
-    <DetailsCard isStatic={isStatic}>
+    <DetailsCard isStatic={isStatic} data-testid="book-details">
       <CloseButton
         src={CloseIcon}
         alt="Close Icon"
