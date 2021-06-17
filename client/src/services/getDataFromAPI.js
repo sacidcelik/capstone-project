@@ -1,6 +1,6 @@
 const getBooks = async (searchQuery) => {
   if (searchQuery.length > 2) {
-    const searchResults = await fetch('http://localhost:4000/searchAPI', {
+    const searchResults = await fetch('/searchAPI', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ searchQuery }),

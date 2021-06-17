@@ -42,5 +42,6 @@
     "@testing-library/cypress": "^7.0.6",
     "cypress": "^7.5.0",
     "react-styleguidist": "^11.1.7"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
