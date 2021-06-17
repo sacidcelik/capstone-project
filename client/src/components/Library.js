@@ -1,14 +1,21 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
-export default function Library({ library, isStatic }) {
+export default function Library({ library, isStatic, onRenderBookDetails }) {
   return (
     <BooksWrapper isStatic={isStatic}>
       {library.map((book) => {
         return (
-          <BookCard key={book.id} data-testid="library-book">
+          <BookCard
+            key={book.id}
+            data-testid="library-book"
+            onClick={() => onRenderBookDetails(book)}
+          >
             <img
-              src={book.volumeInfo.imageLinks.thumbnail}
+              src={
+                book.volumeInfo?.imageLinks?.thumbnail ||
+                book.volumeInfo?.imageLinks?.smallThumbnail
+              }
               alt="Book Cover"
               width="102.4"
               height="159.2"
