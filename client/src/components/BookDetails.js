@@ -1,9 +1,9 @@
 import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
 
-export default function BookDetails({ book, isStatic }) {
+export default function BookDetails({ book, isStatic, onRemoveDetailView }) {
   return (
-    <DetailsCard>
+    <DetailsCard onClick={onRemoveDetailView}>
       <BookInformation>
         <BookImage>
           <img
@@ -12,17 +12,22 @@ export default function BookDetails({ book, isStatic }) {
               book.volumeInfo?.imageLinks?.smallThumbnail
             }
             alt={book.volumeInfo.title || 'Book Cover'}
+            width="128"
+            height="192"
           />
+          <button>Unread</button>
         </BookImage>
+
         <BookSpecs>
-          <p>{book.volumeInfo?.title}</p>
-          {book.volumeInfo.subtitle && <p>{book.volumeInfo.subtitle}</p>}
+          <BookTitle>{book.volumeInfo?.title}</BookTitle>
+          {book.volumeInfo.subtitle && (
+            <BookSubTitle style={{ marginTop: '0.4rem' }}>
+              {book.volumeInfo.subtitle}
+            </BookSubTitle>
+          )}
           <p>{book.volumeInfo?.authors?.[0]}</p>
-          <p>ReleaseDate (to come)</p>
-          <p>
-            {`ISBN: ${book.volumeInfo?.industryIdentifiers[0]?.identifier}`}
-          </p>
-          <p>AddedDate (to come) </p>
+          <p>Released: {book.volumeInfo?.publishedDate?.substring(0, 4)}</p>
+          <p>ISBN: {book.volumeInfo?.industryIdentifiers[0]?.identifier}</p>
         </BookSpecs>
       </BookInformation>
     </DetailsCard>
@@ -31,6 +36,7 @@ export default function BookDetails({ book, isStatic }) {
 
 const DetailsCard = styled.article`
   background-color: var(--background);
+  opacity: 0.98;
   border: 3px solid white;
   border-radius: var(--border-radius);
   box-shadow: 0 0 80px 80px rgba(0, 0, 0, 0.2);
@@ -55,22 +61,31 @@ const BookInformation = styled.section`
 
 const BookImage = styled.div`
   width: 40%;
+  height: 100%;
   img {
-    width: 100%;
   }
 `;
 
 const BookSpecs = styled.div`
   width: 60%;
-  font-size: 0.8rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 
-  p {
-    margin-bottom: 0.5rem;
+  p:not(:first-child) {
+    margin-top: 0.8rem;
   }
+`;
 
-  p:first-child {
-    font-size: 1rem;
-    max-height: 3.6rem;
-    overflow: hidden;
-  }
+const BookTitle = styled.p`
+  font-size: 1.2rem;
+  max-height: 4.1rem;
+  overflow: hidden;
+`;
+
+const BookSubTitle = styled.p`
+  max-height: 2.4rem;
+  overflow: hidden;
 `;

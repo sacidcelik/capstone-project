@@ -36,7 +36,7 @@ function App() {
   }
 
   function renderBookDetails(book) {
-    return <BookDetails book={book} />;
+    return <BookDetails book={book} onRemoveDetailView={() => setView('')} />;
   }
 
   function renderBookDetailsHelper(book) {
