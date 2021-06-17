@@ -60,13 +60,9 @@ export default function ShelfCreator() {
   }
 
   function shelfHeight(index) {
-    let columnHeight = () => {
-      if (checkForHeight(3)) return (100 / 3) * shelf.columns[index].height;
-      if (checkForHeight(2)) return (100 / 2) * shelf.columns[index].height;
-      else return (columnHeight = 100);
-    };
-
-    return columnHeight;
+    if (checkForHeight(3)) return (100 / 3) * shelf.columns[index].height;
+    if (checkForHeight(2)) return (100 / 2) * shelf.columns[index].height;
+    else return 100;
   }
 
   return (
@@ -179,30 +175,28 @@ export default function ShelfCreator() {
           })}
         </ShelfConfigWrapper>
         <ShelfPreview>
-          {shelf.columns.map((column, index) => {
-            return (
-              <SubShelf
-                key={'column' + index}
-                shelfWidth={shelfWidth(index)}
-                shelfHeight={shelfHeight(index)}
-                child={index}
-                getColor={getShelfBorders(shelf.color)}
-                data-testid="sub-shelf"
-              >
-                {column.compartments &&
-                  column.compartments.length > 0 &&
-                  column.compartments.map((compartment, index) => {
-                    return (
-                      <Compartment
-                        key={'compartment' + index}
-                        getColor={getShelfBorders(shelf.color)}
-                        data-testid="compartment"
-                      />
-                    );
-                  })}
-              </SubShelf>
-            );
-          })}
+          {shelf.columns.map((column, index) => (
+            <SubShelf
+              key={'column' + index}
+              shelfWidth={shelfWidth(index)}
+              shelfHeight={shelfHeight(index)}
+              child={index}
+              getColor={getShelfBorders(shelf.color)}
+              data-testid="sub-shelf"
+            >
+              {column.compartments &&
+                column.compartments.length > 0 &&
+                column.compartments.map((compartment, index) => {
+                  return (
+                    <Compartment
+                      key={'compartment' + index}
+                      getColor={getShelfBorders(shelf.color)}
+                      data-testid="compartment"
+                    />
+                  );
+                })}
+            </SubShelf>
+          ))}
         </ShelfPreview>
       </ShelfArea>
     </>
