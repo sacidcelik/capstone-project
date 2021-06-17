@@ -65,7 +65,7 @@ export default function BookDetails({
         <NotesWrapper>
           <p>Notes:</p>
           <div>
-            <textarea placeholder="Notes" />
+            <textarea placeholder="Your notes" />
           </div>
         </NotesWrapper>
       </BookSettings>
