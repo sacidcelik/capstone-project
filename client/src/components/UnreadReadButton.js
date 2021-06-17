@@ -13,8 +13,9 @@ export default function UnreadReadButton({ isRead, onToggleRead }) {
 }
 
 const ToggleButton = styled.button`
-  background: ${(props) => (props.isInLibrary ? '#CC1C1C' : 'var(--tertiary)')};
-  color: var(--background);
+  background: ${(props) =>
+    props.isRead ? 'var(--tertiary)' : 'var(--primary)'};
+  color: ${(props) => (props.isRead ? 'var(--background)' : 'black')};
   border: none;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)

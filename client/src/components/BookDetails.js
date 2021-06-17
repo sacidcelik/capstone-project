@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
+import UnreadReadButton from './UnreadReadButton';
 
 export default function BookDetails({ book, isStatic, onRemoveDetailView }) {
   return (
@@ -15,7 +16,7 @@ export default function BookDetails({ book, isStatic, onRemoveDetailView }) {
             width="128"
             height="192"
           />
-          <button>Unread</button>
+          <UnreadReadButton />
         </BookImage>
 
         <BookSpecs>
