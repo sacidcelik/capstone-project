@@ -12,7 +12,7 @@ export default function BookDetails({
   onAddRating,
 }) {
   return (
-    <DetailsCard>
+    <DetailsCard isStatic={isStatic}>
       <CloseButton
         src={CloseIcon}
         alt="Close Icon"
@@ -81,13 +81,13 @@ const DetailsCard = styled.article`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  height: 80vh;
+  height: ${(props) => (props.isStatic ? '650px' : '80vh')};
   margin: ${(props) => (props.isStatic ? '0 auto' : '50vh 50vw')};
   opacity: 0.95;
   padding: 1rem;
   position: ${(props) => (props.isStatic ? 'relative' : 'fixed')};
   transform: ${(props) => (props.isStatic ? '' : 'translate(-50%, -70%)')};
-  width: 90vw;
+  width: ${(props) => (props.isStatic ? '338px' : '90vw')};
   z-index: 100;
 `;
 
