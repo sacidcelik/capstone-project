@@ -58,8 +58,7 @@ export default function BookDetails({
         <LentWrapper>
           <p>Lent:</p>
           <div>
-            <input type="checkbox" />{' '}
-            <input type="name" placeholder="Name" value="" />
+            <input type="checkbox" /> <input type="name" placeholder="Name" />
             <input type="date" />
           </div>
         </LentWrapper>
