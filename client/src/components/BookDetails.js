@@ -2,11 +2,13 @@ import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
 import UnreadReadButton from './UnreadReadButton';
 
+import BookRating from './BookRating';
+
 export default function BookDetails({ book, isStatic, onRemoveDetailView }) {
   return (
     <DetailsCard onClick={onRemoveDetailView}>
       <BookInformation>
-        <BookImage>
+        <BookImageWrapper>
           <img
             src={
               book.volumeInfo?.imageLinks?.thumbnail ||
@@ -17,20 +19,24 @@ export default function BookDetails({ book, isStatic, onRemoveDetailView }) {
             height="192"
           />
           <UnreadReadButton />
-        </BookImage>
+        </BookImageWrapper>
 
         <BookSpecs>
           <BookTitle>{book.volumeInfo?.title}</BookTitle>
           {book.volumeInfo.subtitle && (
-            <BookSubTitle style={{ marginTop: '0.4rem' }}>
-              {book.volumeInfo.subtitle}
-            </BookSubTitle>
+            <BookSubTitle>{book.volumeInfo.subtitle}</BookSubTitle>
           )}
           <p>{book.volumeInfo?.authors?.[0]}</p>
           <p>Released: {book.volumeInfo?.publishedDate?.substring(0, 4)}</p>
           <p>ISBN: {book.volumeInfo?.industryIdentifiers[0]?.identifier}</p>
         </BookSpecs>
       </BookInformation>
+      <RatingWrapper>
+        <p>Rating: </p>
+        <RatingStarWrapper>
+          <BookRating />
+        </RatingStarWrapper>
+      </RatingWrapper>
     </DetailsCard>
   );
 }
@@ -42,6 +48,7 @@ const DetailsCard = styled.article`
   border-radius: var(--border-radius);
   box-shadow: 0 0 80px 80px rgba(0, 0, 0, 0.2);
   display: flex;
+  flex-direction: column;
   flex-wrap: nowrap;
   height: 80vh;
   margin: ${(props) => (props.isStatic ? '0 auto' : '50vh 50vw')};
@@ -56,14 +63,21 @@ const BookInformation = styled.section`
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  height: 40%;
   width: 100%;
 `;
 
-const BookImage = styled.div`
+const BookImageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
   width: 40%;
   height: 100%;
+
   img {
+    box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
+      var(--box-shadow-blur) var(--box-shadow-color);
   }
 `;
 
@@ -75,18 +89,28 @@ const BookSpecs = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
 
-  p:not(:first-child) {
+  p {
     margin-top: 0.8rem;
   }
 `;
 
-const BookTitle = styled.p`
+const BookTitle = styled.h2`
   font-size: 1.2rem;
   max-height: 4.1rem;
   overflow: hidden;
 `;
 
-const BookSubTitle = styled.p`
-  max-height: 2.4rem;
+const BookSubTitle = styled.h5`
+  max-height: 1.8rem;
   overflow: hidden;
+  margin: 0;
+  margin-top: 0.3rem;
+`;
+
+const RatingWrapper = styled.section`
+  margin-top: 1rem;
+`;
+
+const RatingStarWrapper = styled.div`
+  margin-top: 1rem;
 `;
