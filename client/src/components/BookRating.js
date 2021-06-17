@@ -1,7 +1,8 @@
 import Rating from 'react-rating';
-import { ReactComponent as RatingStar } from '../images/ratingStar.svg';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
+import { ReactComponent as RatingStar } from '../images/ratingStar.svg';
 export default function BookRating({ onAddRating, book }) {
   return (
     <Rating
@@ -19,3 +20,8 @@ const RatingStarFull = styled(RatingStar)`
     stroke: none;
   }
 `;
+
+BookRating.propTypes = {
+  onAddRating: PropTypes.func,
+  book: PropTypes.object,
+};

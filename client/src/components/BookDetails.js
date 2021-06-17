@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
 import UnreadReadButton from './UnreadReadButton';
+import CloseIcon from '../images/closeIcon.svg';
 
 import BookRating from './BookRating';
 
@@ -11,7 +12,12 @@ export default function BookDetails({
   onAddRating,
 }) {
   return (
-    <DetailsCard onClick={onRemoveDetailView}>
+    <DetailsCard>
+      <CloseButton
+        src={CloseIcon}
+        alt="Close Icon"
+        onClick={onRemoveDetailView}
+      />
       <BookInformation>
         <BookImageWrapper>
           <img
@@ -36,20 +42,40 @@ export default function BookDetails({
           <p>ISBN: {book.volumeInfo?.industryIdentifiers[0]?.identifier}</p>
         </BookSpecs>
       </BookInformation>
-      <RatingWrapper>
-        <p>Rating: </p>
-        <RatingStarWrapper>
-          <BookRating onAddRating={onAddRating} book={book} />
-        </RatingStarWrapper>
-      </RatingWrapper>
+      <BookSettings>
+        <RatingWrapper>
+          <p>Rating: </p>
+          <RatingStarWrapper>
+            <BookRating onAddRating={onAddRating} book={book} />
+          </RatingStarWrapper>
+        </RatingWrapper>
+        <LocationWrapper>
+          <p>Location:</p>
+          <div>
+            <p>Location will be added later</p>
+          </div>
+        </LocationWrapper>
+        <LentWrapper>
+          <p>Lent:</p>
+          <div>
+            <input type="checkbox" />{' '}
+            <input type="name" placeholder="Name" value="" />
+            <input type="date" />
+          </div>
+        </LentWrapper>
+        <NotesWrapper>
+          <p>Notes:</p>
+          <div>
+            <textarea placeholder="Notes" />
+          </div>
+        </NotesWrapper>
+      </BookSettings>
     </DetailsCard>
   );
 }
 
 const DetailsCard = styled.article`
   background-color: var(--background);
-  opacity: 0.98;
-  border: 3px solid white;
   border-radius: var(--border-radius);
   box-shadow: 0 0 80px 80px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -57,11 +83,18 @@ const DetailsCard = styled.article`
   flex-wrap: nowrap;
   height: 80vh;
   margin: ${(props) => (props.isStatic ? '0 auto' : '50vh 50vw')};
+  opacity: 0.95;
   padding: 1rem;
   position: ${(props) => (props.isStatic ? 'relative' : 'fixed')};
   transform: ${(props) => (props.isStatic ? '' : 'translate(-50%, -70%)')};
   width: 90vw;
   z-index: 100;
+`;
+
+const CloseButton = styled.img`
+  position: absolute;
+  right: -10px;
+  top: -10px;
 `;
 
 const BookInformation = styled.section`
@@ -72,13 +105,13 @@ const BookInformation = styled.section`
 `;
 
 const BookImageWrapper = styled.div`
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
   gap: 0.5rem;
-  width: 40%;
   height: 100%;
+  justify-content: flex-start;
+  width: 40%;
 
   img {
     box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
@@ -87,12 +120,12 @@ const BookImageWrapper = styled.div`
 `;
 
 const BookSpecs = styled.div`
-  width: 60%;
-  height: 100%;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
+  height: 100%;
   justify-content: flex-start;
-  align-items: flex-start;
+  width: 60%;
 
   p {
     margin-top: 0.8rem;
@@ -106,10 +139,20 @@ const BookTitle = styled.h2`
 `;
 
 const BookSubTitle = styled.h5`
-  max-height: 1.8rem;
-  overflow: hidden;
   margin: 0;
   margin-top: 0.3rem;
+  max-height: 1.8rem;
+  overflow: hidden;
+`;
+
+const BookSettings = styled.section`
+  input:not([type='checkbox']),
+  textarea {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
+      var(--box-shadow-blur) var(--box-shadow-color);
+  }
 `;
 
 const RatingWrapper = styled.section`
@@ -117,5 +160,58 @@ const RatingWrapper = styled.section`
 `;
 
 const RatingStarWrapper = styled.div`
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 `;
+
+const LocationWrapper = styled.section`
+  margin-top: 1rem;
+
+  div {
+    margin-top: 0.5rem;
+  }
+`;
+
+const LentWrapper = styled.section`
+  margin-top: 1rem;
+
+  div {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    width: 100%;
+
+    input {
+      height: 1.5rem;
+    }
+    input[type='checkbox'] {
+      transform: scale(1.5);
+    }
+    input[type='name'] {
+      width: 9rem;
+    }
+    input[type='date'] {
+      font-family: sans-serif;
+    }
+  }
+`;
+
+const NotesWrapper = styled.section`
+  margin-top: 1rem;
+  div {
+    margin-top: 0.5rem;
+
+    textarea {
+      height: 8rem;
+      resize: none;
+      width: 100%;
+    }
+  }
+`;
+
+BookDetails.propTypes = {
+  book: PropTypes.object,
+  onRemoveDetailView: PropTypes.func,
+  onAddRating: PropTypes.func,
+};

@@ -12,8 +12,6 @@ function App() {
   const [view, setView] = useState('');
   const [detailedBook, setDetailedBook] = useState({});
 
-  console.log(detailedBook);
-
   function toggleToAndFromLibrary(focusedBook) {
     isInLibrary(focusedBook)
       ? removeFromLibrary(focusedBook)
@@ -51,15 +49,13 @@ function App() {
   }
 
   function updateBook(property, value, bookToUpdate) {
-    const upToDateBooks = library.filter((book) => book.id !== bookToUpdate.id);
-    const upDatedBook = library.map((book) => {
+    const upDatedBooks = library.map((book) => {
       if (book.id === bookToUpdate.id) {
         book[property] = value;
       }
       return book;
     });
-    setLibrary(...upToDateBooks, upDatedBook);
-    console.log(library);
+    setLibrary(upDatedBooks);
   }
 
   function addRating(rating, bookToUpdate) {
