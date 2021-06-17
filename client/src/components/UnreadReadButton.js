@@ -23,5 +23,5 @@ const ToggleButton = styled.button`
   font-size: 1.2rem;
   height: 30px;
   padding: 0.32rem 0.5rem 0.3rem 0.5rem;
-  width: 128px;
+  width: 102px;
 `;

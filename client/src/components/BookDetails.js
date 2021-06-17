@@ -115,6 +115,8 @@ const BookImageWrapper = styled.div`
   img {
     box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
       var(--box-shadow-blur) var(--box-shadow-color);
+    width: 102px;
+    height: 154px;
   }
 `;
 
@@ -140,7 +142,7 @@ const BookTitle = styled.h2`
 const BookSubTitle = styled.h5`
   margin: 0;
   margin-top: 0.3rem;
-  max-height: 1.8rem;
+  max-height: 2rem;
   overflow: hidden;
 `;
 
@@ -198,11 +200,12 @@ const LentWrapper = styled.section`
 
 const NotesWrapper = styled.section`
   margin-top: 1rem;
+
   div {
     margin-top: 0.5rem;
 
     textarea {
-      height: 8rem;
+      height: 3rem;
       resize: none;
       width: 100%;
     }
