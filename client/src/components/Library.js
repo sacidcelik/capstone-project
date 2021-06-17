@@ -20,7 +20,7 @@ export default function Library({ library, isStatic, onRenderBookDetails }) {
               width="102.4"
               height="159.2"
             />
-            <p>{book.volumeInfo.title}</p>
+            <p>{book.volumeInfo?.title}</p>
           </BookCard>
         );
       })}

@@ -4,7 +4,12 @@ import UnreadReadButton from './UnreadReadButton';
 
 import BookRating from './BookRating';
 
-export default function BookDetails({ book, isStatic, onRemoveDetailView }) {
+export default function BookDetails({
+  book,
+  isStatic,
+  onRemoveDetailView,
+  onAddRating,
+}) {
   return (
     <DetailsCard onClick={onRemoveDetailView}>
       <BookInformation>
@@ -14,7 +19,7 @@ export default function BookDetails({ book, isStatic, onRemoveDetailView }) {
               book.volumeInfo?.imageLinks?.thumbnail ||
               book.volumeInfo?.imageLinks?.smallThumbnail
             }
-            alt={book.volumeInfo.title || 'Book Cover'}
+            alt={book.volumeInfo?.title || 'Book Cover'}
             width="128"
             height="192"
           />
@@ -34,7 +39,7 @@ export default function BookDetails({ book, isStatic, onRemoveDetailView }) {
       <RatingWrapper>
         <p>Rating: </p>
         <RatingStarWrapper>
-          <BookRating />
+          <BookRating onAddRating={onAddRating} book={book} />
         </RatingStarWrapper>
       </RatingWrapper>
     </DetailsCard>

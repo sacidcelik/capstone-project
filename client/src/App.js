@@ -36,12 +36,34 @@ function App() {
   }
 
   function renderBookDetails(book) {
-    return <BookDetails book={book} onRemoveDetailView={() => setView('')} />;
+    return (
+      <BookDetails
+        book={book}
+        onRemoveDetailView={() => setView('')}
+        onAddRating={addRating}
+      />
+    );
   }
 
   function renderBookDetailsHelper(book) {
     setDetailedBook(book);
     setView('details');
+  }
+
+  function updateBook(property, value, bookToUpdate) {
+    const upToDateBooks = library.filter((book) => book.id !== bookToUpdate.id);
+    const upDatedBook = library.map((book) => {
+      if (book.id === bookToUpdate.id) {
+        book[property] = value;
+      }
+      return book;
+    });
+    setLibrary(...upToDateBooks, upDatedBook);
+    console.log(library);
+  }
+
+  function addRating(rating, bookToUpdate) {
+    updateBook('rating', rating, bookToUpdate);
   }
 
   return (
