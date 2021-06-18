@@ -26,7 +26,7 @@ const NavWrapper = styled.footer`
   border-top: 1px solid var(--secondary);
   bottom: 0;
   display: flex;
-  height: 100px;
+  height: 70px;
   justify-content: space-around;
   margin: ${(props) => (props.isStatic ? 'auto' : '')};
   position: ${(props) => (props.isStatic ? 'static' : 'fixed')};
@@ -34,6 +34,8 @@ const NavWrapper = styled.footer`
 `;
 
 const HomeButtonStyled = styled(HomeButton)`
+  height: 50px;
+  width: 50px;
   .active & path {
     fill: var(--tertiary);
     stroke: none;
@@ -41,8 +43,8 @@ const HomeButtonStyled = styled(HomeButton)`
 `;
 
 const ShelfButtonStyled = styled(ShelfButton)`
-  height: 60px;
-  width: 70px;
+  height: 43px;
+  width: 50px;
   .active & path,
   .active & rect {
     fill: var(--tertiary);
@@ -54,6 +56,8 @@ const ShelfButtonStyled = styled(ShelfButton)`
 `;
 
 const BooksButtonStyled = styled(BooksButton)`
+  height: 54px;
+  width: 63px;
   .active & path {
     fill: var(--tertiary);
     stroke: none;
