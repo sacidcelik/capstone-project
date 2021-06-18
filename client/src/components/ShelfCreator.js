@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { useState } from 'react';
 
@@ -369,3 +370,7 @@ const SaveShelfButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
+ShelfCreator.propTypes = {
+  onSaveShelf: PropTypes.func,
+};
