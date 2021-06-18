@@ -11,6 +11,7 @@ const SaveButtonStyled = styled.button`
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
     var(--box-shadow-blur) var(--box-shadow-color);
-  padding: 0.3rem 0.5rem 0.33rem 0.5rem;
-  width: 80px;
+  font-size: 1rem;
+  padding: 0.5rem 0.5rem 0.53rem 0.5rem;
+  width: 95%;
 `;
