@@ -1,6 +1,9 @@
 import NavFooter from './components/NavFooter';
 import { Switch, Route } from 'react-router-dom';
 import { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import styled from 'styled-components';
+import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
 import MyShelves from './pages/MyShelves';
 import MyBooks from './pages/MyBooks';
@@ -69,6 +72,7 @@ function App() {
 
   return (
     <>
+      <StyledToastContainer />
       <Header />
       <Switch>
         <Route path="/home">
@@ -92,5 +96,10 @@ function App() {
     </>
   );
 }
+const StyledToastContainer = styled(ToastContainer)`
+  .Toastify__toast--success {
+    background-color: var(--tertiary);
+  }
+`;
 
 export default App;

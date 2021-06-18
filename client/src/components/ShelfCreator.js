@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { useState } from 'react';
-
+import { toast } from 'react-toastify';
 import getShelfBorders from '../lib/shelfBorders';
 import SaveButton from './SaveButton';
 import validateShelf from '../lib/validateShelf';
@@ -14,10 +14,8 @@ export default function ShelfCreator({ onSaveShelf }) {
   };
 
   const [shelf, setShelf] = useState(initialShelf);
-  const [isError, setIsError] = useState(false);
 
   function updateShelf(event) {
-    setIsError(false);
     const fieldName = event.target.name;
     let fieldValue = event.target.value;
     if (event.target.id === 'columns') {
@@ -33,6 +31,7 @@ export default function ShelfCreator({ onSaveShelf }) {
     }
 
     setShelf({ ...shelf, [fieldName]: fieldValue });
+    toast.dismiss();
   }
 
   function updateColumn(event, index) {
@@ -74,20 +73,23 @@ export default function ShelfCreator({ onSaveShelf }) {
     event.preventDefault();
     if (validateShelf(shelf)) {
       onSaveShelf(shelf);
+      toast.success('Shelf Added!', {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
       setShelf(initialShelf);
-      setIsError(false);
     } else {
-      setIsError(true);
+      toast.error(
+        'Please specifiy a name, the number of columns and a color.',
+        {
+          position: toast.POSITION.BOTTOM_CENTER,
+          toastId: 'validationError',
+        }
+      );
     }
   }
 
   return (
     <ShelfArea onSubmit={handleShelfSave}>
-      {isError && (
-        <ErrorBox>
-          <p>Please choose a name, mumber of columns and a color.</p>
-        </ErrorBox>
-      )}
       <ShelfStarter>
         <div>
           <label htmlFor="name">Name</label>
@@ -237,13 +239,6 @@ const ShelfArea = styled.form`
     border-radius: var(--border-radius);
     background: var(--background);
   }
-`;
-
-const ErrorBox = styled.div`
-  color: var(--background);
-  background-color: #cc1c1c;
-  border-radius: var(--border-radius);
-  padding: 1rem;
 `;
 
 const ShelfStarter = styled.section`
