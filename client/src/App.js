@@ -9,6 +9,7 @@ import BookDetails from './components/BookDetails';
 
 function App() {
   const [library, setLibrary] = useState([]);
+  const [shelves, setShelves] = useState([]);
   const [view, setView] = useState('');
   const [detailedBook, setDetailedBook] = useState({});
 
@@ -62,6 +63,11 @@ function App() {
     updateBook('rating', rating, bookToUpdate);
   }
 
+  function addShelf(shelf) {
+    setShelves([...shelves, shelf]);
+  }
+  console.log(shelves);
+
   return (
     <>
       <Header />
@@ -73,7 +79,7 @@ function App() {
           />
         </Route>
         <Route path="/myshelves">
-          <MyShelves />
+          <MyShelves onSaveShelf={addShelf} />
         </Route>
         <Route path="/mybooks">
           {view === 'details' && renderBookDetails(detailedBook)}

@@ -2,8 +2,10 @@ import styled from 'styled-components/macro';
 import { useState } from 'react';
 
 import getShelfBorders from '../lib/shelfBorders';
+import SaveButton from './SaveButton';
+import validateShelf from '../lib/validateShelf';
 
-export default function ShelfCreator() {
+export default function ShelfCreator({ onSaveShelf }) {
   const initialShelf = {
     name: '',
     columns: [],
@@ -11,6 +13,7 @@ export default function ShelfCreator() {
   };
 
   const [shelf, setShelf] = useState(initialShelf);
+  const [isError, setIsError] = useState(false);
 
   function updateShelf(event) {
     const fieldName = event.target.name;
@@ -65,8 +68,20 @@ export default function ShelfCreator() {
     else return 100;
   }
 
+  function handleShelfSave(event) {
+    event.preventDefault();
+    if (validateShelf(shelf)) {
+      onSaveShelf(shelf);
+      setShelf(initialShelf);
+      setIsError(false);
+    } else {
+      setIsError(true);
+    }
+  }
+
   return (
-    <ShelfArea>
+    <ShelfArea onSubmit={handleShelfSave}>
+      {isError && <ErrorBox>There is an error with your data</ErrorBox>}
       <ShelfStarter>
         <div>
           <label htmlFor="name">Name</label>
@@ -85,6 +100,7 @@ export default function ShelfCreator() {
             name="columns"
             id="columns"
             onChange={updateShelf}
+            value={shelf.columns.length}
             data-testid="column-picker"
           >
             <option value="0">-Columns-</option>
@@ -197,11 +213,14 @@ export default function ShelfCreator() {
           </SubShelf>
         ))}
       </ShelfPreview>
+      <SaveShelfButtonWrapper>
+        {shelf.columns.length >= 1 && <SaveButton />}
+      </SaveShelfButtonWrapper>
     </ShelfArea>
   );
 }
 
-const ShelfArea = styled.section`
+const ShelfArea = styled.form`
   height: 100%;
   margin: 1rem auto 9rem;
   width: 95%;
@@ -213,6 +232,14 @@ const ShelfArea = styled.section`
     background: var(--background);
   }
 `;
+
+const ErrorBox = styled.div`
+  background-color: red;
+  border-radius: 10px;
+  padding: 1rem;
+  color: white;
+`;
+
 const ShelfStarter = styled.section`
   display: flex;
   justify-content: space-around;
@@ -330,4 +357,10 @@ const Compartment = styled.div`
     border-bottom: 3px solid var(--background);
     border-top: none;
   }
+`;
+
+const SaveShelfButtonWrapper = styled.div`
+  width: 95%;
+  display: flex;
+  justify-content: flex-end;
 `;
