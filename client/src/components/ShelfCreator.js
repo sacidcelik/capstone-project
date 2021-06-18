@@ -16,6 +16,7 @@ export default function ShelfCreator({ onSaveShelf }) {
   const [isError, setIsError] = useState(false);
 
   function updateShelf(event) {
+    setIsError(false);
     const fieldName = event.target.name;
     let fieldValue = event.target.value;
     if (event.target.id === 'columns') {
@@ -81,7 +82,11 @@ export default function ShelfCreator({ onSaveShelf }) {
 
   return (
     <ShelfArea onSubmit={handleShelfSave}>
-      {isError && <ErrorBox>There is an error with your data</ErrorBox>}
+      {isError && (
+        <ErrorBox>
+          <p>Please choose a name, mumber of columns and a color.</p>
+        </ErrorBox>
+      )}
       <ShelfStarter>
         <div>
           <label htmlFor="name">Name</label>
@@ -234,10 +239,10 @@ const ShelfArea = styled.form`
 `;
 
 const ErrorBox = styled.div`
-  background-color: red;
-  border-radius: 10px;
+  color: var(--background);
+  background-color: #cc1c1c;
+  border-radius: var(--border-radius);
   padding: 1rem;
-  color: white;
 `;
 
 const ShelfStarter = styled.section`
