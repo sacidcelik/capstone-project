@@ -42,7 +42,7 @@ function App() {
       />
     );
   }
-  console.log(detailedBook);
+
   function renderBookDetailsHelper(book) {
     setDetailedBook(book);
     setView('details');
