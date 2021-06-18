@@ -23,7 +23,7 @@ describe('Use the Navigation', () => {
     cy.visit('/home');
     cy.get('[href="/mybooks"]').click();
     cy.url().should('include', '/mybooks');
-    cy.get('[href="/home"]').click();
+    cy.get('[href="/home"]').first().click();
     cy.url().should('include', '/home');
     cy.get('h2').should('contain', 'Home');
   });

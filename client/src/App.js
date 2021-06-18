@@ -5,9 +5,12 @@ import Home from './pages/Home';
 import MyShelves from './pages/MyShelves';
 import MyBooks from './pages/MyBooks';
 import Header from './components/Header';
+import BookDetails from './components/BookDetails';
 
 function App() {
   const [library, setLibrary] = useState([]);
+  const [view, setView] = useState('');
+  const [detailedBook, setDetailedBook] = useState({});
 
   function toggleToAndFromLibrary(focusedBook) {
     isInLibrary(focusedBook)
@@ -30,6 +33,35 @@ function App() {
     return library.find((book) => book.id === focusedBook.id);
   }
 
+  function renderBookDetails(book) {
+    return (
+      <BookDetails
+        book={book}
+        onRemoveDetailView={() => setView('')}
+        onAddRating={addRating}
+      />
+    );
+  }
+
+  function renderBookDetailsHelper(book) {
+    setDetailedBook(book);
+    setView('details');
+  }
+
+  function updateBook(property, value, bookToUpdate) {
+    const upDatedBooks = library.map((book) => {
+      if (book.id === bookToUpdate.id) {
+        book[property] = value;
+      }
+      return book;
+    });
+    setLibrary(upDatedBooks);
+  }
+
+  function addRating(rating, bookToUpdate) {
+    updateBook('rating', rating, bookToUpdate);
+  }
+
   return (
     <>
       <Header />
@@ -44,7 +76,11 @@ function App() {
           <MyShelves />
         </Route>
         <Route path="/mybooks">
-          <MyBooks library={library} />
+          {view === 'details' && renderBookDetails(detailedBook)}
+          <MyBooks
+            library={library}
+            onRenderBookDetails={renderBookDetailsHelper}
+          />
         </Route>
       </Switch>
       <NavFooter />
