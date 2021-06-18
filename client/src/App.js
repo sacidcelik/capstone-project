@@ -66,7 +66,6 @@ function App() {
   function addShelf(shelf) {
     setShelves([...shelves, shelf]);
   }
-  console.log(shelves);
 
   return (
     <>
