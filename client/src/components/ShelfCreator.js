@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import Shelf from './Shelf';
-import SaveButton from './SaveButton';
+import SaveAddButton from './SaveAddButton';
 import validateShelf from '../lib/validateShelf';
 
 export default function ShelfCreator({ onSaveShelf }) {
@@ -183,7 +183,7 @@ export default function ShelfCreator({ onSaveShelf }) {
         <Shelf shelf={shelf} />
       </ShelfPreview>
       <SaveShelfButtonWrapper>
-        {shelf.columns.length >= 1 && <SaveButton />}
+        {shelf.columns.length >= 1 && <SaveAddButton text={'Save Shelf'} />}
       </SaveShelfButtonWrapper>
     </ShelfArea>
   );

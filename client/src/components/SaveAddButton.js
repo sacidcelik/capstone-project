@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export default function SaveButton() {
-  return <SaveButtonStyled data-testid="save-button">Save</SaveButtonStyled>;
+export default function SaveButton({ text }) {
+  return <SaveButtonStyled data-testid="save-button">{text}</SaveButtonStyled>;
 }
 
 const SaveButtonStyled = styled.button`

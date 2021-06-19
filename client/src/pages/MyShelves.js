@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Shelf from '../components/Shelf';
 import ShelfCreator from '../components/ShelfCreator';
+import SaveAddButton from '../components/SaveAddButton';
 import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
 import { ReactComponent as ForwardArrow } from '../images/arrowForward.svg';
 
@@ -48,16 +49,20 @@ export default function MyShelves({ onSaveShelf, shelves }) {
           </ShelfWrapper>
         </>
       )}
-
+      <SaveAddButton text={'Add New Shelf'} />
       <ShelfCreator onSaveShelf={onSaveShelf} />
     </ShelfPage>
   );
 }
 
-const ShelfPage = styled.main``;
+const ShelfPage = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const ShelfNav = styled.div`
-  margin: 1rem auto;
+  margin: 1rem auto 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -78,7 +83,7 @@ const ShelfWrapper = styled.article`
   display: flex;
   gap: 1px;
   justify-content: center;
-  margin: 1rem auto;
+  margin: 0 auto 1rem;
   height: 50vh;
-  width: 90vw;
+  width: 95%;
 `;
