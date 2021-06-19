@@ -60,16 +60,17 @@ const ShelfNav = styled.div`
   margin: 1rem auto;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
-  width: 90vw;
+  width: 60vw;
 `;
 
 const BackArrowStyled = styled(BackArrow)`
-  display: ${(props) => (props.isActive ? '' : 'none')};
+  visibility: ${(props) => (props.isActive ? '' : 'hidden')};
 `;
 
 const ForwardArrowStyled = styled(ForwardArrow)`
-  display: ${(props) => (props.isActive ? '' : 'none')};
+  visibility: ${(props) => (props.isActive ? '' : 'hidden')};
 `;
 
 const ShelfWrapper = styled.article`
