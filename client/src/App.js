@@ -82,7 +82,7 @@ function App() {
           />
         </Route>
         <Route path="/myshelves">
-          <MyShelves onSaveShelf={addShelf} />
+          <MyShelves onSaveShelf={addShelf} shelves={shelves} />
         </Route>
         <Route path="/mybooks">
           {view === 'details' && renderBookDetails(detailedBook)}
