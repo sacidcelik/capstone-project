@@ -9,6 +9,7 @@ import MyShelves from './pages/MyShelves';
 import MyBooks from './pages/MyBooks';
 import Header from './components/Header';
 import BookDetails from './components/BookDetails';
+import CreateShelf from './pages/CreateShelf';
 
 function App() {
   const [library, setLibrary] = useState([]);
@@ -81,7 +82,7 @@ function App() {
             isInLibrary={isInLibrary}
           />
         </Route>
-        <Route path="/myshelves">
+        <Route exact path="/myshelves">
           <MyShelves onSaveShelf={addShelf} shelves={shelves} />
         </Route>
         <Route path="/mybooks">
@@ -90,6 +91,9 @@ function App() {
             library={library}
             onRenderBookDetails={renderBookDetailsHelper}
           />
+        </Route>
+        <Route path="/myshelves/createshelf">
+          <CreateShelf onSaveShelf={addShelf} />
         </Route>
       </Switch>
       <NavFooter />

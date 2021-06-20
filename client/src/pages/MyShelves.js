@@ -1,13 +1,12 @@
 import { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Shelf from '../components/Shelf';
-import ShelfCreator from '../components/ShelfCreator';
 import SaveAddButton from '../components/SaveAddButton';
 import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
 import { ReactComponent as ForwardArrow } from '../images/arrowForward.svg';
 
-export default function MyShelves({ onSaveShelf, shelves }) {
+export default function MyShelves({ shelves }) {
   const [shelfIndex, setShelfIndex] = useState(0);
 
   function goForward() {
@@ -28,7 +27,9 @@ export default function MyShelves({ onSaveShelf, shelves }) {
   return (
     <ShelfPage>
       <h2>My Shelves</h2>
-      {shelves.length < 1 && <h3>You currently have no shelves.</h3>}
+      {shelves.length < 1 && (
+        <NoShelvesMessage>You currently have no shelves.</NoShelvesMessage>
+      )}
       {shelves.length >= 1 && (
         <>
           <ShelfNav>
@@ -49,8 +50,9 @@ export default function MyShelves({ onSaveShelf, shelves }) {
           </ShelfWrapper>
         </>
       )}
-      <SaveAddButton text={'Add New Shelf'} />
-      <ShelfCreator onSaveShelf={onSaveShelf} />
+      <Link to="/myshelves/createshelf">
+        <SaveAddButton text={'Add New Shelf'} />
+      </Link>
     </ShelfPage>
   );
 }
@@ -59,6 +61,17 @@ const ShelfPage = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  a {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    width: 100%;
+  }
+`;
+
+const NoShelvesMessage = styled.p`
+  margin: 1rem;
 `;
 
 const ShelfNav = styled.div`
@@ -84,6 +97,6 @@ const ShelfWrapper = styled.article`
   gap: 1px;
   justify-content: center;
   margin: 0 auto 1rem;
-  height: 50vh;
+  height: 55vh;
   width: 95%;
 `;
