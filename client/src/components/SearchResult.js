@@ -1,16 +1,26 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
+import { useState } from 'react';
 
 import AddAndRemoveButton from './AddAndRemoveButton';
+import ShelfSelector from './ShelfSelector';
 
 export default function SearchResult({
   searchedBooks,
   isStatic,
   onToggleToAndFromLibrary,
   isInLibrary,
+  shelves,
 }) {
+  const [isSelector, setIsSelector] = useState(false);
+
+  function updateSelector(bool) {
+    setIsSelector(bool);
+  }
+
   return (
     <SearchResultSection isStatic={isStatic}>
+      {isSelector && <ShelfSelector shelves={shelves} />}
       {searchedBooks.map((book, index) => (
         <SearchResultCard
           key={index}
@@ -33,6 +43,7 @@ export default function SearchResult({
           <AddAndRemoveButton
             onToggleToAndFromLibrary={() => onToggleToAndFromLibrary(book)}
             isInLibrary={isInLibrary(book)}
+            onSetIsSelector={updateSelector}
           />
         </SearchResultCard>
       ))}

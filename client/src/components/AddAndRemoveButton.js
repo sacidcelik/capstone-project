@@ -4,11 +4,16 @@ import styled from 'styled-components';
 export default function AddAndRemoveButton({
   onToggleToAndFromLibrary,
   isInLibrary,
+  onSetIsSelector,
 }) {
+  function handleClick() {
+    onToggleToAndFromLibrary();
+    isInLibrary ? onSetIsSelector(() => false) : onSetIsSelector(() => true);
+  }
   return (
     <ToggleButton
       data-testid="add-and-remove-button"
-      onClick={onToggleToAndFromLibrary}
+      onClick={handleClick}
       isInLibrary={isInLibrary}
     >
       {isInLibrary ? 'Remove' : 'Add'}

@@ -47,7 +47,7 @@ function App() {
       />
     );
   }
-
+  console.log(shelves);
   function renderBookDetailsHelper(book) {
     setDetailedBook(book);
     setView('details');
@@ -80,6 +80,7 @@ function App() {
           <Home
             onToggleToAndFromLibrary={toggleToAndFromLibrary}
             isInLibrary={isInLibrary}
+            shelves={shelves}
           />
         </Route>
         <Route exact path="/myshelves">
