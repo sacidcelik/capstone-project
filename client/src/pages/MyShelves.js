@@ -34,7 +34,7 @@ export default function MyShelves({ shelves }) {
       )}
       {shelves.length >= 1 && (
         <>
-          <ShelfNav>
+          <ShelfNav data-testId="shelves-nav">
             <BackArrowStyled
               title="Go Back"
               onClick={() => goBackward()}

@@ -2,7 +2,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 export default function SaveAddButton({ text }) {
-  return <SaveButtonStyled data-testid="save-button">{text}</SaveButtonStyled>;
+  return (
+    <SaveButtonStyled data-testid="save-add-button">{text}</SaveButtonStyled>
+  );
 }
 
 const SaveButtonStyled = styled.button`

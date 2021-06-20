@@ -13,7 +13,7 @@ export default function CreateShelf({ onSaveShelf }) {
 
   return (
     <CreateShelfPage>
-      <BackNav onClick={handleRoute}>
+      <BackNav onClick={handleRoute} data-testid="back-to-shelves">
         <BackArrow /> <p>Back</p>
       </BackNav>
       <h3>Create New Shelf</h3>

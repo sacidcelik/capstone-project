@@ -82,6 +82,7 @@ export default function ShelfCreator({ onSaveShelf }) {
             placeholder="Name your shelf"
             value={shelf.name}
             onChange={updateShelf}
+            data-testid="name-picker"
           />
         </div>
         <div>
