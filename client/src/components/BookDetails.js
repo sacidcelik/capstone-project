@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
+import styled from 'styled-components/macro';
 import UnreadReadButton from './UnreadReadButton';
 import CloseIcon from '../images/closeIcon.svg';
 

@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect, useRef, useState } from 'react';
 
+import getBooks from '../services/getDataFromAPI';
 import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
-import getBooks from '../services/getDataFromAPI';
 
 export default function GlobalSearch({
   onToggleToAndFromLibrary,

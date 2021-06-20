@@ -1,6 +1,8 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useState } from 'react';
+
 import Shelf from '../components/Shelf';
 import SaveAddButton from '../components/SaveAddButton';
 import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
@@ -58,9 +60,9 @@ export default function MyShelves({ shelves }) {
 }
 
 const ShelfPage = styled.main`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 
   a {
     display: flex;
@@ -75,11 +77,11 @@ const NoShelvesMessage = styled.p`
 `;
 
 const ShelfNav = styled.nav`
-  margin: 1rem auto 0.5rem;
-  display: flex;
   align-items: center;
-  justify-content: space-between;
+  display: flex;
   gap: 1rem;
+  justify-content: space-between;
+  margin: 1rem auto 0.5rem;
   width: 60vw;
 `;
 
@@ -95,8 +97,12 @@ const ShelfWrapper = styled.article`
   align-items: flex-end;
   display: flex;
   gap: 1px;
+  height: 55vh;
   justify-content: center;
   margin: 0 auto 1rem;
-  height: 55vh;
   width: 95%;
 `;
+
+MyShelves.propTypes = {
+  shelves: PropTypes.array,
+};

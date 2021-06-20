@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
+import styled from 'styled-components/macro';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
 import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
 import ShelfCreator from '../components/ShelfCreator';
 
@@ -29,7 +30,11 @@ const CreateShelfPage = styled.main`
 
 const BackNav = styled.nav`
   display: flex;
-  width: 95%;
-  margin: 0 auto;
   gap: 0.5rem;
+  margin: 0 auto;
+  width: 95%;
 `;
+
+CreateShelf.propTypes = {
+  onSaveShelf: PropTypes.func,
+};

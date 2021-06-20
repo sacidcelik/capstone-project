@@ -63,4 +63,5 @@ const BookCard = styled.article`
 
 Library.propTypes = {
   library: PropTypes.array,
+  onRenderBookDetails: PropTypes.func,
 };

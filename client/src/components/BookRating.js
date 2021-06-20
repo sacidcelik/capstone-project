@@ -1,5 +1,5 @@
-import Rating from 'react-rating';
 import PropTypes from 'prop-types';
+import Rating from 'react-rating';
 import styled from 'styled-components/macro';
 
 import { ReactComponent as RatingStar } from '../images/ratingStar.svg';
