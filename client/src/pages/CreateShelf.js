@@ -27,7 +27,7 @@ const CreateShelfPage = styled.main`
   }
 `;
 
-const BackNav = styled.div`
+const BackNav = styled.nav`
   display: flex;
   width: 95%;
   margin: 0 auto;

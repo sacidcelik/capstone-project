@@ -74,7 +74,7 @@ const NoShelvesMessage = styled.p`
   margin: 1rem;
 `;
 
-const ShelfNav = styled.div`
+const ShelfNav = styled.nav`
   margin: 1rem auto 0.5rem;
   display: flex;
   align-items: center;
