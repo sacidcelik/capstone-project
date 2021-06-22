@@ -47,7 +47,7 @@ function App() {
       />
     );
   }
-  console.log(shelves);
+
   function renderBookDetailsHelper(book) {
     setDetailedBook(book);
     setView('details');

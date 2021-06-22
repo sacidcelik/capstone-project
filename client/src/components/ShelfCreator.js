@@ -44,7 +44,7 @@ export default function ShelfCreator({ onSaveShelf }) {
     if (event.target.id === 'compartments') {
       fieldValue = [];
       for (let i = 0; i < event.target.value; i++) {
-        fieldValue.push({ compartment: i + 1 });
+        fieldValue.push({ compartment: i + 1, id: uuidv4() });
       }
     }
     newShelf.columns[index] = {

@@ -13,41 +13,49 @@ export default function SearchResult({
   shelves,
 }) {
   const [isSelector, setIsSelector] = useState(false);
+  const [selectedBook, setSelectedBook] = useState({});
 
   function updateSelector(bool) {
     setIsSelector(bool);
   }
 
-  return (
-    <SearchResultSection isStatic={isStatic}>
-      {isSelector && <ShelfSelector shelves={shelves} />}
-      {searchedBooks.map((book, index) => (
-        <SearchResultCard
-          key={index}
-          isStatic={isStatic}
-          data-testid="search-result"
-        >
-          <img
-            src={book.volumeInfo?.imageLinks?.thumbnail}
-            width="58"
-            height="90"
-            alt={book.volumeInfo.title || 'Book Cover'}
-          />
-          <BookInfo>
-            <BookTitle>
-              <p>{book.volumeInfo?.title}</p>
-            </BookTitle>
+  function provideBook(book) {
+    setSelectedBook(book);
+  }
 
-            <p>{book.volumeInfo?.authors?.[0]}</p>
-          </BookInfo>
-          <AddAndRemoveButton
-            onToggleToAndFromLibrary={() => onToggleToAndFromLibrary(book)}
-            isInLibrary={isInLibrary(book)}
-            onSetIsSelector={updateSelector}
-          />
-        </SearchResultCard>
-      ))}
-    </SearchResultSection>
+  return (
+    <>
+      {isSelector && <ShelfSelector shelves={shelves} book={selectedBook} />}
+      <SearchResultSection isStatic={isStatic}>
+        {searchedBooks.map((book, index) => (
+          <SearchResultCard
+            key={index}
+            isStatic={isStatic}
+            data-testid="search-result"
+          >
+            <img
+              src={book.volumeInfo?.imageLinks?.thumbnail}
+              width="58"
+              height="90"
+              alt={book.volumeInfo.title || 'Book Cover'}
+            />
+            <BookInfo>
+              <BookTitle>
+                <p>{book.volumeInfo?.title}</p>
+              </BookTitle>
+
+              <p>{book.volumeInfo?.authors?.[0]}</p>
+            </BookInfo>
+            <AddAndRemoveButton
+              onToggleToAndFromLibrary={() => onToggleToAndFromLibrary(book)}
+              isInLibrary={isInLibrary(book)}
+              onSetIsSelector={updateSelector}
+              onProvideBook={() => provideBook(book)}
+            />
+          </SearchResultCard>
+        ))}
+      </SearchResultSection>
+    </>
   );
 }
 

@@ -5,11 +5,14 @@ export default function AddAndRemoveButton({
   onToggleToAndFromLibrary,
   isInLibrary,
   onSetIsSelector,
+  onProvideBook,
 }) {
   function handleClick() {
     onToggleToAndFromLibrary();
     isInLibrary ? onSetIsSelector(() => false) : onSetIsSelector(() => true);
+    onProvideBook();
   }
+
   return (
     <ToggleButton
       data-testid="add-and-remove-button"
