@@ -93,16 +93,20 @@ function App() {
   }
 
   function getBookLocation(book) {
-    const shelf = shelves.find(
-      (shelf) => shelf.id === book.shelfLocation.bookshelf
-    );
-    const column = shelf.columns.find(
-      (column) => column.id === book.shelfLocation.column
-    );
-    const compartment = column.compartments.find(
-      (compartment) => compartment.id === book.shelfLocation.compartment
-    );
-    return `${shelf.name}, Column ${column.column}, Compartment ${compartment.compartment}`;
+    if (book.shelfLocation) {
+      const shelf = shelves.find(
+        (shelf) => shelf.id === book.shelfLocation.bookshelf
+      );
+      const column = shelf.columns.find(
+        (column) => column.id === book.shelfLocation.column
+      );
+      const compartment = column.compartments.find(
+        (compartment) => compartment.id === book.shelfLocation.compartment
+      );
+      return `${shelf.name}, Column ${column.column}, Compartment ${compartment.compartment}`;
+    } else {
+      return `Not stored in a shelf.`;
+    }
   }
 
   function renderBookDetails(book) {
