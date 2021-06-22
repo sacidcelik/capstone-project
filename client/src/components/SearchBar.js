@@ -10,7 +10,7 @@ export default function SearchBar({ query, setSearchQuery, focusSearch }) {
         value={query}
         onChange={(e) => setSearchQuery(e.target.value)}
         ref={focusSearch}
-        data-testid="search-bar"
+        data-test-id="search-bar"
       />
     </SearchWrapper>
   );

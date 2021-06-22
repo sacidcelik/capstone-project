@@ -29,7 +29,7 @@ export default function Shelf({ shelf }) {
         shelfHeight={shelfHeight(index)}
         child={index}
         getColor={getShelfBorders(shelf.color)}
-        data-testid="column"
+        data-test-id="column"
       >
         {column.compartments &&
           column.compartments.length > 0 &&
@@ -38,7 +38,7 @@ export default function Shelf({ shelf }) {
               <Compartment
                 key={'compartment' + index}
                 getColor={getShelfBorders(shelf.color)}
-                data-testid="compartment"
+                data-test-id="compartment"
               />
             );
           })}

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /// <reference types='Cypress' />
 
-const testId = (id) => `[data-testid="${id}"]`;
+const testId = (id) => `[data-test-id="${id}"]`;
 const COLUMN = testId('column');
 const COMPARTMENT = testId('compartment');
 const NAME_PICKER = testId('name-picker');

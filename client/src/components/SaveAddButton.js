@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export default function SaveAddButton({ text }) {
   return (
-    <SaveButtonStyled data-testid="save-add-button">{text}</SaveButtonStyled>
+    <SaveButtonStyled data-test-id="save-add-button">{text}</SaveButtonStyled>
   );
 }
 
