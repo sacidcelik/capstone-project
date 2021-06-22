@@ -4,7 +4,12 @@ import styled from 'styled-components';
 import SaveAddButton from './SaveAddButton';
 import CloseIcon from '../images/closeIcon.svg';
 
-export default function ShelfSelector({ shelves, book }) {
+export default function ShelfSelector({
+  shelves,
+  book,
+  onSetIsSelector,
+  onSelectShelf,
+}) {
   const initialSelection = {
     bookshelf: '',
     column: '',
@@ -40,9 +45,19 @@ export default function ShelfSelector({ shelves, book }) {
     setSelection({ ...selection, compartment: event.target.value });
   }
 
+  function handleSelectionSave(event) {
+    event.preventDefault();
+    onSelectShelf(selection, book);
+    onSetIsSelector(false);
+  }
+
   return (
     <ShelfSelectorCard>
-      <CloseButton src={CloseIcon} alt="Close Icon" />
+      <CloseButton
+        src={CloseIcon}
+        alt="Close Icon"
+        onClick={() => onSetIsSelector(false)}
+      />
       <BookInformation>
         <BookImageWrapper>
           <img
@@ -66,63 +81,65 @@ export default function ShelfSelector({ shelves, book }) {
           <p>ISBN: {book.volumeInfo?.industryIdentifiers[0]?.identifier}</p>
         </BookSpecs>
       </BookInformation>
-      <ShelfPicker>
-        <div>
-          <label htmlFor="bookshelf">Bookshelf</label>
-          <select
-            name="bookshelf"
-            id="bookshelf"
-            onChange={handleBookShelfChange}
-            value={selection.bookshelf}
-          >
-            <option value="">-Select-</option>
-            {shelves.length > 0 &&
-              shelves.map((shelf, index) => (
-                <option key={index} value={shelf.id}>
-                  {shelf.name}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="column">Column</label>
-          <select
-            name="column"
-            id="column"
-            onChange={handleColumnChange}
-            value={selection.column}
-          >
-            <option value="">-Select-</option>
-            {shelfIndex !== null &&
-              shelves[shelfIndex].columns.map((column, index) => (
-                <option key={index} value={column.id}>
-                  {column.column}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="compartment">Compartment</label>
-          <select
-            name="compartment"
-            id="compartment"
-            value={selection.compartment}
-            onChange={handleCompartmentChange}
-          >
-            <option value="">-Select-</option>
-            {shelfIndex !== null &&
-              columnIndex !== null &&
-              shelves[shelfIndex].columns[columnIndex].compartments.map(
-                (compartment, index) => (
-                  <option key={index} value={compartment.id}>
-                    {compartment.compartment}
+      <ShelfSelectorForm onSubmit={handleSelectionSave}>
+        <ShelfPicker>
+          <div>
+            <label htmlFor="bookshelf">Bookshelf</label>
+            <select
+              name="bookshelf"
+              id="bookshelf"
+              onChange={handleBookShelfChange}
+              value={selection.bookshelf}
+            >
+              <option value="">-Select-</option>
+              {shelves.length > 0 &&
+                shelves.map((shelf, index) => (
+                  <option key={index} value={shelf.id}>
+                    {shelf.name}
                   </option>
-                )
-              )}
-          </select>
-        </div>
-      </ShelfPicker>
-      <SaveAddButton text={'Save'} />
+                ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="column">Column</label>
+            <select
+              name="column"
+              id="column"
+              onChange={handleColumnChange}
+              value={selection.column}
+            >
+              <option value="">-Select-</option>
+              {shelfIndex !== null &&
+                shelves[shelfIndex].columns.map((column, index) => (
+                  <option key={index} value={column.id}>
+                    {column.column}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="compartment">Compartment</label>
+            <select
+              name="compartment"
+              id="compartment"
+              value={selection.compartment}
+              onChange={handleCompartmentChange}
+            >
+              <option value="">-Select-</option>
+              {shelfIndex !== null &&
+                columnIndex !== null &&
+                shelves[shelfIndex].columns[columnIndex].compartments.map(
+                  (compartment, index) => (
+                    <option key={index} value={compartment.id}>
+                      {compartment.compartment}
+                    </option>
+                  )
+                )}
+            </select>
+          </div>
+        </ShelfPicker>
+        <SaveAddButton text={'Save'} />
+      </ShelfSelectorForm>
     </ShelfSelectorCard>
   );
 }
@@ -157,9 +174,11 @@ const CloseButton = styled.img`
   right: -10px;
   top: -10px;
 `;
-const ShelfPicker = styled.form`
+
+const ShelfSelectorForm = styled.form`
   display: flex;
   justify-content: space-around;
+  flex-direction: column;
   margin: 1rem 0 1rem;
   width: 100%;
 
@@ -175,6 +194,11 @@ const ShelfPicker = styled.form`
       var(--box-shadow-blur) var(--box-shadow-color);
     height: 2rem;
   }
+`;
+const ShelfPicker = styled.section`
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
 `;
 
 const BookInformation = styled.section`

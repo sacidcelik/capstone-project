@@ -5,6 +5,7 @@ export default function Home({
   onToggleToAndFromLibrary,
   isInLibrary,
   shelves,
+  onSelectShelf,
 }) {
   return (
     <main>
@@ -13,6 +14,7 @@ export default function Home({
         onToggleToAndFromLibrary={onToggleToAndFromLibrary}
         isInLibrary={isInLibrary}
         shelves={shelves}
+        onSelectShelf={onSelectShelf}
       />
     </main>
   );

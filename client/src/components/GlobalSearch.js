@@ -9,6 +9,7 @@ export default function GlobalSearch({
   onToggleToAndFromLibrary,
   isInLibrary,
   shelves,
+  onSelectShelf,
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchedBooks, setSearchedBooks] = useState([]);
@@ -54,6 +55,7 @@ export default function GlobalSearch({
         onToggleToAndFromLibrary={onToggleToAndFromLibrary}
         isInLibrary={isInLibrary}
         shelves={shelves}
+        onSelectShelf={onSelectShelf}
       />
     </>
   );

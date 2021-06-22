@@ -11,6 +11,7 @@ export default function SearchResult({
   onToggleToAndFromLibrary,
   isInLibrary,
   shelves,
+  onSelectShelf,
 }) {
   const [isSelector, setIsSelector] = useState(false);
   const [selectedBook, setSelectedBook] = useState({});
@@ -25,7 +26,14 @@ export default function SearchResult({
 
   return (
     <>
-      {isSelector && <ShelfSelector shelves={shelves} book={selectedBook} />}
+      {isSelector && (
+        <ShelfSelector
+          shelves={shelves}
+          book={selectedBook}
+          onSetIsSelector={updateSelector}
+          onSelectShelf={onSelectShelf}
+        />
+      )}
       <SearchResultSection isStatic={isStatic}>
         {searchedBooks.map((book, index) => (
           <SearchResultCard

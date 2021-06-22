@@ -48,19 +48,49 @@ function App() {
     );
   }
 
+  console.log(library);
+  console.log(shelves);
+
   function renderBookDetailsHelper(book) {
     setDetailedBook(book);
     setView('details');
   }
 
   function updateBook(property, value, bookToUpdate) {
-    const upDatedBooks = library.map((book) => {
+    const updatedBooks = library.map((book) => {
       if (book.id === bookToUpdate.id) {
         book[property] = value;
       }
       return book;
     });
-    setLibrary(upDatedBooks);
+    setLibrary(updatedBooks);
+  }
+
+  function updateBooksInCompartment(property, selection, book) {
+    const updatedShelves = shelves.map((shelf) => {
+      if (shelf.id === selection.bookshelf) {
+        console.log(shelf);
+        shelf.columns.map((column) => {
+          if (column.id === selection.column) {
+            column.compartments.map((compartment) => {
+              if (compartment.id === selection.compartment) {
+                let existingBooks;
+                compartment[property]
+                  ? (existingBooks = [compartment[property]])
+                  : (existingBooks = '');
+                existingBooks === ''
+                  ? (compartment[property] = book.id)
+                  : (compartment[property] = [...existingBooks, book.id]);
+              }
+              return compartment;
+            });
+          }
+          return column;
+        });
+      }
+      return shelf;
+    });
+    setShelves(updatedShelves);
   }
 
   function addRating(rating, bookToUpdate) {
@@ -69,6 +99,11 @@ function App() {
 
   function addShelf(shelf) {
     setShelves([...shelves, shelf]);
+  }
+
+  function addRefToBookAndShelf(location, bookToUpdate) {
+    updateBook('shelfLocation', location, bookToUpdate);
+    updateBooksInCompartment('storedBooks', location, bookToUpdate);
   }
 
   return (
@@ -81,6 +116,7 @@ function App() {
             onToggleToAndFromLibrary={toggleToAndFromLibrary}
             isInLibrary={isInLibrary}
             shelves={shelves}
+            onSelectShelf={addRefToBookAndShelf}
           />
         </Route>
         <Route exact path="/myshelves">
