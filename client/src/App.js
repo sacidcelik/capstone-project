@@ -1,6 +1,9 @@
 import NavFooter from './components/NavFooter';
 import { Switch, Route } from 'react-router-dom';
 import { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import styled from 'styled-components';
+import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
 import MyShelves from './pages/MyShelves';
 import MyBooks from './pages/MyBooks';
@@ -9,6 +12,7 @@ import BookDetails from './components/BookDetails';
 
 function App() {
   const [library, setLibrary] = useState([]);
+  const [shelves, setShelves] = useState([]);
   const [view, setView] = useState('');
   const [detailedBook, setDetailedBook] = useState({});
 
@@ -62,8 +66,13 @@ function App() {
     updateBook('rating', rating, bookToUpdate);
   }
 
+  function addShelf(shelf) {
+    setShelves([...shelves, shelf]);
+  }
+
   return (
     <>
+      <StyledToastContainer />
       <Header />
       <Switch>
         <Route path="/home">
@@ -73,7 +82,7 @@ function App() {
           />
         </Route>
         <Route path="/myshelves">
-          <MyShelves />
+          <MyShelves onSaveShelf={addShelf} />
         </Route>
         <Route path="/mybooks">
           {view === 'details' && renderBookDetails(detailedBook)}
@@ -87,5 +96,10 @@ function App() {
     </>
   );
 }
+const StyledToastContainer = styled(ToastContainer)`
+  .Toastify__toast--success {
+    background-color: var(--tertiary);
+  }
+`;
 
 export default App;

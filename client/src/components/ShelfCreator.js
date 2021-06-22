@@ -1,9 +1,12 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { useState } from 'react';
-
+import { toast } from 'react-toastify';
 import getShelfBorders from '../lib/shelfBorders';
+import SaveButton from './SaveButton';
+import validateShelf from '../lib/validateShelf';
 
-export default function ShelfCreator() {
+export default function ShelfCreator({ onSaveShelf }) {
   const initialShelf = {
     name: '',
     columns: [],
@@ -28,6 +31,7 @@ export default function ShelfCreator() {
     }
 
     setShelf({ ...shelf, [fieldName]: fieldValue });
+    toast.dismiss();
   }
 
   function updateColumn(event, index) {
@@ -65,8 +69,27 @@ export default function ShelfCreator() {
     else return 100;
   }
 
+  function handleShelfSave(event) {
+    event.preventDefault();
+    if (validateShelf(shelf)) {
+      onSaveShelf(shelf);
+      toast.success('Shelf Added!', {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      setShelf(initialShelf);
+    } else {
+      toast.error(
+        'Please specifiy a name, the number of columns and a color.',
+        {
+          position: toast.POSITION.BOTTOM_CENTER,
+          toastId: 'validationError',
+        }
+      );
+    }
+  }
+
   return (
-    <ShelfArea>
+    <ShelfArea onSubmit={handleShelfSave}>
       <ShelfStarter>
         <div>
           <label htmlFor="name">Name</label>
@@ -85,6 +108,7 @@ export default function ShelfCreator() {
             name="columns"
             id="columns"
             onChange={updateShelf}
+            value={shelf.columns.length}
             data-testid="column-picker"
           >
             <option value="0">-Columns-</option>
@@ -197,11 +221,14 @@ export default function ShelfCreator() {
           </SubShelf>
         ))}
       </ShelfPreview>
+      <SaveShelfButtonWrapper>
+        {shelf.columns.length >= 1 && <SaveButton />}
+      </SaveShelfButtonWrapper>
     </ShelfArea>
   );
 }
 
-const ShelfArea = styled.section`
+const ShelfArea = styled.form`
   height: 100%;
   margin: 1rem auto 9rem;
   width: 95%;
@@ -213,6 +240,7 @@ const ShelfArea = styled.section`
     background: var(--background);
   }
 `;
+
 const ShelfStarter = styled.section`
   display: flex;
   justify-content: space-around;
@@ -331,3 +359,13 @@ const Compartment = styled.div`
     border-top: none;
   }
 `;
+
+const SaveShelfButtonWrapper = styled.div`
+  width: 95%;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+ShelfCreator.propTypes = {
+  onSaveShelf: PropTypes.func,
+};
