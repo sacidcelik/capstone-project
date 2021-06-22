@@ -14,5 +14,10 @@ const book = {
   },
 };
 
-<BookDetails book={book} isStatic onAddRating={() => true} />;
+<BookDetails
+  book={book}
+  isStatic
+  onAddRating={() => true}
+  onGetBookLocation={() => true}
+/>;
 ```

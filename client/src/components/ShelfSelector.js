@@ -1,4 +1,4 @@
-import ProptTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
@@ -8,6 +8,7 @@ import SaveAddButton from './SaveAddButton';
 import validateShelfSelection from '../lib/validateShelfSelection';
 
 export default function ShelfSelector({
+  isStatic,
   shelves,
   book,
   onSetIsSelector,
@@ -67,7 +68,7 @@ export default function ShelfSelector({
   }
 
   return (
-    <ShelfSelectorCard>
+    <ShelfSelectorCard isStatic={isStatic}>
       <CloseButton
         src={CloseIcon}
         alt="Close Icon"
@@ -166,7 +167,7 @@ const ShelfSelectorCard = styled.article`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  height: ${(props) => (props.isStatic ? '650px' : '50vh')};
+  height: ${(props) => (props.isStatic ? '350px' : '50vh')};
   justify-content: center;
   margin: ${(props) => (props.isStatic ? '0 auto' : '50vh 50vw')};
   opacity: 0.95;
@@ -196,6 +197,10 @@ const ShelfSelectorForm = styled.form`
   justify-content: space-around;
   margin: 1rem 0 1rem;
   width: 100%;
+
+  button {
+    align-self: center;
+  }
 
   label {
     display: block;
