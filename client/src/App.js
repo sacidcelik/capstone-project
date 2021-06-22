@@ -85,15 +85,15 @@ function App() {
         <Route exact path="/myshelves">
           <MyShelves onSaveShelf={addShelf} shelves={shelves} />
         </Route>
+        <Route path="/myshelves/createshelf">
+          <CreateShelf onSaveShelf={addShelf} />
+        </Route>
         <Route path="/mybooks">
           {view === 'details' && renderBookDetails(detailedBook)}
           <MyBooks
             library={library}
             onRenderBookDetails={renderBookDetailsHelper}
           />
-        </Route>
-        <Route path="/myshelves/createshelf">
-          <CreateShelf onSaveShelf={addShelf} />
         </Route>
       </Switch>
       <NavFooter />

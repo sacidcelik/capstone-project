@@ -23,13 +23,13 @@ export default function Shelf({ shelf }) {
   }
   return shelf.columns.map((column, index) => {
     return (
-      <SubShelf
+      <Column
         key={'column' + index}
         shelfWidth={shelfWidth(index)}
         shelfHeight={shelfHeight(index)}
         child={index}
         getColor={getShelfBorders(shelf.color)}
-        data-testid="sub-shelf"
+        data-testid="column"
       >
         {column.compartments &&
           column.compartments.length > 0 &&
@@ -42,12 +42,12 @@ export default function Shelf({ shelf }) {
               />
             );
           })}
-      </SubShelf>
+      </Column>
     );
   });
 }
 
-const SubShelf = styled.div`
+const Column = styled.div`
   border: ${(props) => props.getColor};
   display: flex;
   flex-direction: column;
