@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import SaveAddButton from './SaveAddButton';
 import CloseIcon from '../images/closeIcon.svg';
+import { toast } from 'react-toastify';
+import validateShelfSelection from '../lib/validateShelfSelection';
 
 export default function ShelfSelector({
   shelves,
@@ -18,6 +20,7 @@ export default function ShelfSelector({
   const [selection, setSelection] = useState(initialSelection);
   const [shelfIndex, setShelfIndex] = useState(null);
   const [columnIndex, setColumnIndex] = useState(null);
+
   function handleBookShelfChange(event) {
     const shelfIndex = shelves.findIndex(
       (shelf) => shelf.id === event.target.value
@@ -29,26 +32,37 @@ export default function ShelfSelector({
       column: '',
       compartment: '',
     });
+    toast.dismiss('validationError');
   }
 
-  console.log(selection);
   function handleColumnChange(event) {
     const columnIndex = shelves[shelfIndex].columns.findIndex(
       (column) => column.id === event.target.value
     );
     columnIndex >= 0 ? setColumnIndex(columnIndex) : setColumnIndex(null);
     setSelection({ ...selection, column: event.target.value, compartment: '' });
+    toast.dismiss('validationError');
   }
 
   function handleCompartmentChange(event) {
-    console.log(event.target.value);
     setSelection({ ...selection, compartment: event.target.value });
+    toast.dismiss('validationError');
   }
 
   function handleSelectionSave(event) {
     event.preventDefault();
-    onSelectShelf(selection, book);
-    onSetIsSelector(false);
+    if (validateShelfSelection(selection)) {
+      onSelectShelf(selection, book);
+      onSetIsSelector(false);
+      toast.success('Book added to Shelf!', {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    } else {
+      toast.error('Please choose a shelf, column and compartment', {
+        position: toast.POSITION.BOTTOM_CENTER,
+        toastId: 'validationError',
+      });
+    }
   }
 
   return (

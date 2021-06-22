@@ -38,9 +38,6 @@ function App() {
     return library.find((book) => book.id === focusedBook.id);
   }
 
-  console.log(library);
-  console.log(shelves);
-
   function renderBookDetailsHelper(book) {
     setDetailedBook(book);
     setView('details');
@@ -59,17 +56,16 @@ function App() {
   function updateBooksInCompartment(property, selection, book) {
     const updatedShelves = shelves.map((shelf) => {
       if (shelf.id === selection.bookshelf) {
-        console.log(shelf);
         shelf.columns.map((column) => {
           if (column.id === selection.column) {
             column.compartments.map((compartment) => {
               if (compartment.id === selection.compartment) {
                 let existingBooks;
                 compartment[property]
-                  ? (existingBooks = [compartment[property]])
+                  ? (existingBooks = compartment[property])
                   : (existingBooks = '');
                 existingBooks === ''
-                  ? (compartment[property] = book.id)
+                  ? (compartment[property] = [book.id])
                   : (compartment[property] = [...existingBooks, book.id]);
               }
               return compartment;
