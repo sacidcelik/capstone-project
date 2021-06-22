@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import ProptTypes from 'prop-types';
 import styled from 'styled-components';
-
-import SaveAddButton from './SaveAddButton';
-import CloseIcon from '../images/closeIcon.svg';
 import { toast } from 'react-toastify';
+import { useState } from 'react';
+
+import CloseIcon from '../images/closeIcon.svg';
+import SaveAddButton from './SaveAddButton';
 import validateShelfSelection from '../lib/validateShelfSelection';
 
 export default function ShelfSelector({
@@ -191,8 +192,8 @@ const CloseButton = styled.img`
 
 const ShelfSelectorForm = styled.form`
   display: flex;
-  justify-content: space-around;
   flex-direction: column;
+  justify-content: space-around;
   margin: 1rem 0 1rem;
   width: 100%;
 
@@ -217,8 +218,8 @@ const ShelfPicker = styled.section`
 
 const BookInformation = styled.section`
   display: flex;
-  justify-content: space-between;
   gap: 1rem;
+  justify-content: space-between;
   width: 100%;
 `;
 
@@ -264,3 +265,10 @@ const BookSubTitle = styled.h5`
   max-height: 2rem;
   overflow: hidden;
 `;
+
+ShelfSelector.propTypes = {
+  shelves: PropTypes.array,
+  book: PropTypes.object,
+  onSetIsSelector: PropTypes.func,
+  onSelectShelf: PropTypes.func,
+};

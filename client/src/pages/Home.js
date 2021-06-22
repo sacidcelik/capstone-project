@@ -23,4 +23,6 @@ export default function Home({
 Home.propTypes = {
   onToggleToAndFromLibrary: PropTypes.func,
   isInLibrary: PropTypes.func,
+  shelves: PropTypes.array,
+  onSelectShelf: PropTypes.func,
 };

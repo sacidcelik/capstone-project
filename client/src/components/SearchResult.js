@@ -118,4 +118,6 @@ SearchResult.propTypes = {
   searchedBooks: PropTypes.array,
   onToggleToAndFromLibrary: PropTypes.func,
   isInLibrary: PropTypes.func,
+  shelves: PropTypes.array,
+  onSelectShelf: PropTypes.func,
 };
