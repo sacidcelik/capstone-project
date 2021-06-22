@@ -26,7 +26,7 @@ export default function ShelfCreator({ onSaveShelf }) {
         fieldValue.push({
           id: uuidv4(),
           column: i + 1,
-          compartments: [],
+          compartments: [{ compartment: 1, id: uuidv4() }],
           width: 1,
           height: 1,
         });

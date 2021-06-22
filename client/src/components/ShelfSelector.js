@@ -25,7 +25,8 @@ export default function ShelfSelector({ shelves, book }) {
       compartment: '',
     });
   }
-  console.log(book);
+
+  console.log(selection);
   function handleColumnChange(event) {
     const columnIndex = shelves[shelfIndex].columns.findIndex(
       (column) => column.id === event.target.value
@@ -35,6 +36,7 @@ export default function ShelfSelector({ shelves, book }) {
   }
 
   function handleCompartmentChange(event) {
+    console.log(event.target.value);
     setSelection({ ...selection, compartment: event.target.value });
   }
 
