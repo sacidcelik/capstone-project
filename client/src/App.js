@@ -38,16 +38,6 @@ function App() {
     return library.find((book) => book.id === focusedBook.id);
   }
 
-  function renderBookDetails(book) {
-    return (
-      <BookDetails
-        book={book}
-        onRemoveDetailView={() => setView('')}
-        onAddRating={addRating}
-      />
-    );
-  }
-
   console.log(library);
   console.log(shelves);
 
@@ -104,6 +94,30 @@ function App() {
   function addRefToBookAndShelf(location, bookToUpdate) {
     updateBook('shelfLocation', location, bookToUpdate);
     updateBooksInCompartment('storedBooks', location, bookToUpdate);
+  }
+
+  function getBookLocation(book) {
+    const shelf = shelves.find(
+      (shelf) => shelf.id === book.shelfLocation.bookshelf
+    );
+    const column = shelf.columns.find(
+      (column) => column.id === book.shelfLocation.column
+    );
+    const compartment = column.compartments.find(
+      (compartment) => compartment.id === book.shelfLocation.compartment
+    );
+    return `${shelf.name}, Column ${column.column}, Compartment ${compartment.compartment}`;
+  }
+
+  function renderBookDetails(book) {
+    return (
+      <BookDetails
+        book={book}
+        onRemoveDetailView={() => setView('')}
+        onAddRating={addRating}
+        onGetBookLocation={getBookLocation}
+      />
+    );
   }
 
   return (
