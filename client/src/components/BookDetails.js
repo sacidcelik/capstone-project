@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
+import styled from 'styled-components/macro';
 import UnreadReadButton from './UnreadReadButton';
 import CloseIcon from '../images/closeIcon.svg';
 
@@ -12,7 +12,7 @@ export default function BookDetails({
   onAddRating,
 }) {
   return (
-    <DetailsCard isStatic={isStatic} data-testid="book-details">
+    <DetailsCard isStatic={isStatic} data-test-id="book-details">
       <CloseButton
         src={CloseIcon}
         alt="Close Icon"

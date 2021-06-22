@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 export default function AddAndRemoveButton({
   onToggleToAndFromLibrary,
@@ -7,7 +7,7 @@ export default function AddAndRemoveButton({
 }) {
   return (
     <ToggleButton
-      data-testid="add-and-remove-button"
+      data-test-id="add-and-remove-button"
       onClick={onToggleToAndFromLibrary}
       isInLibrary={isInLibrary}
     >

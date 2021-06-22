@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
+import styled from 'styled-components/macro';
 
 import AddAndRemoveButton from './AddAndRemoveButton';
 
@@ -15,7 +15,7 @@ export default function SearchResult({
         <SearchResultCard
           key={index}
           isStatic={isStatic}
-          data-testid="search-result"
+          data-test-id="search-result"
         >
           <img
             src={book.volumeInfo?.imageLinks?.thumbnail}

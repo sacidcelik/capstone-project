@@ -2,7 +2,7 @@
 
 /// <reference types='Cypress' />
 
-const testId = (id) => `[data-testid="${id}"]`;
+const testId = (id) => `[data-test-id="${id}"]`;
 const SEARCH_BAR = testId('search-bar');
 const ADD_REMOVE_BUTTON = testId('add-and-remove-button');
 const LIBRARY_BOOK = testId('library-book');

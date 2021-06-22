@@ -1,7 +1,10 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function SaveButton() {
-  return <SaveButtonStyled data-testid="save-button">Save</SaveButtonStyled>;
+export default function SaveAddButton({ text }) {
+  return (
+    <SaveButtonStyled data-test-id="save-add-button">{text}</SaveButtonStyled>
+  );
 }
 
 const SaveButtonStyled = styled.button`
@@ -15,3 +18,7 @@ const SaveButtonStyled = styled.button`
   padding: 0.5rem 0.5rem 0.53rem 0.5rem;
   width: 95%;
 `;
+
+SaveAddButton.propTypes = {
+  text: PropTypes.string,
+};

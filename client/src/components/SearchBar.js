@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 export default function SearchBar({ query, setSearchQuery, focusSearch }) {
   return (
@@ -10,7 +10,7 @@ export default function SearchBar({ query, setSearchQuery, focusSearch }) {
         value={query}
         onChange={(e) => setSearchQuery(e.target.value)}
         ref={focusSearch}
-        data-testid="search-bar"
+        data-test-id="search-bar"
       />
     </SearchWrapper>
   );

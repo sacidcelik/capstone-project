@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
-import getShelfBorders from '../lib/shelfBorders';
-import SaveButton from './SaveButton';
+import { useState } from 'react';
+import Shelf from './Shelf';
+import SaveAddButton from './SaveAddButton';
 import validateShelf from '../lib/validateShelf';
 
 export default function ShelfCreator({ onSaveShelf }) {
@@ -51,24 +51,6 @@ export default function ShelfCreator({ onSaveShelf }) {
     setShelf(newShelf);
   }
 
-  function shelfWidth(index) {
-    const columnWidth =
-      shelf.columns[index].width === undefined
-        ? 100 / shelf.columns.length
-        : (100 / shelf.columns.length) * shelf.columns[index].width;
-    return columnWidth;
-  }
-
-  function checkForHeight(value) {
-    return shelf.columns.some((column) => column.height === value);
-  }
-
-  function shelfHeight(index) {
-    if (checkForHeight(3)) return (100 / 3) * shelf.columns[index].height;
-    if (checkForHeight(2)) return (100 / 2) * shelf.columns[index].height;
-    else return 100;
-  }
-
   function handleShelfSave(event) {
     event.preventDefault();
     if (validateShelf(shelf)) {
@@ -100,6 +82,7 @@ export default function ShelfCreator({ onSaveShelf }) {
             placeholder="Name your shelf"
             value={shelf.name}
             onChange={updateShelf}
+            data-test-id="name-picker"
           />
         </div>
         <div>
@@ -109,7 +92,7 @@ export default function ShelfCreator({ onSaveShelf }) {
             id="columns"
             onChange={updateShelf}
             value={shelf.columns.length}
-            data-testid="column-picker"
+            data-test-id="column-picker"
           >
             <option value="0">-Columns-</option>
             <option value="1">1</option>
@@ -126,7 +109,7 @@ export default function ShelfCreator({ onSaveShelf }) {
             id="color"
             value={shelf.color}
             onChange={updateShelf}
-            data-testid="color-picker"
+            data-test-id="color-picker"
           >
             <option value="">-Color-</option>
             <option value="black">Black</option>
@@ -146,7 +129,7 @@ export default function ShelfCreator({ onSaveShelf }) {
         )}
         {shelf.columns.map((column, index) => {
           return (
-            <ShelfConfig key={index} data-testid="shelf-config">
+            <ShelfConfig key={index} data-test-id="shelf-config">
               <p>{`Column ${shelf.columns[index].column}`}</p>
               <div>
                 <label htmlFor="width">Width</label>
@@ -179,7 +162,7 @@ export default function ShelfCreator({ onSaveShelf }) {
                 <select
                   name="compartments"
                   id="compartments"
-                  data-testid="compartment-picker"
+                  data-test-id="compartment-picker"
                   value={column.compartments.length}
                   onChange={(e) => updateColumn(e, index)}
                 >
@@ -198,31 +181,10 @@ export default function ShelfCreator({ onSaveShelf }) {
         })}
       </ShelfConfigWrapper>
       <ShelfPreview>
-        {shelf.columns.map((column, index) => (
-          <SubShelf
-            key={'column' + index}
-            shelfWidth={shelfWidth(index)}
-            shelfHeight={shelfHeight(index)}
-            child={index}
-            getColor={getShelfBorders(shelf.color)}
-            data-testid="sub-shelf"
-          >
-            {column.compartments &&
-              column.compartments.length > 0 &&
-              column.compartments.map((compartment, index) => {
-                return (
-                  <Compartment
-                    key={'compartment' + index}
-                    getColor={getShelfBorders(shelf.color)}
-                    data-testid="compartment"
-                  />
-                );
-              })}
-          </SubShelf>
-        ))}
+        <Shelf shelf={shelf} />
       </ShelfPreview>
       <SaveShelfButtonWrapper>
-        {shelf.columns.length >= 1 && <SaveButton />}
+        {shelf.columns.length >= 1 && <SaveAddButton text={'Save Shelf'} />}
       </SaveShelfButtonWrapper>
     </ShelfArea>
   );
@@ -327,37 +289,6 @@ const ShelfPreview = styled.section`
   margin: 1rem auto;
   height: 150px;
   width: 90%;
-`;
-
-const SubShelf = styled.div`
-  border: ${(props) => props.getColor};
-  display: flex;
-  flex-direction: column;
-  height: ${(props) => props.shelfHeight}%;
-  margin: 0;
-  width: ${(props) => props.shelfWidth}%;
-
-  :nth-child(${(props) => props.child}) {
-    height: ${(props) => props.shelfHeight}%;
-    width: ${(props) => props.shelfWidth}%;
-  }
-`;
-
-const Compartment = styled.div`
-  border: ${(props) => props.getColor};
-  border-left: none;
-  border-right: none;
-  height: 100%;
-  width: 100%;
-
-  :not(:first-child) {
-    border-bottom: 3px solid var(--background);
-  }
-
-  :first-child {
-    border-bottom: 3px solid var(--background);
-    border-top: none;
-  }
 `;
 
 const SaveShelfButtonWrapper = styled.div`

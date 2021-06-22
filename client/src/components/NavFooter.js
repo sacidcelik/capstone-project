@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
 import { NavLink } from 'react-router-dom';
+import styled from 'styled-components/macro';
 import { ReactComponent as HomeButton } from '../images/navHome.svg';
 import { ReactComponent as ShelfButton } from '../images/navShelves.svg';
 import { ReactComponent as BooksButton } from '../images/navBooks.svg';
