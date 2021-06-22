@@ -85,7 +85,7 @@ export default function ShelfCreator({ onSaveShelf }) {
             placeholder="Name your shelf"
             value={shelf.name}
             onChange={updateShelf}
-            data-testid="name-picker"
+            data-test-id="name-picker"
           />
         </div>
         <div>
@@ -95,7 +95,7 @@ export default function ShelfCreator({ onSaveShelf }) {
             id="columns"
             onChange={updateShelf}
             value={shelf.columns.length}
-            data-testid="column-picker"
+            data-test-id="column-picker"
           >
             <option value="0">-Columns-</option>
             <option value="1">1</option>
@@ -112,7 +112,7 @@ export default function ShelfCreator({ onSaveShelf }) {
             id="color"
             value={shelf.color}
             onChange={updateShelf}
-            data-testid="color-picker"
+            data-test-id="color-picker"
           >
             <option value="">-Color-</option>
             <option value="black">Black</option>
@@ -132,7 +132,7 @@ export default function ShelfCreator({ onSaveShelf }) {
         )}
         {shelf.columns.map((column, index) => {
           return (
-            <ShelfConfig key={index} data-testid="shelf-config">
+            <ShelfConfig key={index} data-test-id="shelf-config">
               <p>{`Column ${shelf.columns[index].column}`}</p>
               <div>
                 <label htmlFor="width">Width</label>
@@ -165,7 +165,7 @@ export default function ShelfCreator({ onSaveShelf }) {
                 <select
                   name="compartments"
                   id="compartments"
-                  data-testid="compartment-picker"
+                  data-test-id="compartment-picker"
                   value={column.compartments.length}
                   onChange={(e) => updateColumn(e, index)}
                 >

@@ -15,8 +15,8 @@ export default function AddAndRemoveButton({
 
   return (
     <ToggleButton
-      data-testid="add-and-remove-button"
       onClick={handleClick}
+      data-test-id="add-and-remove-button"
       isInLibrary={isInLibrary}
     >
       {isInLibrary ? 'Remove' : 'Add'}

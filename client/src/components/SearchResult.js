@@ -31,7 +31,7 @@ export default function SearchResult({
           <SearchResultCard
             key={index}
             isStatic={isStatic}
-            data-testid="search-result"
+            data-test-id="search-result"
           >
             <img
               src={book.volumeInfo?.imageLinks?.thumbnail}

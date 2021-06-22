@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export default function UnreadReadButton({ isRead, onToggleRead }) {
   return (
     <ToggleButton
-      data-testid="unread-read-button"
+      data-test-id="unread-read-button"
       onClick={onToggleRead}
       isRead={isRead}
     >

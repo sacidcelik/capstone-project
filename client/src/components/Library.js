@@ -8,7 +8,7 @@ export default function Library({ library, isStatic, onRenderBookDetails }) {
         return (
           <BookCard
             key={book.id}
-            data-testid="library-book"
+            data-test-id="library-book"
             onClick={() => onRenderBookDetails(book)}
           >
             <img
