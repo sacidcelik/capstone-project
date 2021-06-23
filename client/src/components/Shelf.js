@@ -7,7 +7,7 @@ import getShelfBorders from '../lib/shelfBorders';
 export default function Shelf({
   shelf,
   onGetCompartmentBooks,
-  onProvideCompartmentHelper,
+  onProvideDetailedShelf,
 }) {
   let { url } = useRouteMatch();
 
@@ -31,7 +31,7 @@ export default function Shelf({
 
   function compartmentClickHandler(shelf, column, compartment) {
     onGetCompartmentBooks(compartment.storedBooks);
-    onProvideCompartmentHelper(shelf, column, compartment);
+    onProvideDetailedShelf(shelf, column, compartment);
   }
 
   return shelf.columns.map((column, index) => {

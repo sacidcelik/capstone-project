@@ -1,3 +1,5 @@
+import styled from 'styled-components/macro';
+
 import Library from './Library';
 
 export default function Compartment({
@@ -6,7 +8,7 @@ export default function Compartment({
   onGetDetailedShelf,
 }) {
   return (
-    <main>
+    <CompartmentWrapper>
       <h2>{onGetDetailedShelf.shelf.name}</h2>
       <p>
         Column {onGetDetailedShelf.column.column} | Compartment{' '}
@@ -16,6 +18,10 @@ export default function Compartment({
         library={onGetCompartmentBooks}
         onRenderBookDetails={onRenderBookDetails}
       />
-    </main>
+    </CompartmentWrapper>
   );
 }
+
+const CompartmentWrapper = styled.section`
+  margin: 1rem;
+`;

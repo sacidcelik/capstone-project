@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
-import Compartment from './components/Compartment';
+import CompartmentPage from './pages/CompartmentPage';
 import MyShelves from './pages/MyShelves';
 import MyBooks from './pages/MyBooks';
 import Header from './components/Header';
@@ -17,7 +17,7 @@ function App() {
   const [shelves, setShelves] = useState([]);
   const [view, setView] = useState('');
   const [detailedBook, setDetailedBook] = useState({});
-  const [detailedShelfCompartment, setDetailedShelfCompartment] = useState({
+  const [detailedShelf, setDetailedShelf] = useState({
     compartment: { id: 123 },
   });
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
@@ -130,13 +130,13 @@ function App() {
   }
   console.log(detailedCompartmentBooks);
 
-  function provideCompartmentHelper(shelf, column, compartment) {
+  function provideDetailedShelfHelper(shelf, column, compartment) {
     const detailedShelfCompartment = {
       shelf: shelf,
       column: column,
       compartment: compartment,
     };
-    setDetailedShelfCompartment(detailedShelfCompartment);
+    setDetailedShelf(detailedShelfCompartment);
   }
 
   function renderBookDetails(book) {
@@ -168,18 +168,18 @@ function App() {
             onSaveShelf={addShelf}
             shelves={shelves}
             onGetCompartmentBooks={getCompartmentBooks}
-            onProvideCompartmentHelper={provideCompartmentHelper}
+            onProvideDetailedShelf={provideDetailedShelfHelper}
           />
         </Route>
         <Route path="/myshelves/createshelf">
           <CreateShelf onSaveShelf={addShelf} />
         </Route>
-        <Route path={`/myshelves/${detailedShelfCompartment.compartment.id}`}>
+        <Route path={`/myshelves/${detailedShelf.compartment.id || 'id'}`}>
           {view === 'details' && renderBookDetails(detailedBook)}
-          <Compartment
+          <CompartmentPage
             onRenderBookDetails={renderBookDetailsHelper}
             onGetCompartmentBooks={detailedCompartmentBooks}
-            onGetDetailedShelf={detailedShelfCompartment}
+            onGetDetailedShelf={detailedShelf}
           />
         </Route>
         <Route path="/mybooks">

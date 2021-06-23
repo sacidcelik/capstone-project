@@ -11,7 +11,7 @@ import { ReactComponent as ForwardArrow } from '../images/arrowForward.svg';
 export default function MyShelves({
   shelves,
   onGetCompartmentBooks,
-  onProvideCompartmentHelper,
+  onProvideDetailedShelf,
 }) {
   const [shelfIndex, setShelfIndex] = useState(0);
 
@@ -55,7 +55,7 @@ export default function MyShelves({
             <Shelf
               shelf={shelves[shelfIndex]}
               onGetCompartmentBooks={onGetCompartmentBooks}
-              onProvideCompartmentHelper={onProvideCompartmentHelper}
+              onProvideDetailedShelf={onProvideDetailedShelf}
             />
           </ShelfWrapper>
         </>
