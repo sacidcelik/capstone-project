@@ -8,7 +8,11 @@ import SaveAddButton from '../components/SaveAddButton';
 import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
 import { ReactComponent as ForwardArrow } from '../images/arrowForward.svg';
 
-export default function MyShelves({ shelves }) {
+export default function MyShelves({
+  shelves,
+  onGetCompartmentBooks,
+  onProvideCompartmentHelper,
+}) {
   const [shelfIndex, setShelfIndex] = useState(0);
 
   function goForward() {
@@ -48,7 +52,11 @@ export default function MyShelves({ shelves }) {
             />
           </ShelfNav>
           <ShelfWrapper>
-            <Shelf shelf={shelves[shelfIndex]} />
+            <Shelf
+              shelf={shelves[shelfIndex]}
+              onGetCompartmentBooks={onGetCompartmentBooks}
+              onProvideCompartmentHelper={onProvideCompartmentHelper}
+            />
           </ShelfWrapper>
         </>
       )}

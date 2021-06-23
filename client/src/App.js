@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
+import Compartment from './components/Compartment';
 import MyShelves from './pages/MyShelves';
 import MyBooks from './pages/MyBooks';
 import Header from './components/Header';
@@ -16,6 +17,10 @@ function App() {
   const [shelves, setShelves] = useState([]);
   const [view, setView] = useState('');
   const [detailedBook, setDetailedBook] = useState({});
+  const [detailedShelfCompartment, setDetailedShelfCompartment] = useState({
+    compartment: { id: 123 },
+  });
+  const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
 
   function toggleToAndFromLibrary(focusedBook) {
     isInLibrary(focusedBook)
@@ -108,6 +113,31 @@ function App() {
       return `Not stored in a shelf.`;
     }
   }
+  console.log(shelves);
+  function getCompartmentBooks(storedBookIds) {
+    const storedBooks = [];
+    if (storedBookIds && storedBookIds.length > 0) {
+      storedBookIds.map((bookId) =>
+        library.map((book) => {
+          if (book.id === bookId) storedBooks.push(book);
+          return storedBooks;
+        })
+      );
+      return setDetailedCompartmentBooks(storedBooks);
+    } else {
+      return setDetailedCompartmentBooks([]);
+    }
+  }
+  console.log(detailedCompartmentBooks);
+
+  function provideCompartmentHelper(shelf, column, compartment) {
+    const detailedShelfCompartment = {
+      shelf: shelf,
+      column: column,
+      compartment: compartment,
+    };
+    setDetailedShelfCompartment(detailedShelfCompartment);
+  }
 
   function renderBookDetails(book) {
     return (
@@ -134,10 +164,23 @@ function App() {
           />
         </Route>
         <Route exact path="/myshelves">
-          <MyShelves onSaveShelf={addShelf} shelves={shelves} />
+          <MyShelves
+            onSaveShelf={addShelf}
+            shelves={shelves}
+            onGetCompartmentBooks={getCompartmentBooks}
+            onProvideCompartmentHelper={provideCompartmentHelper}
+          />
         </Route>
         <Route path="/myshelves/createshelf">
           <CreateShelf onSaveShelf={addShelf} />
+        </Route>
+        <Route path={`/myshelves/${detailedShelfCompartment.compartment.id}`}>
+          {view === 'details' && renderBookDetails(detailedBook)}
+          <Compartment
+            onRenderBookDetails={renderBookDetailsHelper}
+            onGetCompartmentBooks={detailedCompartmentBooks}
+            onGetDetailedShelf={detailedShelfCompartment}
+          />
         </Route>
         <Route path="/mybooks">
           {view === 'details' && renderBookDetails(detailedBook)}

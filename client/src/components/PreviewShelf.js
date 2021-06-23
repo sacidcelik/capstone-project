@@ -1,16 +1,9 @@
 import PropTypes from 'prop-types';
-import { Link, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 import getShelfBorders from '../lib/shelfBorders';
 
-export default function Shelf({
-  shelf,
-  onGetCompartmentBooks,
-  onProvideCompartmentHelper,
-}) {
-  let { url } = useRouteMatch();
-
+export default function PreviewShelf({ shelf }) {
   function shelfWidth(index) {
     const columnWidth =
       shelf.columns[index].width === undefined
@@ -27,11 +20,6 @@ export default function Shelf({
     if (checkForHeight(3)) return (100 / 3) * shelf.columns[index].height;
     if (checkForHeight(2)) return (100 / 2) * shelf.columns[index].height;
     else return 100;
-  }
-
-  function compartmentClickHandler(shelf, column, compartment) {
-    onGetCompartmentBooks(compartment.storedBooks);
-    onProvideCompartmentHelper(shelf, column, compartment);
   }
 
   return shelf.columns.map((column, index) => {
@@ -52,17 +40,7 @@ export default function Shelf({
                 key={'compartment' + index}
                 getColor={getShelfBorders(shelf.color)}
                 data-test-id="compartment"
-              >
-                <Link
-                  key={index}
-                  to={`${url}/${compartment.id}`}
-                  onClick={() =>
-                    compartmentClickHandler(shelf, column, compartment)
-                  }
-                >
-                  <p>CLICK ME</p>
-                </Link>
-              </Compartment>
+              />
             );
           })}
       </Column>
@@ -101,6 +79,6 @@ const Compartment = styled.div`
   }
 `;
 
-Shelf.propTypes = {
+PreviewShelf.propTypes = {
   shelf: PropTypes.object,
 };
