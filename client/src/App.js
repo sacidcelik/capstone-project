@@ -129,6 +129,32 @@ function App() {
     }
   }
 
+  function getShelfBooks(shelf) {
+    const shelfBooks = [];
+    shelf &&
+      shelf.columns.map((column, columnIndex) => {
+        shelfBooks.push([]);
+        column.compartments.map((compartment) =>
+          compartment.storedBooks
+            ? shelfBooks[columnIndex].push(compartment.storedBooks)
+            : shelfBooks[columnIndex].push([])
+        );
+        return shelfBooks;
+      });
+    shelfBooks.map((compartmentBooks, columnIndex) =>
+      compartmentBooks.map((bookId, compartmentIndex) =>
+        library.map((book) => {
+          if (book.id === bookId) {
+            shelfBooks[columnIndex][compartmentIndex] =
+              book.volumeInfo?.imageLinks?.thumbnail;
+          }
+          return shelfBooks;
+        })
+      )
+    );
+    return shelfBooks;
+  }
+
   function provideDetailedShelfHelper(shelf, column, compartment) {
     const detailedShelfCompartment = {
       shelf: shelf,
@@ -168,6 +194,8 @@ function App() {
             shelves={shelves}
             onGetCompartmentBooks={getCompartmentBooks}
             onProvideDetailedShelf={provideDetailedShelfHelper}
+            detailedCompartmentBooks={detailedCompartmentBooks}
+            onGetShelfBooks={getShelfBooks}
           />
         </Route>
         <Route path="/myshelves/createshelf">

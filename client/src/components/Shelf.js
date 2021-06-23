@@ -63,7 +63,14 @@ export default function Shelf({
                     }
                     data-test-id="compartment-link"
                   >
-                    <p>CLICK ME</p>
+                    {/*  {shelfBooks.map((book) => {
+                      return (
+                        <img
+                          src={book.volumeInfo?.imageLinks?.thumbnail}
+                          alt="book cover"
+                        />
+                      );
+                    })} */}
                   </Link>
                 )}
               </Compartment>

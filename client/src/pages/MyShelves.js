@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import SaveAddButton from '../components/SaveAddButton';
 import Shelf from '../components/Shelf';
@@ -12,8 +12,16 @@ export default function MyShelves({
   shelves,
   onGetCompartmentBooks,
   onProvideDetailedShelf,
+  onGetShelfBooks,
 }) {
   const [shelfIndex, setShelfIndex] = useState(0);
+  const [bookImages, setBookImages] = useState([]);
+
+  useEffect(() => {
+    setBookImages(onGetShelfBooks(shelves[shelfIndex]));
+  }, [shelfIndex]);
+
+  console.log(bookImages);
 
   function goForward() {
     if (isShelfAfter()) setShelfIndex(shelfIndex + 1);
