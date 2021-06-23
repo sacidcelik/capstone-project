@@ -8,6 +8,7 @@ export default function Shelf({
   shelf,
   onGetCompartmentBooks,
   onProvideDetailedShelf,
+  isSaved,
 }) {
   let { url } = useRouteMatch();
 
@@ -53,15 +54,17 @@ export default function Shelf({
                 getColor={getShelfBorders(shelf.color)}
                 data-test-id="compartment"
               >
-                <Link
-                  key={index}
-                  to={`${url}/${compartment.id}`}
-                  onClick={() =>
-                    compartmentClickHandler(shelf, column, compartment)
-                  }
-                >
-                  <p>CLICK ME</p>
-                </Link>
+                {isSaved && (
+                  <Link
+                    key={index}
+                    to={`${url}/${compartment.id}`}
+                    onClick={() =>
+                      compartmentClickHandler(shelf, column, compartment)
+                    }
+                  >
+                    <p>CLICK ME</p>
+                  </Link>
+                )}
               </Compartment>
             );
           })}

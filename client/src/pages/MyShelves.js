@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 
-import Shelf from '../components/Shelf';
 import SaveAddButton from '../components/SaveAddButton';
+import Shelf from '../components/Shelf';
 import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
 import { ReactComponent as ForwardArrow } from '../images/arrowForward.svg';
 
@@ -56,6 +56,7 @@ export default function MyShelves({
               shelf={shelves[shelfIndex]}
               onGetCompartmentBooks={onGetCompartmentBooks}
               onProvideDetailedShelf={onProvideDetailedShelf}
+              isSaved={true}
             />
           </ShelfWrapper>
         </>
@@ -113,4 +114,6 @@ const ShelfWrapper = styled.article`
 
 MyShelves.propTypes = {
   shelves: PropTypes.array,
+  onGetCompartmentBooks: PropTypes.func,
+  onProvideDetailedShelf: PropTypes.func,
 };
