@@ -113,7 +113,7 @@ function App() {
       return `Not stored in a shelf.`;
     }
   }
-  console.log(shelves);
+
   function getCompartmentBooks(storedBookIds) {
     const storedBooks = [];
     if (storedBookIds && storedBookIds.length > 0) {
@@ -128,7 +128,6 @@ function App() {
       return setDetailedCompartmentBooks([]);
     }
   }
-  console.log(detailedCompartmentBooks);
 
   function provideDetailedShelfHelper(shelf, column, compartment) {
     const detailedShelfCompartment = {
@@ -174,7 +173,7 @@ function App() {
         <Route path="/myshelves/createshelf">
           <CreateShelf onSaveShelf={addShelf} />
         </Route>
-        <Route path={`/myshelves/${detailedShelf.compartment.id || 'id'}`}>
+        <Route path={`/myshelves/${detailedShelf.compartment.id}`}>
           {view === 'details' && renderBookDetails(detailedBook)}
           <CompartmentPage
             onRenderBookDetails={renderBookDetailsHelper}
