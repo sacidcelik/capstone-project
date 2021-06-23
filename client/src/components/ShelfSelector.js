@@ -106,6 +106,7 @@ export default function ShelfSelector({
               id="bookshelf"
               onChange={handleBookShelfChange}
               value={selection.bookshelf}
+              data-test-id="book-to-bookshelf-picker"
             >
               <option value="">-Select-</option>
               {shelves.length > 0 &&
@@ -123,6 +124,7 @@ export default function ShelfSelector({
               id="column"
               onChange={handleColumnChange}
               value={selection.column}
+              data-test-id="book-to-column-picker"
             >
               <option value="">-Select-</option>
               {shelfIndex !== null &&
@@ -140,6 +142,7 @@ export default function ShelfSelector({
               id="compartment"
               value={selection.compartment}
               onChange={handleCompartmentChange}
+              data-test-id="book-to-compartment-picker"
             >
               <option value="">-Select-</option>
               {shelfIndex !== null &&

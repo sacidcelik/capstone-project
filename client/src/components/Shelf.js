@@ -61,6 +61,7 @@ export default function Shelf({
                     onClick={() =>
                       compartmentClickHandler(shelf, column, compartment)
                     }
+                    data-test-id="compartment-link"
                   >
                     <p>CLICK ME</p>
                   </Link>
