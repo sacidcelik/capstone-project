@@ -4,18 +4,18 @@ import Library from './Library';
 
 export default function Compartment({
   onRenderBookDetails,
-  onGetCompartmentBooks,
-  onGetDetailedShelf,
+  detailedCompartmentBooks,
+  detailedShelf,
 }) {
   return (
     <CompartmentWrapper>
-      <h2>{onGetDetailedShelf.shelf.name}</h2>
+      <h2>{detailedShelf.shelf.name}</h2>
       <p>
-        Column {onGetDetailedShelf.column.column} | Compartment{' '}
-        {onGetDetailedShelf.compartment.compartment}
+        Column {detailedShelf.column.column} | Compartment{' '}
+        {detailedShelf.compartment.compartment}
       </p>
       <Library
-        library={onGetCompartmentBooks}
+        library={detailedCompartmentBooks}
         onRenderBookDetails={onRenderBookDetails}
       />
     </CompartmentWrapper>

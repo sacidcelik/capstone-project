@@ -177,8 +177,8 @@ function App() {
           {view === 'details' && renderBookDetails(detailedBook)}
           <CompartmentPage
             onRenderBookDetails={renderBookDetailsHelper}
-            onGetCompartmentBooks={detailedCompartmentBooks}
-            onGetDetailedShelf={detailedShelf}
+            detailedCompartmentBooks={detailedCompartmentBooks}
+            detailedShelf={detailedShelf}
           />
         </Route>
         <Route path="/mybooks">

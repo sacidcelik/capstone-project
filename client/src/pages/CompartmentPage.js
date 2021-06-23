@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { useHistory } from 'react-router-dom';
 import Compartment from '../components/Compartment';
@@ -6,8 +7,8 @@ import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
 
 export default function CompartmentPage({
   onRenderBookDetails,
-  onGetCompartmentBooks,
-  onGetDetailedShelf,
+  detailedCompartmentBooks,
+  detailedShelf,
 }) {
   const history = useHistory();
 
@@ -20,8 +21,8 @@ export default function CompartmentPage({
         <BackArrow /> <p>Back</p>
       </BackNav>
       <Compartment
-        onGetDetailedShelf={onGetDetailedShelf}
-        onGetCompartmentBooks={onGetCompartmentBooks}
+        detailedShelf={detailedShelf}
+        detailedCompartmentBooks={detailedCompartmentBooks}
         onRenderBookDetails={onRenderBookDetails}
       />
     </CompartmentPageWrapper>
