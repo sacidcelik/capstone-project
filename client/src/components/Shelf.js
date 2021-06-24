@@ -9,6 +9,7 @@ export default function Shelf({
   onGetCompartmentBooks,
   onProvideDetailedShelf,
   isSaved,
+  bookImages,
 }) {
   let { url } = useRouteMatch();
 
@@ -32,45 +33,50 @@ export default function Shelf({
 
   function compartmentClickHandler(shelf, column, compartment) {
     onGetCompartmentBooks(compartment.storedBooks);
+    console.log('shelf', compartment);
     onProvideDetailedShelf(shelf, column, compartment);
   }
 
-  return shelf.columns.map((column, index) => {
+  return shelf.columns.map((column, columnIndex) => {
     return (
       <Column
-        key={'column' + index}
-        shelfWidth={shelfWidth(index)}
-        shelfHeight={shelfHeight(index)}
-        child={index}
+        key={'column' + columnIndex}
+        shelfWidth={shelfWidth(columnIndex)}
+        shelfHeight={shelfHeight(columnIndex)}
+        child={columnIndex}
         getColor={getShelfBorders(shelf.color)}
         data-test-id="column"
       >
         {column.compartments &&
           column.compartments.length > 0 &&
-          column.compartments.map((compartment, index) => {
+          column.compartments.map((compartment, compartmentIndex) => {
             return (
               <Compartment
-                key={'compartment' + index}
+                key={'compartment' + compartmentIndex}
                 getColor={getShelfBorders(shelf.color)}
                 data-test-id="compartment"
               >
                 {isSaved && (
                   <Link
-                    key={index}
+                    key={compartmentIndex}
                     to={`${url}/${compartment.id}`}
                     onClick={() =>
                       compartmentClickHandler(shelf, column, compartment)
                     }
                     data-test-id="compartment-link"
                   >
-                    {/*  {shelfBooks.map((book) => {
-                      return (
-                        <img
-                          src={book.volumeInfo?.imageLinks?.thumbnail}
-                          alt="book cover"
-                        />
-                      );
-                    })} */}
+                    {bookImages.length > 0 &&
+                      bookImages[columnIndex][compartmentIndex]?.map(
+                        (bookImageURL, bookImageIndex) => {
+                          return (
+                            <img
+                              key={bookImageIndex}
+                              src={bookImageURL}
+                              alt="book cover"
+                            />
+                          );
+                        }
+                      )}
                   </Link>
                 )}
               </Compartment>
@@ -96,6 +102,9 @@ const Column = styled.div`
 `;
 
 const Compartment = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: ${(props) => props.getColor};
   border-left: none;
   border-right: none;
@@ -109,6 +118,10 @@ const Compartment = styled.div`
   :first-child {
     border-bottom: 3px solid var(--background);
     border-top: none;
+  }
+
+  img {
+    width: 30%;
   }
 `;
 

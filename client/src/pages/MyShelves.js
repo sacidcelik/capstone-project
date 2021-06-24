@@ -21,8 +21,6 @@ export default function MyShelves({
     setBookImages(onGetShelfBooks(shelves[shelfIndex]));
   }, [shelfIndex]);
 
-  console.log(bookImages);
-
   function goForward() {
     if (isShelfAfter()) setShelfIndex(shelfIndex + 1);
   }
@@ -65,6 +63,7 @@ export default function MyShelves({
               onGetCompartmentBooks={onGetCompartmentBooks}
               onProvideDetailedShelf={onProvideDetailedShelf}
               isSaved={true}
+              bookImages={bookImages}
             />
           </ShelfWrapper>
         </>

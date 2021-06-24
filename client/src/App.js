@@ -21,7 +21,7 @@ function App() {
     compartment: { id: 123 },
   });
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
-
+  console.log('app', shelves);
   function toggleToAndFromLibrary(focusedBook) {
     isInLibrary(focusedBook)
       ? removeFromLibrary(focusedBook)
@@ -131,26 +131,29 @@ function App() {
 
   function getShelfBooks(shelf) {
     const shelfBooks = [];
-    shelf &&
-      shelf.columns.map((column, columnIndex) => {
-        shelfBooks.push([]);
-        column.compartments.map((compartment) =>
-          compartment.storedBooks
-            ? shelfBooks[columnIndex].push(compartment.storedBooks)
-            : shelfBooks[columnIndex].push([])
+    shelf.columns.map((column, columnIndex) => {
+      shelfBooks.push([]);
+      column.compartments.map((compartment) =>
+        compartment.storedBooks
+          ? shelfBooks[columnIndex].push(compartment.storedBooks)
+          : shelfBooks[columnIndex].push([])
+      );
+      return shelfBooks;
+    });
+    shelfBooks.map((columnBooks, shelfBooksColumnIndex) =>
+      columnBooks.map((compartmentBooks, compartmentIndex) => {
+        compartmentBooks.map((bookId, bookIndex) =>
+          library.map((book) => {
+            if (book.id === bookId) {
+              shelfBooks[shelfBooksColumnIndex][compartmentIndex][bookIndex] =
+                book.volumeInfo?.imageLinks?.thumbnail;
+              return shelfBooks;
+            }
+            return shelfBooks;
+          })
         );
         return shelfBooks;
-      });
-    shelfBooks.map((compartmentBooks, columnIndex) =>
-      compartmentBooks.map((bookId, compartmentIndex) =>
-        library.map((book) => {
-          if (book.id === bookId) {
-            shelfBooks[columnIndex][compartmentIndex] =
-              book.volumeInfo?.imageLinks?.thumbnail;
-          }
-          return shelfBooks;
-        })
-      )
+      })
     );
     return shelfBooks;
   }
