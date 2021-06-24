@@ -131,15 +131,16 @@ function App() {
 
   function getShelfBooks(shelf) {
     const shelfBooks = [];
-    shelf.columns.map((column, columnIndex) => {
-      shelfBooks.push([]);
-      column.compartments.map((compartment) =>
-        compartment.storedBooks
-          ? shelfBooks[columnIndex].push(compartment.storedBooks)
-          : shelfBooks[columnIndex].push([])
-      );
-      return shelfBooks;
-    });
+    shelf &&
+      shelf.columns.map((column, columnIndex) => {
+        shelfBooks.push([]);
+        column.compartments.map((compartment) =>
+          compartment.storedBooks
+            ? shelfBooks[columnIndex].push(compartment.storedBooks)
+            : shelfBooks[columnIndex].push([])
+        );
+        return shelfBooks;
+      });
     shelfBooks.map((columnBooks, shelfBooksColumnIndex) =>
       columnBooks.map((compartmentBooks, compartmentIndex) => {
         compartmentBooks.map((bookId, bookIndex) =>
