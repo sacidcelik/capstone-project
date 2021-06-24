@@ -131,32 +131,33 @@ function App() {
 
   function getShelfBooks(shelf) {
     const shelfBooks = [];
-    shelf &&
-      shelf.columns.map((column, columnIndex) => {
+    if (shelf) {
+      shelf.columns.forEach((column, columnIndex) => {
         shelfBooks.push([]);
-        column.compartments.map((compartment) =>
+        column.compartments.forEach((compartment) =>
           compartment.storedBooks
-            ? shelfBooks[columnIndex].push(compartment.storedBooks)
+            ? shelfBooks[columnIndex].push([...compartment.storedBooks])
             : shelfBooks[columnIndex].push([])
         );
-        return shelfBooks;
       });
-    shelfBooks.map((columnBooks, shelfBooksColumnIndex) =>
-      columnBooks.map((compartmentBooks, compartmentIndex) => {
-        compartmentBooks.map((bookId, bookIndex) =>
-          library.map((book) => {
-            if (book.id === bookId) {
-              shelfBooks[shelfBooksColumnIndex][compartmentIndex][bookIndex] =
-                book.volumeInfo?.imageLinks?.thumbnail;
-              return shelfBooks;
-            }
-            return shelfBooks;
-          })
-        );
-        return shelfBooks;
-      })
-    );
-    return shelfBooks;
+      shelfBooks.map((columnBooks, shelfBooksColumnIndex) =>
+        columnBooks.map((compartmentBooks, compartmentIndex) => {
+          compartmentBooks.map((bookId, bookIndex) =>
+            library.map((book) => {
+              if (book.id === bookId) {
+                shelfBooks[shelfBooksColumnIndex][compartmentIndex][bookIndex] =
+                  book.volumeInfo?.imageLinks?.thumbnail;
+                return shelfBooks;
+              }
+              return compartmentBooks;
+            })
+          );
+          return columnBooks;
+        })
+      );
+
+      return shelfBooks;
+    }
   }
 
   function provideDetailedShelfHelper(shelf, column, compartment) {
