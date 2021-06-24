@@ -1,42 +1,69 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
+import { useState } from 'react';
 
 import AddAndRemoveButton from './AddAndRemoveButton';
+import ShelfSelector from './ShelfSelector';
 
 export default function SearchResult({
   searchedBooks,
   isStatic,
   onToggleToAndFromLibrary,
   isInLibrary,
+  shelves,
+  onSelectShelf,
 }) {
-  return (
-    <SearchResultSection isStatic={isStatic}>
-      {searchedBooks.map((book, index) => (
-        <SearchResultCard
-          key={index}
-          isStatic={isStatic}
-          data-test-id="search-result"
-        >
-          <img
-            src={book.volumeInfo?.imageLinks?.thumbnail}
-            width="58"
-            height="90"
-            alt={book.volumeInfo.title || 'Book Cover'}
-          />
-          <BookInfo>
-            <BookTitle>
-              <p>{book.volumeInfo?.title}</p>
-            </BookTitle>
+  const [isSelector, setIsSelector] = useState(false);
+  const [selectedBook, setSelectedBook] = useState({});
 
-            <p>{book.volumeInfo?.authors?.[0]}</p>
-          </BookInfo>
-          <AddAndRemoveButton
-            onToggleToAndFromLibrary={() => onToggleToAndFromLibrary(book)}
-            isInLibrary={isInLibrary(book)}
-          />
-        </SearchResultCard>
-      ))}
-    </SearchResultSection>
+  function updateSelector(bool) {
+    setIsSelector(bool);
+  }
+
+  function provideBook(book) {
+    setSelectedBook(book);
+  }
+
+  return (
+    <>
+      {isSelector && (
+        <ShelfSelector
+          shelves={shelves}
+          book={selectedBook}
+          onSetIsSelector={updateSelector}
+          onSelectShelf={onSelectShelf}
+        />
+      )}
+      <SearchResultSection isStatic={isStatic}>
+        {searchedBooks.map((book, index) => (
+          <SearchResultCard
+            key={index}
+            isStatic={isStatic}
+            data-test-id="search-result"
+          >
+            <img
+              src={book.volumeInfo?.imageLinks?.thumbnail}
+              width="58"
+              height="90"
+              alt={book.volumeInfo.title || 'Book Cover'}
+            />
+            <BookInfo>
+              <BookTitle>
+                <p>{book.volumeInfo?.title}</p>
+              </BookTitle>
+
+              <p>{book.volumeInfo?.authors?.[0]}</p>
+            </BookInfo>
+            <AddAndRemoveButton
+              onToggleToAndFromLibrary={() => onToggleToAndFromLibrary(book)}
+              isInLibrary={isInLibrary(book)}
+              onSetIsSelector={updateSelector}
+              onProvideBook={() => provideBook(book)}
+            />
+          </SearchResultCard>
+        ))}
+      </SearchResultSection>
+    </>
   );
 }
 
@@ -91,4 +118,6 @@ SearchResult.propTypes = {
   searchedBooks: PropTypes.array,
   onToggleToAndFromLibrary: PropTypes.func,
   isInLibrary: PropTypes.func,
+  shelves: PropTypes.array,
+  onSelectShelf: PropTypes.func,
 };

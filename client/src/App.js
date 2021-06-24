@@ -38,30 +38,47 @@ function App() {
     return library.find((book) => book.id === focusedBook.id);
   }
 
-  function renderBookDetails(book) {
-    return (
-      <BookDetails
-        book={book}
-        onRemoveDetailView={() => setView('')}
-        onAddRating={addRating}
-      />
-    );
-  }
-
   function renderBookDetailsHelper(book) {
     setDetailedBook(book);
     setView('details');
   }
 
   function updateBook(property, value, bookToUpdate) {
-    const upDatedBooks = library.map((book) => {
+    const updatedBooks = library.map((book) => {
       if (book.id === bookToUpdate.id) {
         book[property] = value;
       }
       return book;
     });
-    setLibrary(upDatedBooks);
+    setLibrary(updatedBooks);
   }
+
+  function updateBooksInCompartment(property, selection, book) {
+    const updatedShelves = shelves.map((shelf) => {
+      if (shelf.id === selection.bookshelfId) {
+        shelf.columns.map((column) => {
+          if (column.id === selection.columnId) {
+            column.compartments.map((compartment) => {
+              if (compartment.id === selection.compartmentId) {
+                let existingBooks;
+                compartment[property]
+                  ? (existingBooks = compartment[property])
+                  : (existingBooks = []);
+                existingBooks.length === 0
+                  ? (compartment[property] = [book.id])
+                  : (compartment[property] = [...existingBooks, book.id]);
+              }
+              return compartment;
+            });
+          }
+          return column;
+        });
+      }
+      return shelf;
+    });
+    setShelves(updatedShelves);
+  }
+  console.log(shelves);
 
   function addRating(rating, bookToUpdate) {
     updateBook('rating', rating, bookToUpdate);
@@ -69,6 +86,39 @@ function App() {
 
   function addShelf(shelf) {
     setShelves([...shelves, shelf]);
+  }
+
+  function addRefToBookAndShelf(location, bookToUpdate) {
+    updateBook('shelfLocation', location, bookToUpdate);
+    updateBooksInCompartment('storedBooks', location, bookToUpdate);
+  }
+
+  function getBookLocation(book) {
+    if (book.shelfLocation) {
+      const shelf = shelves.find(
+        (shelf) => shelf.id === book.shelfLocation.bookshelf
+      );
+      const column = shelf.columns.find(
+        (column) => column.id === book.shelfLocation.column
+      );
+      const compartment = column.compartments.find(
+        (compartment) => compartment.id === book.shelfLocation.compartment
+      );
+      return `${shelf.name}, Column ${column.column}, Compartment ${compartment.compartment}`;
+    } else {
+      return `Not stored in a shelf.`;
+    }
+  }
+
+  function renderBookDetails(book) {
+    return (
+      <BookDetails
+        book={book}
+        onRemoveDetailView={() => setView('')}
+        onAddRating={addRating}
+        onGetBookLocation={getBookLocation}
+      />
+    );
   }
 
   return (
@@ -80,6 +130,8 @@ function App() {
           <Home
             onToggleToAndFromLibrary={toggleToAndFromLibrary}
             isInLibrary={isInLibrary}
+            shelves={shelves}
+            onSelectShelf={addRefToBookAndShelf}
           />
         </Route>
         <Route exact path="/myshelves">

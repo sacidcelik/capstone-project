@@ -10,6 +10,7 @@ export default function BookDetails({
   isStatic,
   onRemoveDetailView,
   onAddRating,
+  onGetBookLocation,
 }) {
   return (
     <DetailsCard isStatic={isStatic} data-test-id="book-details">
@@ -52,7 +53,7 @@ export default function BookDetails({
         <LocationWrapper>
           <p>Location:</p>
           <div>
-            <p>Location will be added later</p>
+            <p>{onGetBookLocation(book)}</p>
           </div>
         </LocationWrapper>
         <LentWrapper>

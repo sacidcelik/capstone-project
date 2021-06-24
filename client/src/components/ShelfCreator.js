@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { toast } from 'react-toastify';
+import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import Shelf from './Shelf';
 import SaveAddButton from './SaveAddButton';
@@ -8,6 +9,7 @@ import validateShelf from '../lib/validateShelf';
 
 export default function ShelfCreator({ onSaveShelf }) {
   const initialShelf = {
+    id: '',
     name: '',
     columns: [],
     color: '',
@@ -22,15 +24,16 @@ export default function ShelfCreator({ onSaveShelf }) {
       fieldValue = [];
       for (let i = 0; i < event.target.value; i++) {
         fieldValue.push({
+          id: uuidv4(),
           column: i + 1,
-          compartments: [],
+          compartments: [{ compartment: 1, id: uuidv4() }],
           width: 1,
           height: 1,
         });
       }
     }
 
-    setShelf({ ...shelf, [fieldName]: fieldValue });
+    setShelf({ ...shelf, id: uuidv4(), [fieldName]: fieldValue });
     toast.dismiss();
   }
 
@@ -41,7 +44,7 @@ export default function ShelfCreator({ onSaveShelf }) {
     if (event.target.id === 'compartments') {
       fieldValue = [];
       for (let i = 0; i < event.target.value; i++) {
-        fieldValue.push({ compartment: i + 1 });
+        fieldValue.push({ compartment: i + 1, id: uuidv4() });
       }
     }
     newShelf.columns[index] = {
