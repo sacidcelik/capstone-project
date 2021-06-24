@@ -26,6 +26,9 @@ export default function CompartmentPage({
           Column {detailedShelf.column.column} | Compartment{' '}
           {detailedShelf.compartment.compartment}
         </p>
+        {detailedCompartmentBooks.length === 0 && (
+          <h3>There are no books in this compartment yet.</h3>
+        )}
         <Library
           library={detailedCompartmentBooks}
           onRenderBookDetails={onRenderBookDetails}
@@ -46,6 +49,11 @@ const BackNav = styled.nav`
 
 const CompartmentWrapper = styled.section`
   margin: 1rem;
+
+  h3 {
+    margin-top: 1rem;
+    text-align: center;
+  }
 `;
 CompartmentPage.propTypes = {
   onRenderBookDetails: PropTypes.func,
