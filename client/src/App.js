@@ -78,7 +78,6 @@ function App() {
     });
     setShelves(updatedShelves);
   }
-  console.log(shelves);
 
   function addRating(rating, bookToUpdate) {
     updateBook('rating', rating, bookToUpdate);
