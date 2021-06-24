@@ -100,13 +100,13 @@ function App() {
   function getBookLocation(book) {
     if (book.shelfLocation) {
       const shelf = shelves.find(
-        (shelf) => shelf.id === book.shelfLocation.bookshelf
+        (shelf) => shelf.id === book.shelfLocation.bookshelfId
       );
       const column = shelf.columns.find(
-        (column) => column.id === book.shelfLocation.column
+        (column) => column.id === book.shelfLocation.columnId
       );
       const compartment = column.compartments.find(
-        (compartment) => compartment.id === book.shelfLocation.compartment
+        (compartment) => compartment.id === book.shelfLocation.compartmentId
       );
       return `${shelf.name}, Column ${column.column}, Compartment ${compartment.compartment}`;
     } else {
