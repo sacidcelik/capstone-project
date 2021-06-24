@@ -9,7 +9,7 @@ export default function AddAndRemoveButton({
 }) {
   function handleClick() {
     onToggleToAndFromLibrary();
-    isInLibrary ? onSetIsSelector(() => false) : onSetIsSelector(() => true);
+    isInLibrary ? onSetIsSelector(false) : onSetIsSelector(true);
     onProvideBook();
   }
 
