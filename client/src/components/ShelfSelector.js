@@ -15,9 +15,9 @@ export default function ShelfSelector({
   onSelectShelf,
 }) {
   const initialSelection = {
-    bookshelf: '',
-    column: '',
-    compartment: '',
+    bookshelfId: '',
+    columnId: '',
+    compartmentId: '',
   };
   const [selection, setSelection] = useState(initialSelection);
   const [shelfIndex, setShelfIndex] = useState(null);
@@ -30,9 +30,9 @@ export default function ShelfSelector({
     shelfIndex >= 0 ? setShelfIndex(shelfIndex) : setShelfIndex(null);
     setSelection({
       ...selection,
-      bookshelf: event.target.value,
-      column: '',
-      compartment: '',
+      bookshelfId: event.target.value,
+      columnId: '',
+      compartmentId: '',
     });
     toast.dismiss('validationError');
   }
@@ -42,12 +42,16 @@ export default function ShelfSelector({
       (column) => column.id === event.target.value
     );
     columnIndex >= 0 ? setColumnIndex(columnIndex) : setColumnIndex(null);
-    setSelection({ ...selection, column: event.target.value, compartment: '' });
+    setSelection({
+      ...selection,
+      columnId: event.target.value,
+      compartment: '',
+    });
     toast.dismiss('validationError');
   }
 
   function handleCompartmentChange(event) {
-    setSelection({ ...selection, compartment: event.target.value });
+    setSelection({ ...selection, compartmentId: event.target.value });
     toast.dismiss('validationError');
   }
 
@@ -100,47 +104,47 @@ export default function ShelfSelector({
       <ShelfSelectorForm onSubmit={handleSelectionSave}>
         <ShelfPicker>
           <div>
-            <label htmlFor="bookshelf">Bookshelf</label>
+            <label htmlFor="bookshelfId">Bookshelf</label>
             <select
-              name="bookshelf"
-              id="bookshelf"
+              name="bookshelfId"
+              id="bookshelfId"
               onChange={handleBookShelfChange}
-              value={selection.bookshelf}
               data-test-id="book-to-bookshelf-picker"
+              value={selection.bookshelfId}
             >
               <option value="">-Select-</option>
               {shelves.length > 0 &&
                 shelves.map((shelf, index) => (
-                  <option key={index} value={shelf.id}>
+                  <option key={shelf.id} value={shelf.id}>
                     {shelf.name}
                   </option>
                 ))}
             </select>
           </div>
           <div>
-            <label htmlFor="column">Column</label>
+            <label htmlFor="columnId">Column</label>
             <select
-              name="column"
-              id="column"
+              name="columnId"
+              id="columnId"
               onChange={handleColumnChange}
-              value={selection.column}
               data-test-id="book-to-column-picker"
+              value={selection.columnId}
             >
               <option value="">-Select-</option>
               {shelfIndex !== null &&
                 shelves[shelfIndex].columns.map((column, index) => (
-                  <option key={index} value={column.id}>
+                  <option key={column.id} value={column.id}>
                     {column.column}
                   </option>
                 ))}
             </select>
           </div>
           <div>
-            <label htmlFor="compartment">Compartment</label>
+            <label htmlFor="compartmentId">Compartment</label>
             <select
-              name="compartment"
-              id="compartment"
-              value={selection.compartment}
+              name="compartmentId"
+              id="compartmentId"
+              value={selection.compartmentId}
               onChange={handleCompartmentChange}
               data-test-id="book-to-compartment-picker"
             >
@@ -149,7 +153,7 @@ export default function ShelfSelector({
                 columnIndex !== null &&
                 shelves[shelfIndex].columns[columnIndex].compartments.map(
                   (compartment, index) => (
-                    <option key={index} value={compartment.id}>
+                    <option key={compartment.id} value={compartment.id}>
                       {compartment.compartment}
                     </option>
                   )
@@ -157,7 +161,7 @@ export default function ShelfSelector({
             </select>
           </div>
         </ShelfPicker>
-        <SaveAddButton text={'Save'} />
+        <SaveAddButton text="Save" />
       </ShelfSelectorForm>
     </ShelfSelectorCard>
   );

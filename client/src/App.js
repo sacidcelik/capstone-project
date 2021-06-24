@@ -60,16 +60,16 @@ function App() {
 
   function updateBooksInCompartment(property, selection, book) {
     const updatedShelves = shelves.map((shelf) => {
-      if (shelf.id === selection.bookshelf) {
+      if (shelf.id === selection.bookshelfId) {
         shelf.columns.map((column) => {
-          if (column.id === selection.column) {
+          if (column.id === selection.columnId) {
             column.compartments.map((compartment) => {
-              if (compartment.id === selection.compartment) {
+              if (compartment.id === selection.compartmentId) {
                 let existingBooks;
                 compartment[property]
                   ? (existingBooks = compartment[property])
-                  : (existingBooks = '');
-                existingBooks === ''
+                  : (existingBooks = []);
+                existingBooks.length === 0
                   ? (compartment[property] = [book.id])
                   : (compartment[property] = [...existingBooks, book.id]);
               }
