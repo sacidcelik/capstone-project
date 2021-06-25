@@ -27,7 +27,7 @@ function App() {
       ? removeFromLibrary(focusedBook)
       : addToLibrary(focusedBook);
   }
-
+  console.log(library);
   function addToLibrary(focusedBook) {
     setLibrary([...library, focusedBook]);
   }
@@ -129,7 +129,7 @@ function App() {
     }
   }
 
-  function getShelfBooks(shelf) {
+  function getShelfBookImages(shelf) {
     const shelfBooks = [];
     if (shelf) {
       shelf.columns.forEach((column, columnIndex) => {
@@ -199,7 +199,7 @@ function App() {
             onGetCompartmentBooks={getCompartmentBooks}
             onProvideDetailedShelf={provideDetailedShelfHelper}
             detailedCompartmentBooks={detailedCompartmentBooks}
-            onGetShelfBooks={getShelfBooks}
+            onGetShelfBooks={getShelfBookImages}
           />
         </Route>
         <Route path="/myshelves/createshelf">

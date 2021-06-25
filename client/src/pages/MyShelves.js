@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { useEffect, useState } from 'react';
 
 import SaveAddButton from '../components/SaveAddButton';
@@ -68,9 +68,9 @@ export default function MyShelves({
           </ShelfWrapper>
         </>
       )}
-      <Link to="/myshelves/createshelf">
+      <LinkStyled to="/myshelves/createshelf">
         <SaveAddButton text={'Add New Shelf'} />
-      </Link>
+      </LinkStyled>
     </ShelfPage>
   );
 }
@@ -79,13 +79,6 @@ const ShelfPage = styled.main`
   align-items: center;
   display: flex;
   flex-direction: column;
-
-  a {
-    display: flex;
-    justify-content: center;
-    text-decoration: none;
-    width: 100%;
-  }
 `;
 
 const NoShelvesMessage = styled.p`
@@ -117,6 +110,12 @@ const ShelfWrapper = styled.article`
   justify-content: center;
   margin: 0 auto 1rem;
   width: 95%;
+`;
+const LinkStyled = styled(Link)`
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  width: 100%;
 `;
 
 MyShelves.propTypes = {

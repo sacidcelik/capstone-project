@@ -12,30 +12,31 @@ export default function Shelf({
   isSaved,
   bookImages,
 }) {
-  const [compartmentHeights, setCompartmentHeights] = useState([]);
+  const [compartmentDimensions, setCompartmentDimensions] = useState([]);
   let { url } = useRouteMatch();
 
-  function shelfWidth(index) {
-    const columnWidth =
-      shelf.columns[index].width === undefined
-        ? 100 / shelf.columns.length
-        : (100 / shelf.columns.length) * shelf.columns[index].width;
-    return columnWidth;
-  }
-  console.log('heights', compartmentHeights);
   useEffect(() => {
-    setCompartmentHeights([]);
+    determineCompartmentRenderDimensions();
+  }, [shelf]);
+  console.log(compartmentDimensions);
+
+  function determineCompartmentRenderDimensions() {
+    setCompartmentDimensions([]);
     const columns = document?.querySelectorAll('#column');
     const height = [];
 
     columns.forEach((column, columnIndex) => {
       height.push([]);
       column.childNodes.forEach((compartment) =>
-        height[columnIndex].push(compartment.clientHeight)
+        height[columnIndex].push({
+          height: compartment.clientHeight,
+          width: compartment.clientWidth,
+          fitsWidth: Math.floor(compartment.clientWidth / 50),
+        })
       );
     });
-    setCompartmentHeights(height);
-  }, [shelf]);
+    setCompartmentDimensions(height);
+  }
 
   function checkForHeight(value) {
     return shelf.columns.some((column) => column.height === value);
@@ -45,6 +46,14 @@ export default function Shelf({
     if (checkForHeight(3)) return (100 / 3) * shelf.columns[index].height;
     if (checkForHeight(2)) return (100 / 2) * shelf.columns[index].height;
     else return 100;
+  }
+
+  function shelfWidth(index) {
+    const columnWidth =
+      shelf.columns[index].width === undefined
+        ? 100 / shelf.columns.length
+        : (100 / shelf.columns.length) * shelf.columns[index].width;
+    return columnWidth;
   }
 
   function compartmentClickHandler(shelf, column, compartment) {
@@ -75,8 +84,8 @@ export default function Shelf({
                 id="compartment"
               >
                 {isSaved && (
-                  <div>
-                    <Link
+                  <BookImageWrapper>
+                    <LinkStyled
                       key={compartmentIndex}
                       to={`${url}/${compartment.id}`}
                       onClick={() =>
@@ -84,27 +93,68 @@ export default function Shelf({
                       }
                       data-test-id="compartment-link"
                     >
-                      {compartmentHeights.length > 1 &&
-                        compartmentHeights[columnIndex][compartmentIndex] >
-                          95 &&
-                        bookImages &&
-                        bookImages.length > 0 &&
-                        bookImages[columnIndex][compartmentIndex]?.map(
+                      {compartmentDimensions?.[columnIndex]?.[compartmentIndex]
+                        ?.height > 57 &&
+                        compartmentDimensions?.[columnIndex]?.[compartmentIndex]
+                          ?.fitsWidth > 0 &&
+                        bookImages?.[columnIndex]?.[compartmentIndex]?.map(
                           (bookImageURL, bookImageIndex) => {
-                            return (
-                              <img
-                                key={bookImageIndex}
-                                src={bookImageURL}
-                                alt="book cover"
-                              />
-                            );
+                            if (
+                              bookImageIndex <
+                              compartmentDimensions?.[columnIndex]?.[
+                                compartmentIndex
+                              ]?.fitsWidth
+                            ) {
+                              return (
+                                <BookImage
+                                  key={bookImageIndex}
+                                  src={bookImageURL}
+                                  alt="book cover"
+                                  height={
+                                    compartmentDimensions[columnIndex][
+                                      compartmentIndex
+                                    ].height - 10
+                                  }
+                                  width={
+                                    (compartmentDimensions[columnIndex][
+                                      compartmentIndex
+                                    ].height -
+                                      10) *
+                                    0.63
+                                  }
+                                  propWidth={
+                                    75 /
+                                    compartmentDimensions[columnIndex][
+                                      compartmentIndex
+                                    ].fitsWidth
+                                  }
+                                />
+                              );
+                            }
                           }
                         )}
-                      {compartmentHeights.length > 1 &&
-                        compartmentHeights[columnIndex][compartmentIndex] <
-                          95 && <p>{compartment?.storedBooks?.length}</p>}
-                    </Link>
-                  </div>
+                      {compartmentDimensions?.[columnIndex]?.[compartmentIndex]
+                        ?.height > 57 &&
+                        compartment?.storedBooks?.length >
+                          compartmentDimensions?.[columnIndex]?.[
+                            compartmentIndex
+                          ]?.fitsWidth && (
+                          <BookCountBubble>
+                            +
+                            {compartment?.storedBooks?.length -
+                              compartmentDimensions?.[columnIndex]?.[
+                                compartmentIndex
+                              ]?.fitsWidth}
+                          </BookCountBubble>
+                        )}
+                      {(compartmentDimensions?.[columnIndex]?.[compartmentIndex]
+                        ?.height <= 57 ||
+                        compartmentDimensions?.[columnIndex]?.[compartmentIndex]
+                          ?.fitsWidth === 0) && (
+                        <p>{compartment?.storedBooks?.length}</p>
+                      )}
+                    </LinkStyled>
+                  </BookImageWrapper>
                 )}
               </Compartment>
             );
@@ -129,39 +179,76 @@ const Column = styled.div`
 `;
 
 const Compartment = styled.div`
-  display: flex;
-  justify-content: center;
   align-items: center;
   border: ${(props) => props.getColor};
   border-left: none;
   border-right: none;
+  display: flex;
+  justify-content: center;
   height: 100%;
   width: 100%;
 
   :not(:first-child) {
-    border-bottom: 3px solid var(--background);
+    border-bottom: none;
   }
 
   :first-child {
-    border-bottom: 3px solid var(--background);
+    border-bottom: none;
     border-top: none;
-  }
-  div {
-    margin: 0 auto;
-    width: 80%;
-    height: 95%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    img {
-      width: 32%;
-      height: auto;
-      object-fit: cover;
-    }
   }
 `;
 
+const BookImageWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 80%;
+`;
+
+const LinkStyled = styled(Link)`
+  color: black;
+  display: flex;
+  height: 100;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+  text-decoration: none;
+  width: 100%;
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+`;
+
+const BookImage = styled.img`
+  height: auto;
+  object-fit: cover;
+  width: ${(props) => props.propWidth}%;
+`;
+const BookCountBubble = styled.div`
+  align-items: center;
+  align-self: center;
+  background-color: var(--secondary);
+  border-radius: 50%;
+  color: var(--background);
+  display: flex;
+  height: 3rem;
+  justify-content: center;
+  opacity: 0.8;
+  position: absolute;
+  right: 0;
+  width: 3rem;
+`;
 Shelf.propTypes = {
   shelf: PropTypes.object,
+  onGetCompartmentBooks: PropTypes.func,
+  onProvideDetailedShelf: PropTypes.func,
+  isSaved: PropTypes.bool,
+  bookImages: PropTypes.array,
 };
