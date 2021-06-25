@@ -155,7 +155,6 @@ function App() {
           return columnBooks;
         })
       );
-
       return shelfBooks;
     }
   }

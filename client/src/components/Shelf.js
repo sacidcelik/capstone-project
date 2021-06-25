@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
@@ -11,6 +12,7 @@ export default function Shelf({
   isSaved,
   bookImages,
 }) {
+  const [compartmentHeights, setCompartmentHeights] = useState([]);
   let { url } = useRouteMatch();
 
   function shelfWidth(index) {
@@ -20,6 +22,20 @@ export default function Shelf({
         : (100 / shelf.columns.length) * shelf.columns[index].width;
     return columnWidth;
   }
+  console.log('heights', compartmentHeights);
+  useEffect(() => {
+    setCompartmentHeights([]);
+    const columns = document?.querySelectorAll('#column');
+    const height = [];
+
+    columns.forEach((column, columnIndex) => {
+      height.push([]);
+      column.childNodes.forEach((compartment) =>
+        height[columnIndex].push(compartment.clientHeight)
+      );
+    });
+    setCompartmentHeights(height);
+  }, [shelf]);
 
   function checkForHeight(value) {
     return shelf.columns.some((column) => column.height === value);
@@ -46,6 +62,7 @@ export default function Shelf({
         child={columnIndex}
         getColor={getShelfBorders(shelf.color)}
         data-test-id="column"
+        id="column"
       >
         {column.compartments &&
           column.compartments.length > 0 &&
@@ -55,29 +72,39 @@ export default function Shelf({
                 key={'compartment' + compartmentIndex}
                 getColor={getShelfBorders(shelf.color)}
                 data-test-id="compartment"
+                id="compartment"
               >
                 {isSaved && (
-                  <Link
-                    key={compartmentIndex}
-                    to={`${url}/${compartment.id}`}
-                    onClick={() =>
-                      compartmentClickHandler(shelf, column, compartment)
-                    }
-                    data-test-id="compartment-link"
-                  >
-                    {bookImages.length > 0 &&
-                      bookImages[columnIndex][compartmentIndex]?.map(
-                        (bookImageURL, bookImageIndex) => {
-                          return (
-                            <img
-                              key={bookImageIndex}
-                              src={bookImageURL}
-                              alt="book cover"
-                            />
-                          );
-                        }
-                      )}
-                  </Link>
+                  <div>
+                    <Link
+                      key={compartmentIndex}
+                      to={`${url}/${compartment.id}`}
+                      onClick={() =>
+                        compartmentClickHandler(shelf, column, compartment)
+                      }
+                      data-test-id="compartment-link"
+                    >
+                      {compartmentHeights.length > 1 &&
+                        compartmentHeights[columnIndex][compartmentIndex] >
+                          95 &&
+                        bookImages &&
+                        bookImages.length > 0 &&
+                        bookImages[columnIndex][compartmentIndex]?.map(
+                          (bookImageURL, bookImageIndex) => {
+                            return (
+                              <img
+                                key={bookImageIndex}
+                                src={bookImageURL}
+                                alt="book cover"
+                              />
+                            );
+                          }
+                        )}
+                      {compartmentHeights.length > 1 &&
+                        compartmentHeights[columnIndex][compartmentIndex] <
+                          95 && <p>{compartment?.storedBooks?.length}</p>}
+                    </Link>
+                  </div>
                 )}
               </Compartment>
             );
@@ -119,9 +146,19 @@ const Compartment = styled.div`
     border-bottom: 3px solid var(--background);
     border-top: none;
   }
+  div {
+    margin: 0 auto;
+    width: 80%;
+    height: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  img {
-    width: 30%;
+    img {
+      width: 32%;
+      height: auto;
+      object-fit: cover;
+    }
   }
 `;
 
