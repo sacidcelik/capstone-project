@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 
-import Shelf from '../components/Shelf';
 import SaveAddButton from '../components/SaveAddButton';
+import Shelf from '../components/Shelf';
 import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
 import { ReactComponent as ForwardArrow } from '../images/arrowForward.svg';
 
-export default function MyShelves({ shelves }) {
+export default function MyShelves({
+  shelves,
+  onGetCompartmentBooks,
+  onProvideDetailedShelf,
+}) {
   const [shelfIndex, setShelfIndex] = useState(0);
 
   function goForward() {
@@ -48,7 +52,12 @@ export default function MyShelves({ shelves }) {
             />
           </ShelfNav>
           <ShelfWrapper>
-            <Shelf shelf={shelves[shelfIndex]} />
+            <Shelf
+              shelf={shelves[shelfIndex]}
+              onGetCompartmentBooks={onGetCompartmentBooks}
+              onProvideDetailedShelf={onProvideDetailedShelf}
+              isSaved={true}
+            />
           </ShelfWrapper>
         </>
       )}
@@ -105,4 +114,6 @@ const ShelfWrapper = styled.article`
 
 MyShelves.propTypes = {
   shelves: PropTypes.array,
+  onGetCompartmentBooks: PropTypes.func,
+  onProvideDetailedShelf: PropTypes.func,
 };

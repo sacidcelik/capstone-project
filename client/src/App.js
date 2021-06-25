@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
+import CompartmentPage from './pages/CompartmentPage';
 import MyShelves from './pages/MyShelves';
 import MyBooks from './pages/MyBooks';
 import Header from './components/Header';
@@ -16,6 +17,10 @@ function App() {
   const [shelves, setShelves] = useState([]);
   const [view, setView] = useState('');
   const [detailedBook, setDetailedBook] = useState({});
+  const [detailedShelf, setDetailedShelf] = useState({
+    compartment: { id: 123 },
+  });
+  const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
 
   function toggleToAndFromLibrary(focusedBook) {
     isInLibrary(focusedBook)
@@ -95,18 +100,42 @@ function App() {
   function getBookLocation(book) {
     if (book.shelfLocation) {
       const shelf = shelves.find(
-        (shelf) => shelf.id === book.shelfLocation.bookshelf
+        (shelf) => shelf.id === book.shelfLocation.bookshelfId
       );
       const column = shelf.columns.find(
-        (column) => column.id === book.shelfLocation.column
+        (column) => column.id === book.shelfLocation.columnId
       );
       const compartment = column.compartments.find(
-        (compartment) => compartment.id === book.shelfLocation.compartment
+        (compartment) => compartment.id === book.shelfLocation.compartmentId
       );
       return `${shelf.name}, Column ${column.column}, Compartment ${compartment.compartment}`;
     } else {
       return `Not stored in a shelf.`;
     }
+  }
+
+  function getCompartmentBooks(storedBookIds) {
+    const storedBooks = [];
+    if (storedBookIds && storedBookIds.length > 0) {
+      storedBookIds.map((bookId) =>
+        library.map((book) => {
+          if (book.id === bookId) storedBooks.push(book);
+          return storedBooks;
+        })
+      );
+      return setDetailedCompartmentBooks(storedBooks);
+    } else {
+      return setDetailedCompartmentBooks([]);
+    }
+  }
+
+  function provideDetailedShelfHelper(shelf, column, compartment) {
+    const detailedShelfCompartment = {
+      shelf: shelf,
+      column: column,
+      compartment: compartment,
+    };
+    setDetailedShelf(detailedShelfCompartment);
   }
 
   function renderBookDetails(book) {
@@ -134,10 +163,23 @@ function App() {
           />
         </Route>
         <Route exact path="/myshelves">
-          <MyShelves onSaveShelf={addShelf} shelves={shelves} />
+          <MyShelves
+            onSaveShelf={addShelf}
+            shelves={shelves}
+            onGetCompartmentBooks={getCompartmentBooks}
+            onProvideDetailedShelf={provideDetailedShelfHelper}
+          />
         </Route>
         <Route path="/myshelves/createshelf">
           <CreateShelf onSaveShelf={addShelf} />
+        </Route>
+        <Route path={`/myshelves/${detailedShelf.compartment.id}`}>
+          {view === 'details' && renderBookDetails(detailedBook)}
+          <CompartmentPage
+            onRenderBookDetails={renderBookDetailsHelper}
+            detailedCompartmentBooks={detailedCompartmentBooks}
+            detailedShelf={detailedShelf}
+          />
         </Route>
         <Route path="/mybooks">
           {view === 'details' && renderBookDetails(detailedBook)}
