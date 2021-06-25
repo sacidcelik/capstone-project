@@ -18,7 +18,6 @@ export default function Shelf({
   useEffect(() => {
     determineCompartmentRenderDimensions();
   }, [shelf]);
-  console.log(compartmentDimensions);
 
   function determineCompartmentRenderDimensions() {
     setCompartmentDimensions([]);
@@ -58,7 +57,6 @@ export default function Shelf({
 
   function compartmentClickHandler(shelf, column, compartment) {
     onGetCompartmentBooks(compartment.storedBooks);
-    console.log('shelf', compartment);
     onProvideDetailedShelf(shelf, column, compartment);
   }
 
@@ -81,7 +79,6 @@ export default function Shelf({
                 key={'compartment' + compartmentIndex}
                 getColor={getShelfBorders(shelf.color)}
                 data-test-id="compartment"
-                id="compartment"
               >
                 {isSaved && (
                   <BookImageWrapper>
@@ -210,7 +207,6 @@ const BookImageWrapper = styled.div`
 const LinkStyled = styled(Link)`
   color: black;
   display: flex;
-  height: 100;
   justify-content: center;
   margin: 0 auto;
   position: relative;

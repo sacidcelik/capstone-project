@@ -21,13 +21,13 @@ function App() {
     compartment: { id: 123 },
   });
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
-  console.log('app', shelves);
+
   function toggleToAndFromLibrary(focusedBook) {
     isInLibrary(focusedBook)
       ? removeFromLibrary(focusedBook)
       : addToLibrary(focusedBook);
   }
-  console.log(library);
+
   function addToLibrary(focusedBook) {
     setLibrary([...library, focusedBook]);
   }
