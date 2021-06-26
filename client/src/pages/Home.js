@@ -30,7 +30,15 @@ export default function Home({
           {shelves.length === 0 && <h5>You have no saved shelves.</h5>}
           <ShelfList>
             {shelves.map(
-              (shelf, index) => index < 3 && <Shelf>{shelf.name}</Shelf>
+              (shelf, index) =>
+                index < 3 && (
+                  <Shelf key={shelf.id}>
+                    {shelf.name}:{' '}
+                    {shelf.storedBooks
+                      ? `${shelf.storedBooks} Books`
+                      : '0 Books'}
+                  </Shelf>
+                )
             )}
             {shelves.length > 3 && <p>+ {shelves.length - 3} more</p>}
           </ShelfList>
@@ -44,16 +52,16 @@ export default function Home({
         </Link>
         {recentBooks.length > 0 &&
           recentBooks.map((book) => (
-            <BookCard onClick={() => onRenderBookDetails(book)}>
+            <BookCard key={book.id} onClick={() => onRenderBookDetails(book)}>
               <BookImage>
                 <img
-                  src={book.volumeInfo.imageLinks.thumbnail}
+                  src={book.volumeInfo?.imageLinks?.thumbnail}
                   alt="book cover"
                   width="36"
                   height="48"
                 />
               </BookImage>
-              <BookTitle>{book.volumeInfo.title}</BookTitle>
+              <BookTitle>{book.volumeInfo?.title}</BookTitle>
             </BookCard>
           ))}
       </LibraryCard>

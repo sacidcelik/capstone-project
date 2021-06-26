@@ -76,13 +76,28 @@ function App() {
               return compartment;
             });
           }
+
           return column;
         });
       }
+      shelf.storedBooks = 0;
+      shelf.columns.forEach((column) =>
+        column.compartments.forEach((compartment) => {
+          const sum = compartment.storedBooks
+            ? compartment.storedBooks.reduce((acc, element) => {
+                if (element) acc++;
+                return acc;
+              }, 0)
+            : 0;
+          return (shelf.storedBooks += sum);
+        })
+      );
       return shelf;
     });
     setShelves(updatedShelves);
   }
+
+  console.log(shelves);
 
   function addRating(rating, bookToUpdate) {
     updateBook('rating', rating, bookToUpdate);
