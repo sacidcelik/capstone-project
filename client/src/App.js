@@ -185,11 +185,14 @@ function App() {
       <Header />
       <Switch>
         <Route path="/home">
+          {view === 'details' && renderBookDetails(detailedBook)}
           <Home
             onToggleToAndFromLibrary={toggleToAndFromLibrary}
             isInLibrary={isInLibrary}
             shelves={shelves}
             onSelectShelf={addRefToBookAndShelf}
+            library={library}
+            onRenderBookDetails={renderBookDetailsHelper}
           />
         </Route>
         <Route exact path="/myshelves">

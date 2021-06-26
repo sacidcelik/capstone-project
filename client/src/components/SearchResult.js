@@ -68,7 +68,7 @@ export default function SearchResult({
 }
 
 const SearchResultSection = styled.section`
-  padding-bottom: ${(props) => (props.isStatic ? '0px' : '7rem')};
+  /* padding-bottom: ${(props) => (props.isStatic ? '0px' : '7rem')}; */
 `;
 
 const SearchResultCard = styled.article`
