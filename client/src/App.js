@@ -12,6 +12,8 @@ import Header from './components/Header';
 import BookDetails from './components/BookDetails';
 import CreateShelf from './pages/CreateShelf';
 import getTodaysDate from './services/getDate';
+import Start from './pages/Start';
+import Access from './pages/Access';
 
 function App() {
   const [library, setLibrary] = useState([]);
@@ -22,6 +24,7 @@ function App() {
     compartment: { id: 123 },
   });
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
+  const [isNewUser, setIsNewUser] = useState(false);
 
   function toggleToAndFromLibrary(focusedBook) {
     isInLibrary(focusedBook)
@@ -195,13 +198,21 @@ function App() {
       />
     );
   }
-
+  console.log(isNewUser);
   return (
     <>
       <StyledToastContainer />
-      <Header />
+
       <Switch>
+        <Route exact path="/">
+          <Start onSetIsNewUser={setIsNewUser} />
+        </Route>
+        <Route exact path="/accessPage">
+          <Header noLink />
+          <Access isNewUser={isNewUser} />
+        </Route>
         <Route path="/home">
+          <Header />
           {view === 'details' && renderBookDetails(detailedBook)}
           <Home
             onToggleToAndFromLibrary={toggleToAndFromLibrary}
@@ -211,8 +222,10 @@ function App() {
             library={library}
             onRenderBookDetails={renderBookDetailsHelper}
           />
+          <NavFooter />
         </Route>
         <Route exact path="/myshelves">
+          <Header />
           <MyShelves
             onSaveShelf={addShelf}
             shelves={shelves}
@@ -221,27 +234,33 @@ function App() {
             detailedCompartmentBooks={detailedCompartmentBooks}
             onGetShelfBooks={getShelfBookImages}
           />
+          <NavFooter />
         </Route>
         <Route path="/myshelves/createshelf">
+          <Header />
           <CreateShelf onSaveShelf={addShelf} />
+          <NavFooter />
         </Route>
         <Route path={`/myshelves/${detailedShelf.compartment.id}`}>
+          <Header />
           {view === 'details' && renderBookDetails(detailedBook)}
           <CompartmentPage
             onRenderBookDetails={renderBookDetailsHelper}
             detailedCompartmentBooks={detailedCompartmentBooks}
             detailedShelf={detailedShelf}
           />
+          <NavFooter />
         </Route>
         <Route path="/mybooks">
+          <Header />
           {view === 'details' && renderBookDetails(detailedBook)}
           <MyBooks
             library={library}
             onRenderBookDetails={renderBookDetailsHelper}
           />
+          <NavFooter />
         </Route>
       </Switch>
-      <NavFooter />
     </>
   );
 }

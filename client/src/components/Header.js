@@ -3,17 +3,27 @@ import styled from 'styled-components/macro';
 
 import BookshelfIcon from '../images/bookshelfLogo.svg';
 
-export default function Header({ isStatic }) {
+export default function Header({ isStatic, noLink }) {
   return (
     <HeaderWrapper isStatic={isStatic}>
-      <Link to="/home">
+      {noLink !== true && (
+        <Link to="/home">
+          <img
+            src={BookshelfIcon}
+            alt="Bookshelves Icon"
+            width="51"
+            height="44"
+          />
+        </Link>
+      )}
+      {noLink && (
         <img
           src={BookshelfIcon}
           alt="Bookshelves Icon"
           width="51"
           height="44"
         />
-      </Link>
+      )}
     </HeaderWrapper>
   );
 }
@@ -31,4 +41,8 @@ const HeaderWrapper = styled.header`
   position: ${(props) => (props.isStatic ? 'static' : 'sticky')};
   top: 0;
   width: ${(props) => (props.isStatic ? '414px' : '100vw')};
+
+  a {
+    text-decoration: none;
+  }
 `;
