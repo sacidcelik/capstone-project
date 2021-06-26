@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import GlobalSearch from '../components/GlobalSearch';
+import getTodaysDate from '../services/getDate';
 
 export default function Home({
   onToggleToAndFromLibrary,
@@ -11,9 +12,10 @@ export default function Home({
   library,
   onRenderBookDetails,
 }) {
-  const recentBooks = library.slice(library.length - 3, library.length);
+  let recentBooks = [];
+  recentBooks = library.slice(library.length - 3, library.length).reverse();
 
-  console.log(recentBooks);
+  console.log(getTodaysDate());
 
   return (
     <HomePage>
@@ -50,6 +52,12 @@ export default function Home({
         <Link to="/mybooks">
           <p>Recently added books</p>
         </Link>
+        {recentBooks.length === 0 && (
+          <h5>
+            You have not added any books to your library yet. Start by searching
+            for a book.
+          </h5>
+        )}
         {recentBooks.length > 0 &&
           recentBooks.map((book) => (
             <BookCard key={book.id} onClick={() => onRenderBookDetails(book)}>
@@ -61,7 +69,12 @@ export default function Home({
                   height="48"
                 />
               </BookImage>
-              <BookTitle>{book.volumeInfo?.title}</BookTitle>
+              <BookTitle>
+                <p>{book.volumeInfo?.title}</p>
+              </BookTitle>
+              <AddedDate>
+                <p>Added on: {book.addToLibraryDate}</p>
+              </AddedDate>
             </BookCard>
           ))}
       </LibraryCard>
@@ -113,21 +126,24 @@ const LibraryCard = styled.section`
   box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
     var(--box-shadow-blur) var(--box-shadow-color);
   margin: 0 auto;
-  padding: 0.5rem;
   min-height: 20vh;
+  padding: 0.5rem;
 
   a {
     color: black;
   }
+  h5 {
+    text-align: center;
+  }
 `;
 
 const BookCard = styled.div`
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
-  gap: 1rem;
   background: var(--background);
   border-radius: var(--border-radius);
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
   max-height: 64px;
   margin: 0.5rem auto;
   padding: 0.5rem;
@@ -140,6 +156,13 @@ const BookTitle = styled.div`
   width: 60%;
   max-height: 3.6rem;
   overflow: hidden;
+`;
+
+const AddedDate = styled.div`
+  width: 25%;
+  p {
+    text-align: center;
+  }
 `;
 
 Home.propTypes = {

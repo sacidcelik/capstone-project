@@ -11,6 +11,7 @@ import MyBooks from './pages/MyBooks';
 import Header from './components/Header';
 import BookDetails from './components/BookDetails';
 import CreateShelf from './pages/CreateShelf';
+import getTodaysDate from './services/getDate';
 
 function App() {
   const [library, setLibrary] = useState([]);
@@ -29,8 +30,10 @@ function App() {
   }
 
   function addToLibrary(focusedBook) {
+    focusedBook.addToLibraryDate = getTodaysDate();
     setLibrary([...library, focusedBook]);
   }
+  console.log(library);
 
   function removeFromLibrary(focusedBook) {
     const remainingLibrary = library.filter(
