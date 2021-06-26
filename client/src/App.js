@@ -33,7 +33,6 @@ function App() {
     focusedBook.addToLibraryDate = getTodaysDate();
     setLibrary([...library, focusedBook]);
   }
-  console.log(library);
 
   function removeFromLibrary(focusedBook) {
     const remainingLibrary = library.filter(

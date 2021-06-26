@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import GlobalSearch from '../components/GlobalSearch';
-import getTodaysDate from '../services/getDate';
 
 export default function Home({
   onToggleToAndFromLibrary,
@@ -14,8 +13,6 @@ export default function Home({
 }) {
   let recentBooks = [];
   recentBooks = library.slice(library.length - 3, library.length).reverse();
-
-  console.log(getTodaysDate());
 
   return (
     <HomePage>
@@ -156,13 +153,12 @@ const BookTitle = styled.div`
   width: 60%;
   max-height: 3.6rem;
   overflow: hidden;
+  text-align: center;
 `;
 
 const AddedDate = styled.div`
+  text-align: center;
   width: 25%;
-  p {
-    text-align: center;
-  }
 `;
 
 Home.propTypes = {
@@ -170,4 +166,6 @@ Home.propTypes = {
   isInLibrary: PropTypes.func,
   shelves: PropTypes.array,
   onSelectShelf: PropTypes.func,
+  library: PropTypes.array,
+  onRenderBookDetails: PropTypes.func,
 };
