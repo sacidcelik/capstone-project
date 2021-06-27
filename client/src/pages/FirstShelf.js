@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 import ShelfCreator from '../components/ShelfCreator';
@@ -34,3 +35,9 @@ const FinishButton = styled.button`
   margin-bottom: 1rem;
   width: 280px;
 `;
+
+FirstShelf.propTypes = {
+  onSaveShelf: PropTypes.func,
+  activeUser: PropTypes.string,
+  shelves: PropTypes.array,
+};
