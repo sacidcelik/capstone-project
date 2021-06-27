@@ -1,5 +1,6 @@
-import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
+import { useHistory } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 
 import StartLoginButton from '../components/StartLoginButton';
@@ -134,3 +135,10 @@ const NameInput = styled.input`
     outline-color: var(--background);
   }
 `;
+
+Access.propTypes = {
+  isNewUser: PropTypes.bool,
+  onHandleAccess: PropTypes.func,
+  grantAccess: PropTypes.bool,
+  onCheckForUser: PropTypes.bool,
+};

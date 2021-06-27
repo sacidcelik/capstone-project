@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 import StartLoginButton from '../components/StartLoginButton';
@@ -45,3 +46,7 @@ const ButtonSection = styled.section`
   align-items: center;
   margin-top: 10rem;
 `;
+
+Start.propTypes = {
+  onSetIsNewUser: PropTypes.func,
+};

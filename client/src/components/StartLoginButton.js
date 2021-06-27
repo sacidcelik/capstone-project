@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 export default function StartLoginButton({ isStart, text }) {
@@ -15,3 +16,8 @@ const Button = styled.button`
   margin-bottom: 1rem;
   width: 280px;
 `;
+
+StartLoginButton.propTypes = {
+  isStart: PropTypes.bool,
+  text: PropTypes.string,
+};
