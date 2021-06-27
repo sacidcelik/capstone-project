@@ -21,8 +21,6 @@ export default function MyShelves({
     setBookImages(onGetShelfBooks(shelves[shelfIndex]));
   }, [shelfIndex, shelves, onGetShelfBooks]);
 
-  console.log(bookImages);
-
   function goForward() {
     if (isShelfAfter()) setShelfIndex(shelfIndex + 1);
   }

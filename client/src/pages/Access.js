@@ -6,9 +6,15 @@ import StartLoginButton from '../components/StartLoginButton';
 import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
 import { toast } from 'react-toastify';
 
-export default function Access({ isNewUser, onHandleAccess, grantAccess }) {
+export default function Access({
+  isNewUser,
+  onHandleAccess,
+  grantAccess,
+  onCheckForUser,
+}) {
   const [user, setUser] = useState('');
   const buttonText = () => (isNewUser ? 'Create User' : 'Sign In');
+
   const history = useHistory();
 
   function handleRoute() {
@@ -23,9 +29,47 @@ export default function Access({ isNewUser, onHandleAccess, grantAccess }) {
     handleLoginRoute();
   }, [grantAccess, handleLoginRoute]);
 
+  function inputChangeHandler(event) {
+    setUser(event.target.value);
+    toast.dismiss();
+  }
+
   function handleFormSubmit(event) {
     event.preventDefault();
-    user.length > 0 ? onHandleAccess(user) : toast.error('Enter a user name');
+    if (user.length > 0) {
+      onHandleAccess(user);
+      isNewUser &&
+        (onCheckForUser(user)
+          ? toast.error(
+              'User already exists. If this is your user name, please go back and Sign In',
+              {
+                toastId: 'signInError',
+                position: toast.POSITION.BOTTOM_CENTER,
+              }
+            )
+          : toast.success('Created new user', {
+              toastId: 'signInSuccess',
+              position: toast.POSITION.BOTTOM_CENTER,
+            }));
+      !isNewUser &&
+        (onCheckForUser(user)
+          ? toast.success('Successfully logged in', {
+              toastId: 'signInSuccess',
+              position: toast.POSITION.BOTTOM_CENTER,
+            })
+          : toast.error(
+              'User is not known, please check your user name or return and click "Start Now".',
+              {
+                toastId: 'signInError',
+                position: toast.POSITION.BOTTOM_CENTER,
+              }
+            ));
+    } else {
+      toast.error('Enter a user name', {
+        toastId: 'userNameError',
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    }
   }
 
   return (
@@ -43,7 +87,7 @@ export default function Access({ isNewUser, onHandleAccess, grantAccess }) {
         <NameInput
           type="name"
           placeholder="Your Name"
-          onChange={(e) => setUser(e.target.value)}
+          onChange={inputChangeHandler}
           value={user}
         />
         <StartLoginButton text={buttonText()} isStart={isNewUser} />

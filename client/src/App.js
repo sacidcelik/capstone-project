@@ -14,6 +14,7 @@ import CreateShelf from './pages/CreateShelf';
 import getTodaysDate from './services/getDate';
 import Start from './pages/Start';
 import Access from './pages/Access';
+import FirstShelf from './pages/FirstShelf';
 
 function App() {
   const [library, setLibrary] = useState([]);
@@ -25,7 +26,7 @@ function App() {
   });
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
   const [isNewUser, setIsNewUser] = useState(false);
-  const [users, setUsers] = useState(['']);
+  const [users, setUsers] = useState(['Sacid']);
   const [grantAccess, setGrantAccess] = useState(false);
   const [activeUser, setActiveUser] = useState('');
 
@@ -34,9 +35,6 @@ function App() {
       ? removeFromLibrary(focusedBook)
       : addToLibrary(focusedBook);
   }
-  console.log('users', users);
-  console.log('active', activeUser);
-  console.log('access', grantAccess);
 
   function addToLibrary(focusedBook) {
     focusedBook.addToLibraryDate = getTodaysDate();
@@ -193,10 +191,6 @@ function App() {
   }
 
   function handleAccess(user) {
-    console.log('checkforuser', checkForUser(user));
-    setGrantAccess(false);
-    setActiveUser('');
-
     if (isNewUser) {
       return checkForUser(user)
         ? setGrantAccess(false)
@@ -212,9 +206,10 @@ function App() {
   }
 
   function checkForUser(user) {
-    return users.some(
-      (existingUser) => existingUser.toLowerCase() === user.toLowerCase()
-    );
+    if (user.length > 0)
+      return users.some(
+        (existingUser) => existingUser.toLowerCase() === user.toLowerCase()
+      );
   }
 
   function renderBookDetails(book) {
@@ -227,7 +222,7 @@ function App() {
       />
     );
   }
-  console.log('newUser', isNewUser);
+
   return (
     <>
       <StyledToastContainer />
@@ -242,6 +237,15 @@ function App() {
             isNewUser={isNewUser}
             onHandleAccess={handleAccess}
             grantAccess={grantAccess}
+            onCheckForUser={checkForUser}
+          />
+        </Route>
+        <Route exact path="/firstShelf">
+          <Header noLink />
+          <FirstShelf
+            onSaveShelf={addShelf}
+            activeUser={activeUser}
+            shelves={shelves}
           />
         </Route>
         <Route path="/home">
