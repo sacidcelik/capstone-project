@@ -25,7 +25,7 @@ export default function ShelfSelector({
 
   function handleBookShelfChange(event) {
     const shelfIndex = shelves.findIndex(
-      (shelf) => shelf.id === event.target.value
+      (shelf) => shelf._id === event.target.value
     );
     shelfIndex >= 0 ? setShelfIndex(shelfIndex) : setShelfIndex(null);
     setSelection({
@@ -39,7 +39,7 @@ export default function ShelfSelector({
 
   function handleColumnChange(event) {
     const columnIndex = shelves[shelfIndex].columns.findIndex(
-      (column) => column.id === event.target.value
+      (column) => column._id === event.target.value
     );
     columnIndex >= 0 ? setColumnIndex(columnIndex) : setColumnIndex(null);
     setSelection({
@@ -115,7 +115,7 @@ export default function ShelfSelector({
               <option value="">-Select-</option>
               {shelves.length > 0 &&
                 shelves.map((shelf, index) => (
-                  <option key={shelf.id} value={shelf.id}>
+                  <option key={shelf._id} value={shelf._id}>
                     {shelf.name}
                   </option>
                 ))}
@@ -132,8 +132,8 @@ export default function ShelfSelector({
             >
               <option value="">-Select-</option>
               {shelfIndex !== null &&
-                shelves[shelfIndex].columns.map((column, index) => (
-                  <option key={column.id} value={column.id}>
+                shelves[shelfIndex].columns.map((column) => (
+                  <option key={column._id} value={column._id}>
                     {column.column}
                   </option>
                 ))}
@@ -152,8 +152,8 @@ export default function ShelfSelector({
               {shelfIndex !== null &&
                 columnIndex !== null &&
                 shelves[shelfIndex].columns[columnIndex].compartments.map(
-                  (compartment, index) => (
-                    <option key={compartment.id} value={compartment.id}>
+                  (compartment) => (
+                    <option key={compartment._id} value={compartment._id}>
                       {compartment.compartment}
                     </option>
                   )

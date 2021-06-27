@@ -19,7 +19,7 @@ import { saveToLocal, loadFromLocal } from './services/localStorage';
 
 function App() {
   const [activeUser, setActiveUser] = useState(
-    loadFromLocal('activeUser') ?? ''
+    loadFromLocal('activeUser') ?? {}
   );
   const [users, setUsers] = useState([]);
   const [library, setLibrary] = useState(loadFromLocal('library') ?? []);
@@ -32,10 +32,35 @@ function App() {
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
   const [isNewUser, setIsNewUser] = useState(false);
   const [grantAccess, setGrantAccess] = useState(false);
-
+  console.log('users', users);
+  console.log('activeUser', activeUser);
+  console.log('shelves', shelves);
   useEffect(() => {
     saveToLocal('library', library);
   }, [library]);
+
+  console.log('library', library);
+
+  useEffect(() => {
+    fetch('/users')
+      .then((result) => result.json())
+      .then((usersApi) => setUsers(usersApi))
+      .catch((error) => console.error(error));
+  }, []);
+
+  useEffect(() => {
+    fetch('/users/shelves/' + activeUser._id)
+      .then((result) => result.json())
+      .then((usersApi) => setShelves(usersApi.shelves))
+      .catch((error) => console.error(error));
+  }, [activeUser]);
+
+  useEffect(() => {
+    fetch('/users/library/' + activeUser._id)
+      .then((result) => result.json())
+      .then((usersApi) => setLibrary(usersApi.library))
+      .catch((error) => console.error(error));
+  }, [activeUser._id]);
 
   useEffect(() => {
     saveToLocal('shelves', shelves);
@@ -53,7 +78,32 @@ function App() {
 
   function addToLibrary(focusedBook) {
     focusedBook.addToLibraryDate = getTodaysDate();
-    setLibrary([...library, focusedBook]);
+    console.log(focusedBook);
+    fetch('/users/library/' + activeUser._id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(focusedBook),
+    })
+      .then((result) => result.json())
+      .then((updatedUser) => {
+        setLibrary(updatedUser.library);
+      });
+  }
+
+  function addShelf(shelf) {
+    fetch('/users/shelves/' + activeUser._id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(shelf),
+    })
+      .then((result) => result.json())
+      .then((updatedUser) => {
+        setShelves(updatedUser.shelves);
+      });
   }
 
   function removeFromLibrary(focusedBook) {
@@ -123,10 +173,6 @@ function App() {
 
   function addRating(rating, bookToUpdate) {
     updateBook('rating', rating, bookToUpdate);
-  }
-
-  function addShelf(shelf) {
-    setShelves([...shelves, shelf]);
   }
 
   function addRefToBookAndShelf(location, bookToUpdate) {
@@ -205,25 +251,45 @@ function App() {
     setDetailedShelf(detailedShelfCompartment);
   }
 
+  function addUser(user) {
+    fetch('/users', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user),
+    })
+      .then((result) => result.json)
+      .then((savedUser) => setUsers([...users, savedUser]))
+      .catch((error) => alert('That did not work for some reason. Try again'));
+  }
+
+  function getActiveUser(user) {
+    const activeUser = users.find(
+      (existingUser) =>
+        existingUser.name.toLowerCase() === user.name.toLowerCase()
+    );
+    return activeUser;
+  }
+
   function handleAccess(user) {
     if (isNewUser) {
       return checkForUser(user)
         ? setGrantAccess(false)
-        : (setUsers([...users, user]),
+        : (addUser(user),
           setGrantAccess(true),
-          setActiveUser(user));
+          setActiveUser(getActiveUser(user)));
     }
     if (!isNewUser) {
       return checkForUser(user)
-        ? (setGrantAccess(true), setActiveUser(user))
+        ? (setGrantAccess(true), setActiveUser(getActiveUser(user)))
         : setGrantAccess(false);
     }
   }
 
   function checkForUser(user) {
-    if (user.length > 0)
+    if (user.name.length > 0)
       return users.some(
-        (existingUser) => existingUser.toLowerCase() === user.toLowerCase()
+        (existingUser) =>
+          existingUser.name.toLowerCase() === user.name.toLowerCase()
       );
   }
 

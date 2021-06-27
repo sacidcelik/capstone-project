@@ -13,7 +13,8 @@ export default function Access({
   grantAccess,
   onCheckForUser,
 }) {
-  const [user, setUser] = useState('');
+  const initialUser = { name: '' };
+  const [user, setUser] = useState(initialUser);
   const buttonText = () => (isNewUser ? 'Create User' : 'Sign In');
 
   const history = useHistory();
@@ -31,13 +32,13 @@ export default function Access({
   }, [grantAccess, handleLoginRoute]);
 
   function inputChangeHandler(event) {
-    setUser(event.target.value);
+    setUser({ name: event.target.value });
     toast.dismiss();
   }
 
   function handleFormSubmit(event) {
     event.preventDefault();
-    if (user.length > 0) {
+    if (user.name.length > 0) {
       onHandleAccess(user);
       isNewUser &&
         (onCheckForUser(user)
@@ -89,7 +90,7 @@ export default function Access({
           type="name"
           placeholder="Your Name"
           onChange={inputChangeHandler}
-          value={user}
+          value={user.name}
         />
         <StartLoginButton text={buttonText()} isStart={isNewUser} />
       </Form>
