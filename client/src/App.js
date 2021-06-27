@@ -26,7 +26,7 @@ function App() {
   });
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
   const [isNewUser, setIsNewUser] = useState(false);
-  const [users, setUsers] = useState(['Sacid']);
+  const [users, setUsers] = useState([]);
   const [grantAccess, setGrantAccess] = useState(false);
   const [activeUser, setActiveUser] = useState('');
 
