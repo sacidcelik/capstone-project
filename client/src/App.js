@@ -25,12 +25,18 @@ function App() {
   });
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
   const [isNewUser, setIsNewUser] = useState(false);
+  const [users, setUsers] = useState(['']);
+  const [grantAccess, setGrantAccess] = useState(false);
+  const [activeUser, setActiveUser] = useState('');
 
   function toggleToAndFromLibrary(focusedBook) {
     isInLibrary(focusedBook)
       ? removeFromLibrary(focusedBook)
       : addToLibrary(focusedBook);
   }
+  console.log('users', users);
+  console.log('active', activeUser);
+  console.log('access', grantAccess);
 
   function addToLibrary(focusedBook) {
     focusedBook.addToLibraryDate = getTodaysDate();
@@ -101,8 +107,6 @@ function App() {
     });
     setShelves(updatedShelves);
   }
-
-  console.log(shelves);
 
   function addRating(rating, bookToUpdate) {
     updateBook('rating', rating, bookToUpdate);
@@ -188,6 +192,31 @@ function App() {
     setDetailedShelf(detailedShelfCompartment);
   }
 
+  function handleAccess(user) {
+    console.log('checkforuser', checkForUser(user));
+    setGrantAccess(false);
+    setActiveUser('');
+
+    if (isNewUser) {
+      return checkForUser(user)
+        ? setGrantAccess(false)
+        : (setUsers([...users, user]),
+          setGrantAccess(true),
+          setActiveUser(user));
+    }
+    if (!isNewUser) {
+      return checkForUser(user)
+        ? (setGrantAccess(true), setActiveUser(user))
+        : setGrantAccess(false);
+    }
+  }
+
+  function checkForUser(user) {
+    return users.some(
+      (existingUser) => existingUser.toLowerCase() === user.toLowerCase()
+    );
+  }
+
   function renderBookDetails(book) {
     return (
       <BookDetails
@@ -198,7 +227,7 @@ function App() {
       />
     );
   }
-  console.log(isNewUser);
+  console.log('newUser', isNewUser);
   return (
     <>
       <StyledToastContainer />
@@ -209,7 +238,11 @@ function App() {
         </Route>
         <Route exact path="/accessPage">
           <Header noLink />
-          <Access isNewUser={isNewUser} />
+          <Access
+            isNewUser={isNewUser}
+            onHandleAccess={handleAccess}
+            grantAccess={grantAccess}
+          />
         </Route>
         <Route path="/home">
           <Header />

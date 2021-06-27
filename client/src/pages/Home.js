@@ -14,7 +14,6 @@ export default function Home({
 }) {
   let recentBooks = [];
   recentBooks = library.slice(library.length - 3, library.length).reverse();
-  console.log(shelves);
   return (
     <HomePage>
       <SectionHeadline>Add new book</SectionHeadline>

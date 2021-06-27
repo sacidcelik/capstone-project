@@ -1,16 +1,33 @@
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
+import { useCallback, useEffect, useState } from 'react';
 
 import StartLoginButton from '../components/StartLoginButton';
 import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
+import { toast } from 'react-toastify';
 
-export default function Access({ isNewUser }) {
+export default function Access({ isNewUser, onHandleAccess, grantAccess }) {
+  const [user, setUser] = useState('');
   const buttonText = () => (isNewUser ? 'Create User' : 'Sign In');
   const history = useHistory();
 
   function handleRoute() {
     history.push('/');
   }
+  const handleLoginRoute = useCallback(() => {
+    if (isNewUser && grantAccess) return history.push('/firstShelf');
+    if (!isNewUser && grantAccess) return history.push('/home');
+  }, [isNewUser, grantAccess, history]);
+
+  useEffect(() => {
+    handleLoginRoute();
+  }, [grantAccess, handleLoginRoute]);
+
+  function handleFormSubmit(event) {
+    event.preventDefault();
+    user.length > 0 ? onHandleAccess(user) : toast.error('Enter a user name');
+  }
+
   return (
     <AccessPage>
       <BackNav onClick={handleRoute}>
@@ -22,18 +39,14 @@ export default function Access({ isNewUser }) {
           ? 'to create a new user'
           : 'to sign in and access your bookshelves'}
       </h3>
-      <Form onSubmit>
-        <NameInput type="name" placeholder="Your Name" />
-        {isNewUser && (
-          <Link to="/firstShelf">
-            <StartLoginButton text={buttonText()} isStart={isNewUser} />
-          </Link>
-        )}
-        {!isNewUser && (
-          <Link to="/home">
-            <StartLoginButton text={buttonText()} isStart={isNewUser} />
-          </Link>
-        )}
+      <Form onSubmit={handleFormSubmit}>
+        <NameInput
+          type="name"
+          placeholder="Your Name"
+          onChange={(e) => setUser(e.target.value)}
+          value={user}
+        />
+        <StartLoginButton text={buttonText()} isStart={isNewUser} />
       </Form>
     </AccessPage>
   );
@@ -61,15 +74,14 @@ const Form = styled.form`
 
 const NameInput = styled.input`
   height: 50px;
+  background: white;
+  border: none;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
     var(--box-shadow-blur) var(--box-shadow-color);
-
-  margin: 1rem auto;
-  background: white;
-  border: none;
   display: inline;
   font-size: 1rem;
+  margin: 1rem auto;
   height: 46px;
   padding: 0 1rem;
   width: 280px;

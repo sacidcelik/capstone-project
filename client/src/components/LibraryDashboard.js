@@ -7,7 +7,6 @@ export default function LibraryDashboard({
   onRenderBookDetails,
   isStatic,
 }) {
-  console.log(recentBooks);
   return (
     <LibraryCard isStatic={isStatic}>
       <Link to="/mybooks">
