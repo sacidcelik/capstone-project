@@ -1,6 +1,6 @@
 import NavFooter from './components/NavFooter';
 import { Switch, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,10 +15,15 @@ import getTodaysDate from './services/getDate';
 import Start from './pages/Start';
 import Access from './pages/Access';
 import FirstShelf from './pages/FirstShelf';
+import { saveToLocal, loadFromLocal } from './services/localStorage';
 
 function App() {
-  const [library, setLibrary] = useState([]);
-  const [shelves, setShelves] = useState([]);
+  const [activeUser, setActiveUser] = useState(
+    loadFromLocal('activeUser') ?? ''
+  );
+  const [users, setUsers] = useState([]);
+  const [library, setLibrary] = useState(loadFromLocal('library') ?? []);
+  const [shelves, setShelves] = useState(loadFromLocal('shelves') ?? []);
   const [view, setView] = useState('');
   const [detailedBook, setDetailedBook] = useState({});
   const [detailedShelf, setDetailedShelf] = useState({
@@ -26,9 +31,19 @@ function App() {
   });
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
   const [isNewUser, setIsNewUser] = useState(false);
-  const [users, setUsers] = useState(['Sacid']);
   const [grantAccess, setGrantAccess] = useState(false);
-  const [activeUser, setActiveUser] = useState('');
+
+  useEffect(() => {
+    saveToLocal('library', library);
+  }, [library]);
+
+  useEffect(() => {
+    saveToLocal('shelves', shelves);
+  }, [shelves]);
+
+  useEffect(() => {
+    saveToLocal('activeUser', activeUser);
+  }, [activeUser]);
 
   function toggleToAndFromLibrary(focusedBook) {
     isInLibrary(focusedBook)
