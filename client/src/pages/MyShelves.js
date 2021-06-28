@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { useState } from 'react';
+import styled from 'styled-components/macro';
+import { useEffect, useState } from 'react';
 
 import SaveAddButton from '../components/SaveAddButton';
 import Shelf from '../components/Shelf';
@@ -12,8 +12,14 @@ export default function MyShelves({
   shelves,
   onGetCompartmentBooks,
   onProvideDetailedShelf,
+  onGetShelfBooks,
 }) {
   const [shelfIndex, setShelfIndex] = useState(0);
+  const [bookImages, setBookImages] = useState([]);
+
+  useEffect(() => {
+    setBookImages(onGetShelfBooks(shelves[shelfIndex]));
+  }, [shelfIndex]);
 
   function goForward() {
     if (isShelfAfter()) setShelfIndex(shelfIndex + 1);
@@ -57,13 +63,14 @@ export default function MyShelves({
               onGetCompartmentBooks={onGetCompartmentBooks}
               onProvideDetailedShelf={onProvideDetailedShelf}
               isSaved={true}
+              bookImages={bookImages}
             />
           </ShelfWrapper>
         </>
       )}
-      <Link to="/myshelves/createshelf">
+      <LinkStyled to="/myshelves/createshelf">
         <SaveAddButton text={'Add New Shelf'} />
-      </Link>
+      </LinkStyled>
     </ShelfPage>
   );
 }
@@ -72,13 +79,6 @@ const ShelfPage = styled.main`
   align-items: center;
   display: flex;
   flex-direction: column;
-
-  a {
-    display: flex;
-    justify-content: center;
-    text-decoration: none;
-    width: 100%;
-  }
 `;
 
 const NoShelvesMessage = styled.p`
@@ -110,6 +110,12 @@ const ShelfWrapper = styled.article`
   justify-content: center;
   margin: 0 auto 1rem;
   width: 95%;
+`;
+const LinkStyled = styled(Link)`
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  width: 100%;
 `;
 
 MyShelves.propTypes = {
