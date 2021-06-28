@@ -60,7 +60,7 @@ function App() {
       .then((result) => result.json())
       .then((usersApi) => setLibrary(usersApi.library))
       .catch((error) => console.error(error));
-  }, [activeUser._id]);
+  }, [activeUser]);
 
   useEffect(() => {
     saveToLocal('shelves', shelves);
@@ -132,20 +132,30 @@ function App() {
     setLibrary(updatedBooks);
   }
 
-  function updateBooksInCompartment(property, selection, book) {
-    const updatedShelves = shelves.map((shelf) => {
-      if (shelf.id === selection.bookshelfId) {
+  function findBookInLibrary(book) {
+    return library.find((existingBook) => existingBook.id === book.id);
+  }
+
+  async function updateBooksInCompartment(property, selection, book) {
+    const bookToAdd = await findBookInLibrary(book);
+    const updatedShelves = await shelves.map((shelf) => {
+      if (shelf._id === selection.bookshelfId) {
         shelf.columns.map((column) => {
-          if (column.id === selection.columnId) {
+          if (column._id === selection.columnId) {
             column.compartments.map((compartment) => {
-              if (compartment.id === selection.compartmentId) {
+              if (compartment._id === selection.compartmentId) {
+                console.log('selection', selection.compartmentId);
+                console.log('column', compartment._id);
                 let existingBooks;
                 compartment[property]
                   ? (existingBooks = compartment[property])
                   : (existingBooks = []);
                 existingBooks.length === 0
-                  ? (compartment[property] = [book.id])
-                  : (compartment[property] = [...existingBooks, book.id]);
+                  ? (compartment[property] = [{ id: bookToAdd._id }])
+                  : (compartment[property] = [
+                      ...existingBooks,
+                      { id: bookToAdd._id },
+                    ]);
               }
               return compartment;
             });
@@ -168,7 +178,18 @@ function App() {
       );
       return shelf;
     });
-    setShelves(updatedShelves);
+    console.log('updatedShelves', updatedShelves);
+    fetch('/users/shelvesUpdate/' + activeUser._id, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedShelves),
+    })
+      .then((result) => result.json())
+      .then((updatedUser) => {
+        setShelves(updatedUser.shelves);
+      });
   }
 
   function addRating(rating, bookToUpdate) {
@@ -183,13 +204,13 @@ function App() {
   function getBookLocation(book) {
     if (book.shelfLocation) {
       const shelf = shelves.find(
-        (shelf) => shelf.id === book.shelfLocation.bookshelfId
+        (shelf) => shelf._id === book.shelfLocation.bookshelfId
       );
       const column = shelf.columns.find(
-        (column) => column.id === book.shelfLocation.columnId
+        (column) => column._id === book.shelfLocation.columnId
       );
       const compartment = column.compartments.find(
-        (compartment) => compartment.id === book.shelfLocation.compartmentId
+        (compartment) => compartment._id === book.shelfLocation.compartmentId
       );
       return `${shelf.name}, Column ${column.column}, Compartment ${compartment.compartment}`;
     } else {
@@ -202,7 +223,7 @@ function App() {
     if (storedBookIds && storedBookIds.length > 0) {
       storedBookIds.map((bookId) =>
         library.map((book) => {
-          if (book.id === bookId) storedBooks.push(book);
+          if (book._id === bookId) storedBooks.push(book);
           return storedBooks;
         })
       );
@@ -227,7 +248,7 @@ function App() {
         columnBooks.map((compartmentBooks, compartmentIndex) => {
           compartmentBooks.map((bookId, bookIndex) =>
             library.map((book) => {
-              if (book.id === bookId) {
+              if (book._id === bookId) {
                 shelfBooks[shelfBooksColumnIndex][compartmentIndex][bookIndex] =
                   book.volumeInfo?.imageLinks?.thumbnail;
                 return shelfBooks;

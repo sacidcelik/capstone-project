@@ -20,7 +20,7 @@ export default function LibraryDashboard({
       )}
       {recentBooks.length > 0 &&
         recentBooks.map((book) => (
-          <BookCard key={book.id} onClick={() => onRenderBookDetails(book)}>
+          <BookCard key={book._id} onClick={() => onRenderBookDetails(book)}>
             <BookImage>
               <img
                 src={book.volumeInfo?.imageLinks?.thumbnail}

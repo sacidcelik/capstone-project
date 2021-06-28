@@ -29,7 +29,7 @@ function postUser(req, res) {
     );
 }
 
-function updateShelves(req, res) {
+function sendShelf(req, res) {
   const { userId } = req.params;
   User.findByIdAndUpdate(
     { _id: userId },
@@ -46,7 +46,24 @@ function updateShelves(req, res) {
   );
 }
 
-function updateLibrary(req, res) {
+function updateShelf(req, res) {
+  const { userId } = req.params;
+  User.findByIdAndUpdate(
+    { _id: userId },
+    { $set: { shelves: req.body } },
+    (error, doc) => {
+      if (error) {
+        res.json({
+          success: false,
+          message: 'Could not update this user with current shelves',
+        });
+      }
+      res.json(doc);
+    }
+  );
+}
+
+function sendBook(req, res) {
   const { userId } = req.params;
   User.findByIdAndUpdate(
     { _id: userId },
@@ -56,7 +73,7 @@ function updateLibrary(req, res) {
         console.error(error);
         res.json({
           success: false,
-          message: error.message,
+          message: 'Could not update this user with new book',
         });
       }
       res.json(doc);
@@ -64,4 +81,4 @@ function updateLibrary(req, res) {
   );
 }
 
-export { getUser, getUsers, postUser, updateShelves, updateLibrary };
+export { getUser, getUsers, postUser, sendShelf, sendBook, updateShelf };

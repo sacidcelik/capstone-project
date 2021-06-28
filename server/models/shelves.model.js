@@ -14,7 +14,7 @@ const shelves = new Schema({
       compartments: [
         {
           compartment: Number,
-          storedBooks: [String],
+          storedBooks: [{}],
         },
       ],
     },

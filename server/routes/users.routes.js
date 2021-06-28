@@ -3,8 +3,9 @@ import {
   getUser,
   getUsers,
   postUser,
-  updateShelves,
-  updateLibrary,
+  sendShelf,
+  sendBook,
+  updateShelf,
 } from '../controller/users.controller.js';
 
 const router = express.Router();
@@ -13,8 +14,9 @@ router.get('/users', getUsers);
 
 router.get('/users/:userId', getUser);
 
-router.put('/users/shelves/:userId', updateShelves);
-router.put('/users/library/:userId', updateLibrary);
+router.put('/users/shelves/:userId', sendShelf);
+router.put('/users/shelvesUpdate/:userId', updateShelf);
+router.put('/users/library/:userId', sendBook);
 
 router.post('/users', postUser);
 
