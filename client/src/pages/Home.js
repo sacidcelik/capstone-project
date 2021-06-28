@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import GlobalSearch from '../components/GlobalSearch';
 import LibraryDashboard from '../components/LibraryDashboard';
@@ -18,7 +17,6 @@ export default function Home({
       ? library?.slice(library.length - 3, library.length).reverse()
       : library.reverse();
 
-  console.log('recentbook', recentBooks);
   return (
     <HomePage>
       <SectionHeadline>Add new book</SectionHeadline>

@@ -83,10 +83,30 @@ function App() {
   }
 
   function removeFromLibrary(focusedBook) {
+    const bookWithObjectId = findBookInLibrary(focusedBook);
     const remainingLibrary = library.filter(
       (book) => book.id !== focusedBook.id
     );
-    setLibrary(remainingLibrary);
+    updateRemoteLibrary(activeUser, remainingLibrary, setLibrary);
+    const shelfId = bookWithObjectId.shelfLocation.bookshelfId;
+    const columnId = bookWithObjectId.shelfLocation.columnId;
+    const compartmentId = bookWithObjectId.shelfLocation.compartmentId;
+    const storedBookId = bookWithObjectId._id;
+    fetch(
+      `/users/${activeUser._id}/shelves/${shelfId}/columns/${columnId}/compartment/${compartmentId}/storedBooks/${storedBookId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+      .then((result) => result.json())
+      .then((updatedUser) => setLibrary(updatedUser.shelves))
+      .then(() => {
+        const updatedShelves = shelves.map((shelf) => countBooksInShelf(shelf));
+        updateRemoteShelves(activeUser, updatedShelves, setShelves);
+      });
   }
 
   function isInLibrary(focusedBook) {
@@ -137,21 +157,25 @@ function App() {
           return column;
         });
       }
-      shelf.storedBooks = 0;
-      shelf.columns.forEach((column) =>
-        column.compartments.forEach((compartment) => {
-          const sum = compartment.storedBooks
-            ? compartment.storedBooks.reduce((acc, element) => {
-                if (element) acc++;
-                return acc;
-              }, 0)
-            : 0;
-          return (shelf.storedBooks += sum);
-        })
-      );
-      return shelf;
+      return countBooksInShelf(shelf);
     });
     updateRemoteShelves(activeUser, updatedShelves, setShelves);
+  }
+
+  function countBooksInShelf(shelf) {
+    shelf.storedBooks = 0;
+    shelf.columns.forEach((column) =>
+      column.compartments.forEach((compartment) => {
+        const sum = compartment.storedBooks
+          ? compartment.storedBooks.reduce((acc, element) => {
+              if (element) acc++;
+              return acc;
+            }, 0)
+          : 0;
+        return (shelf.storedBooks += sum);
+      })
+    );
+    return shelf;
   }
 
   function addRating(rating, bookToUpdate) {

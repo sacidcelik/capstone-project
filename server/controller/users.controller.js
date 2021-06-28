@@ -96,6 +96,42 @@ function updateLibrary(req, res) {
   );
 }
 
+const deleteStoredBook = async (req, res) => {
+  console.log(
+    req.params.userId,
+    req.params.shelfId,
+    req.params.columnId,
+    req.params.compartmentId
+  );
+  try {
+    let result = await User.findOneAndUpdate(
+      {
+        _id: req.params.userId,
+      },
+      {
+        $pull: {
+          'shelves.$[shelf].columns.$[column].compartments.$[compartment].storedBooks':
+            { id: req.params.storedBookId },
+        },
+      },
+      {
+        arrayFilters: [
+          { 'shelf._id': req.params.shelfId },
+          { 'column._id': req.params.columnId },
+          { 'compartment._id': req.params.compartmentId },
+        ],
+        new: true,
+      }
+    );
+    res.json(result);
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 export {
   getUser,
   getUsers,
@@ -104,4 +140,5 @@ export {
   sendBook,
   updateShelf,
   updateLibrary,
+  deleteStoredBook,
 };
