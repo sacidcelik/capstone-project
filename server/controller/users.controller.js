@@ -24,9 +24,7 @@ function postUser(req, res) {
   newUser
     .save()
     .then((savedUser) => res.json(savedUser))
-    .catch((error) =>
-      res.json({ success: false, message: 'Could not save new user' })
-    );
+    .catch((error) => res.json({ success: false, message: error.message }));
 }
 
 function sendShelf(req, res) {

@@ -6,17 +6,22 @@ export default function ShelvesDashboard({ shelves, isStatic }) {
   return (
     <Link to="/myshelves">
       <ShelvesCard isStatic={isStatic}>
-        {shelves.length === 0 && <h5>You have no saved shelves.</h5>}
+        {shelves && shelves?.length === 0 && (
+          <h5>You have no saved shelves.</h5>
+        )}
         <ShelfList>
-          {shelves.map(
-            (shelf, index) =>
-              index < 3 && (
-                <Shelf key={shelf.id}>
-                  {shelf.name}:{' '}
-                  {shelf.storedBooks ? `${shelf.storedBooks} Books` : '0 Books'}
-                </Shelf>
-              )
-          )}
+          {shelves &&
+            shelves.map(
+              (shelf, index) =>
+                index < 3 && (
+                  <Shelf key={shelf.id}>
+                    {shelf.name}:{' '}
+                    {shelf.storedBooks
+                      ? `${shelf.storedBooks} Books`
+                      : '0 Books'}
+                  </Shelf>
+                )
+            )}
           {shelves.length > 3 && <p>+ {shelves.length - 3} more</p>}
         </ShelfList>
       </ShelvesCard>

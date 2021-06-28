@@ -7,13 +7,13 @@ import ShelfCreator from '../components/ShelfCreator';
 export default function FirstShelf({ onSaveShelf, activeUser, shelves }) {
   return (
     <FirstShelfPage>
-      <h3>{activeUser.name}, Set Up Your First Shelf Here </h3>
+      <h3>{activeUser?.name}, Set Up Your First Shelf Here </h3>
       <ShelfCreator onSaveShelf={onSaveShelf}></ShelfCreator>
-      {shelves.length > 0 && (
-        <Link to="/home">
+      {
+        /* shelves.length > 0 && */ <Link to="/home">
           <FinishButton>Finish Set Up</FinishButton>
         </Link>
-      )}
+      }
     </FirstShelfPage>
   );
 }

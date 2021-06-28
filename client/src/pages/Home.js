@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import GlobalSearch from '../components/GlobalSearch';
 import LibraryDashboard from '../components/LibraryDashboard';
@@ -12,8 +13,11 @@ export default function Home({
   library,
   onRenderBookDetails,
 }) {
-  let recentBooks = [];
-  recentBooks = library?.slice(library.length - 3, library.length).reverse();
+  const recentBooks =
+    library.length > 3
+      ? library?.slice(library.length - 3, library.length).reverse()
+      : library.reverse();
+
   console.log('recentbook', recentBooks);
   return (
     <HomePage>

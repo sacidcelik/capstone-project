@@ -42,6 +42,11 @@ function App() {
   const [isNewUser, setIsNewUser] = useState(false);
   const [grantAccess, setGrantAccess] = useState(false);
 
+  console.log('active', activeUser);
+  console.log('users', users);
+  console.log('isNew', isNewUser);
+  console.log('shelves', shelves);
+  console.log('library', library);
   useEffect(() => {
     getUsers(setUsers);
   }, []);
@@ -229,29 +234,29 @@ function App() {
     setDetailedShelf(detailedShelfCompartment);
   }
 
-  function addUser(user) {
-    sendUser(user, users, setUsers);
-  }
-
-  function getActiveUser(user) {
-    const activeUser = users.find(
-      (existingUser) =>
-        existingUser.name.toLowerCase() === user.name.toLowerCase()
-    );
-    return activeUser;
+  async function getActiveUser(user) {
+    if (isNewUser) {
+      const newActiveUser = await sendUser(user);
+      setActiveUser(newActiveUser);
+    }
+    if (!isNewUser) {
+      const newActiveUser = await users.find(
+        (existingUser) => existingUser.name === user.name
+      );
+      console.log('newActive', newActiveUser);
+      setActiveUser(newActiveUser);
+    }
   }
 
   function handleAccess(user) {
     if (isNewUser) {
       return checkForUser(user)
         ? setGrantAccess(false)
-        : (addUser(user),
-          setGrantAccess(true),
-          setActiveUser(getActiveUser(user)));
+        : (setGrantAccess(true), getActiveUser(user));
     }
     if (!isNewUser) {
       return checkForUser(user)
-        ? (setGrantAccess(true), setActiveUser(getActiveUser(user)))
+        ? (setGrantAccess(true), getActiveUser(user))
         : setGrantAccess(false);
     }
   }

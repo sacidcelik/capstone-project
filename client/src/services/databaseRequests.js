@@ -1,4 +1,4 @@
-export function getUsers(func) {
+function getUsers(func) {
   fetch('/users')
     .then((result) => result.json())
     .then((usersApi) => {
@@ -12,7 +12,7 @@ export function getUsers(func) {
     .catch((error) => console.error(error));
 }
 
-export function getActiveUserData(activeUser, funcShelves, funcLibrary) {
+function getActiveUserData(activeUser, funcShelves, funcLibrary) {
   fetch('/users/' + activeUser._id)
     .then((result) => result.json())
     .then((usersApi) => {
@@ -22,7 +22,7 @@ export function getActiveUserData(activeUser, funcShelves, funcLibrary) {
     .catch((error) => console.error('error', error));
 }
 
-export function sendBook(activeUser, book, func) {
+function sendBook(activeUser, book, func) {
   fetch('/users/library/' + activeUser._id, {
     method: 'PUT',
     headers: {
@@ -35,19 +35,21 @@ export function sendBook(activeUser, book, func) {
       func(updatedUser.library);
     });
 }
+const sendUser = async (user) => {
+  try {
+    const results = await fetch('/users', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user),
+    });
+    const savedUser = await results.json();
+    return savedUser;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
 
-export function sendUser(user, array, func) {
-  fetch('/users', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(user),
-  })
-    .then((result) => result.json)
-    .then((savedUser) => func([...array, savedUser]))
-    .catch((error) => alert('That did not work for some reason. Try again'));
-}
-
-export function sendShelf(activeUser, shelf, func) {
+function sendShelf(activeUser, shelf, func) {
   fetch('/users/shelves/' + activeUser._id, {
     method: 'PUT',
     headers: {
@@ -61,7 +63,7 @@ export function sendShelf(activeUser, shelf, func) {
     });
 }
 
-export function updateRemoteLibrary(activeUser, booksArray, func) {
+function updateRemoteLibrary(activeUser, booksArray, func) {
   fetch('/users/libraryUpdate/' + activeUser._id, {
     method: 'PUT',
     headers: {
@@ -75,7 +77,7 @@ export function updateRemoteLibrary(activeUser, booksArray, func) {
     });
 }
 
-export function updateRemoteShelves(activeUser, shelvesArray, func) {
+function updateRemoteShelves(activeUser, shelvesArray, func) {
   fetch('/users/shelvesUpdate/' + activeUser._id, {
     method: 'PUT',
     headers: {
@@ -88,3 +90,13 @@ export function updateRemoteShelves(activeUser, shelvesArray, func) {
       func(updatedUser.shelves);
     });
 }
+
+export {
+  getUsers,
+  getActiveUserData,
+  sendBook,
+  sendUser,
+  sendShelf,
+  updateRemoteLibrary,
+  updateRemoteShelves,
+};
