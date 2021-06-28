@@ -12,8 +12,11 @@ export default function Home({
   library,
   onRenderBookDetails,
 }) {
-  let recentBooks = [];
-  recentBooks = library.slice(library.length - 3, library.length).reverse();
+  const recentBooks =
+    library.length > 3
+      ? library?.slice(library.length - 3, library.length).reverse()
+      : library.reverse();
+
   return (
     <HomePage>
       <SectionHeadline>Add new book</SectionHeadline>
