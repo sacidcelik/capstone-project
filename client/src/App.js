@@ -17,8 +17,11 @@ import Access from './pages/Access';
 import FirstShelf from './pages/FirstShelf';
 import { saveToLocal, loadFromLocal } from './services/localStorage';
 import {
+  getActiveUserData,
+  getUsers,
   sendBook,
   sendShelf,
+  sendUser,
   updateRemoteLibrary,
   updateRemoteShelves,
 } from './services/databaseRequests';
@@ -38,35 +41,18 @@ function App() {
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
   const [isNewUser, setIsNewUser] = useState(false);
   const [grantAccess, setGrantAccess] = useState(false);
-  console.log('users', users);
-  console.log('activeUser', activeUser);
-  console.log('shelves', shelves);
-  useEffect(() => {
-    saveToLocal('library', library);
-  }, [library]);
-
-  console.log('library', library);
 
   useEffect(() => {
-    fetch('/users')
-      .then((result) => result.json())
-      .then((usersApi) => setUsers(usersApi))
-      .catch((error) => console.error(error));
+    getUsers(setUsers);
   }, []);
 
   useEffect(() => {
-    fetch('/users/shelves/' + activeUser._id)
-      .then((result) => result.json())
-      .then((usersApi) => setShelves(usersApi.shelves))
-      .catch((error) => console.error(error));
+    getActiveUserData(activeUser, setShelves, setLibrary);
   }, [activeUser]);
 
   useEffect(() => {
-    fetch('/users/library/' + activeUser._id)
-      .then((result) => result.json())
-      .then((usersApi) => setLibrary(usersApi.library))
-      .catch((error) => console.error(error));
-  }, [activeUser]);
+    saveToLocal('library', library);
+  }, [library]);
 
   useEffect(() => {
     saveToLocal('shelves', shelves);
@@ -143,7 +129,6 @@ function App() {
               return compartment;
             });
           }
-
           return column;
         });
       }
@@ -245,14 +230,7 @@ function App() {
   }
 
   function addUser(user) {
-    fetch('/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user),
-    })
-      .then((result) => result.json)
-      .then((savedUser) => setUsers([...users, savedUser]))
-      .catch((error) => alert('That did not work for some reason. Try again'));
+    sendUser(user, users, setUsers);
   }
 
   function getActiveUser(user) {
