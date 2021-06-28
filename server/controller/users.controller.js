@@ -81,4 +81,29 @@ function sendBook(req, res) {
   );
 }
 
-export { getUser, getUsers, postUser, sendShelf, sendBook, updateShelf };
+function updateLibrary(req, res) {
+  const { userId } = req.params;
+  User.findByIdAndUpdate(
+    { _id: userId },
+    { $set: { library: req.body } },
+    (error, doc) => {
+      if (error) {
+        res.json({
+          success: false,
+          message: 'Could not update this user with current library',
+        });
+      }
+      res.json(doc);
+    }
+  );
+}
+
+export {
+  getUser,
+  getUsers,
+  postUser,
+  sendShelf,
+  sendBook,
+  updateShelf,
+  updateLibrary,
+};

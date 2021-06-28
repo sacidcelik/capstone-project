@@ -6,6 +6,7 @@ import {
   sendShelf,
   sendBook,
   updateShelf,
+  updateLibrary,
 } from '../controller/users.controller.js';
 
 const router = express.Router();
@@ -17,6 +18,7 @@ router.get('/users/:userId', getUser);
 router.put('/users/shelves/:userId', sendShelf);
 router.put('/users/shelvesUpdate/:userId', updateShelf);
 router.put('/users/library/:userId', sendBook);
+router.put('/users/libraryUpdate/:userId', updateLibrary);
 
 router.post('/users', postUser);
 

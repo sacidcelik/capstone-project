@@ -16,6 +16,12 @@ import Start from './pages/Start';
 import Access from './pages/Access';
 import FirstShelf from './pages/FirstShelf';
 import { saveToLocal, loadFromLocal } from './services/localStorage';
+import {
+  sendBook,
+  sendShelf,
+  updateRemoteLibrary,
+  updateRemoteShelves,
+} from './services/databaseRequests';
 
 function App() {
   const [activeUser, setActiveUser] = useState(
@@ -78,32 +84,11 @@ function App() {
 
   function addToLibrary(focusedBook) {
     focusedBook.addToLibraryDate = getTodaysDate();
-    console.log(focusedBook);
-    fetch('/users/library/' + activeUser._id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(focusedBook),
-    })
-      .then((result) => result.json())
-      .then((updatedUser) => {
-        setLibrary(updatedUser.library);
-      });
+    sendBook(activeUser, focusedBook, setLibrary);
   }
 
   function addShelf(shelf) {
-    fetch('/users/shelves/' + activeUser._id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(shelf),
-    })
-      .then((result) => result.json())
-      .then((updatedUser) => {
-        setShelves(updatedUser.shelves);
-      });
+    sendShelf(activeUser, shelf, setShelves);
   }
 
   function removeFromLibrary(focusedBook) {
@@ -129,7 +114,7 @@ function App() {
       }
       return book;
     });
-    setLibrary(updatedBooks);
+    updateRemoteLibrary(activeUser, updatedBooks, setLibrary);
   }
 
   function findBookInLibrary(book) {
@@ -144,8 +129,6 @@ function App() {
           if (column._id === selection.columnId) {
             column.compartments.map((compartment) => {
               if (compartment._id === selection.compartmentId) {
-                console.log('selection', selection.compartmentId);
-                console.log('column', compartment._id);
                 let existingBooks;
                 compartment[property]
                   ? (existingBooks = compartment[property])
@@ -178,18 +161,7 @@ function App() {
       );
       return shelf;
     });
-    console.log('updatedShelves', updatedShelves);
-    fetch('/users/shelvesUpdate/' + activeUser._id, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedShelves),
-    })
-      .then((result) => result.json())
-      .then((updatedUser) => {
-        setShelves(updatedUser.shelves);
-      });
+    updateRemoteShelves(activeUser, updatedShelves, setShelves);
   }
 
   function addRating(rating, bookToUpdate) {
@@ -221,9 +193,9 @@ function App() {
   function getCompartmentBooks(storedBookIds) {
     const storedBooks = [];
     if (storedBookIds && storedBookIds.length > 0) {
-      storedBookIds.map((bookId) =>
+      storedBookIds.map((storedBook) =>
         library.map((book) => {
-          if (book._id === bookId) storedBooks.push(book);
+          if (book._id === storedBook.id) storedBooks.push(book);
           return storedBooks;
         })
       );
@@ -246,9 +218,9 @@ function App() {
       });
       shelfBooks.map((columnBooks, shelfBooksColumnIndex) =>
         columnBooks.map((compartmentBooks, compartmentIndex) => {
-          compartmentBooks.map((bookId, bookIndex) =>
+          compartmentBooks.map((compartmentBook, bookIndex) =>
             library.map((book) => {
-              if (book._id === bookId) {
+              if (book._id === compartmentBook.id) {
                 shelfBooks[shelfBooksColumnIndex][compartmentIndex][bookIndex] =
                   book.volumeInfo?.imageLinks?.thumbnail;
                 return shelfBooks;
