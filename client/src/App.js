@@ -78,7 +78,9 @@ function App() {
   }
 
   async function removeFromLibrary(focusedBook) {
-    const bookWithObjectId = await findBookInLibrary(focusedBook);
+    const bookWithObjectId = focusedBook._id
+      ? focusedBook
+      : await findBookInLibrary(focusedBook);
     console.log(bookWithObjectId);
     const remainingLibrary = library.filter(
       (book) => book._id !== bookWithObjectId._id
