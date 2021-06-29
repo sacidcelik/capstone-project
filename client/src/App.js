@@ -79,12 +79,12 @@ function App() {
 
   async function removeFromLibrary(focusedBook) {
     const bookWithObjectId = await findBookInLibrary(focusedBook);
+    console.log(bookWithObjectId);
     const remainingLibrary = library.filter(
       (book) => book._id !== bookWithObjectId._id
     );
     updateRemoteLibrary(activeUser, remainingLibrary, setLibrary);
-
-    if (bookWithObjectId.shelfLocation && bookWithObjectId.shelfLocation > 0) {
+    if (bookWithObjectId.shelfLocation) {
       const shelfId = bookWithObjectId.shelfLocation.bookshelfId;
       const columnId = bookWithObjectId.shelfLocation.columnId;
       const compartmentId = bookWithObjectId.shelfLocation.compartmentId;

@@ -15,7 +15,8 @@ const server = express();
 
 const DB_NAME = process.env.DB_NAME || 'Bookshelves';
 
-const connectionString = 'mongodb://localhost:27017/' + DB_NAME;
+const connectionString =
+  process.env.DB_CONNECTION || 'mongodb://localhost:27017/' + DB_NAME;
 
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
