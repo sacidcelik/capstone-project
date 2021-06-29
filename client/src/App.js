@@ -30,23 +30,18 @@ function App() {
   const [activeUser, setActiveUser] = useState(
     loadFromLocal('activeUser') ?? {}
   );
-  const [users, setUsers] = useState([]);
   const [library, setLibrary] = useState(loadFromLocal('library') ?? []);
   const [shelves, setShelves] = useState(loadFromLocal('shelves') ?? []);
+  const [users, setUsers] = useState([]);
   const [view, setView] = useState('');
   const [detailedBook, setDetailedBook] = useState({});
   const [detailedShelf, setDetailedShelf] = useState({
-    compartment: { id: 123 },
+    compartment: { id: '' },
   });
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
   const [isNewUser, setIsNewUser] = useState(false);
   const [grantAccess, setGrantAccess] = useState(false);
 
-  console.log('active', activeUser);
-  console.log('users', users);
-  console.log('isNew', isNewUser);
-  console.log('shelves', shelves);
-  console.log('library', library);
   useEffect(() => {
     getUsers(setUsers);
   }, []);
@@ -82,31 +77,51 @@ function App() {
     sendShelf(activeUser, shelf, setShelves);
   }
 
-  function removeFromLibrary(focusedBook) {
-    const bookWithObjectId = findBookInLibrary(focusedBook);
+  async function removeFromLibrary(focusedBook) {
+    const bookWithObjectId = await findBookInLibrary(focusedBook);
     const remainingLibrary = library.filter(
-      (book) => book.id !== focusedBook.id
+      (book) => book._id !== bookWithObjectId._id
     );
     updateRemoteLibrary(activeUser, remainingLibrary, setLibrary);
-    const shelfId = bookWithObjectId.shelfLocation.bookshelfId;
-    const columnId = bookWithObjectId.shelfLocation.columnId;
-    const compartmentId = bookWithObjectId.shelfLocation.compartmentId;
-    const storedBookId = bookWithObjectId._id;
-    fetch(
-      `/users/${activeUser._id}/shelves/${shelfId}/columns/${columnId}/compartment/${compartmentId}/storedBooks/${storedBookId}`,
-      {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-      .then((result) => result.json())
-      .then((updatedUser) => setLibrary(updatedUser.shelves))
-      .then(() => {
-        const updatedShelves = shelves.map((shelf) => countBooksInShelf(shelf));
-        updateRemoteShelves(activeUser, updatedShelves, setShelves);
-      });
+
+    if (bookWithObjectId.shelfLocation && bookWithObjectId.shelfLocation > 0) {
+      const shelfId = bookWithObjectId.shelfLocation.bookshelfId;
+      const columnId = bookWithObjectId.shelfLocation.columnId;
+      const compartmentId = bookWithObjectId.shelfLocation.compartmentId;
+      const storedBookId = bookWithObjectId._id;
+      fetch(
+        `/users/${activeUser._id}/shelves/${shelfId}/columns/${columnId}/compartment/${compartmentId}/storedBooks/${storedBookId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+        .then((result) => result.json())
+        .then((updatedUser) => {
+          const updatedShelves = updatedUser.shelves.map((shelf) =>
+            countBooksInShelf(shelf)
+          );
+          updateRemoteShelves(activeUser, updatedShelves, setShelves);
+        });
+    }
+  }
+
+  function countBooksInShelf(shelf) {
+    shelf.storedBooks = 0;
+    shelf.columns.forEach((column) =>
+      column.compartments.forEach((compartment) => {
+        const sum = compartment.storedBooks
+          ? compartment.storedBooks.reduce((acc, element) => {
+              if (element) acc++;
+              return acc;
+            }, 0)
+          : 0;
+        return (shelf.storedBooks += sum);
+      })
+    );
+    return shelf;
   }
 
   function isInLibrary(focusedBook) {
@@ -160,22 +175,6 @@ function App() {
       return countBooksInShelf(shelf);
     });
     updateRemoteShelves(activeUser, updatedShelves, setShelves);
-  }
-
-  function countBooksInShelf(shelf) {
-    shelf.storedBooks = 0;
-    shelf.columns.forEach((column) =>
-      column.compartments.forEach((compartment) => {
-        const sum = compartment.storedBooks
-          ? compartment.storedBooks.reduce((acc, element) => {
-              if (element) acc++;
-              return acc;
-            }, 0)
-          : 0;
-        return (shelf.storedBooks += sum);
-      })
-    );
-    return shelf;
   }
 
   function addRating(rating, bookToUpdate) {
@@ -267,7 +266,7 @@ function App() {
       const newActiveUser = await users.find(
         (existingUser) => existingUser.name === user.name
       );
-      console.log('newActive', newActiveUser);
+
       setActiveUser(newActiveUser);
     }
   }

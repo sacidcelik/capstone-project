@@ -9,11 +9,11 @@ export default function FirstShelf({ onSaveShelf, activeUser, shelves }) {
     <FirstShelfPage>
       <h3>{activeUser?.name}, Set Up Your First Shelf Here </h3>
       <ShelfCreator onSaveShelf={onSaveShelf}></ShelfCreator>
-      {
-        /* shelves.length > 0 && */ <Link to="/home">
+      {shelves.length > 0 && (
+        <Link to="/home">
           <FinishButton>Finish Set Up</FinishButton>
         </Link>
-      }
+      )}
     </FirstShelfPage>
   );
 }
@@ -38,6 +38,6 @@ const FinishButton = styled.button`
 
 FirstShelf.propTypes = {
   onSaveShelf: PropTypes.func,
-  activeUser: PropTypes.string,
+  activeUser: PropTypes.object,
   shelves: PropTypes.array,
 };

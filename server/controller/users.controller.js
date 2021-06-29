@@ -97,12 +97,6 @@ function updateLibrary(req, res) {
 }
 
 const deleteStoredBook = async (req, res) => {
-  console.log(
-    req.params.userId,
-    req.params.shelfId,
-    req.params.columnId,
-    req.params.compartmentId
-  );
   try {
     let result = await User.findOneAndUpdate(
       {

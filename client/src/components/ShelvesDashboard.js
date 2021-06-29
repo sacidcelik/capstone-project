@@ -6,15 +6,13 @@ export default function ShelvesDashboard({ shelves, isStatic }) {
   return (
     <Link to="/myshelves">
       <ShelvesCard isStatic={isStatic}>
-        {shelves && shelves?.length === 0 && (
-          <h5>You have no saved shelves.</h5>
-        )}
+        {shelves?.length === 0 && <h5>You have no saved shelves.</h5>}
         <ShelfList>
           {shelves &&
             shelves.map(
               (shelf, index) =>
                 index < 3 && (
-                  <Shelf key={shelf.id}>
+                  <Shelf key={shelf._id}>
                     {shelf.name}:{' '}
                     {shelf.storedBooks
                       ? `${shelf.storedBooks} Books`
