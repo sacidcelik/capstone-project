@@ -16,8 +16,8 @@ function getActiveUserData(activeUser, funcShelves, funcLibrary) {
   fetch('/users/' + activeUser._id)
     .then((result) => result.json())
     .then((usersApi) => {
-      funcShelves(usersApi.shelves);
-      funcLibrary(usersApi.library);
+      funcShelves(Array.isArray(usersApi.shelves) ? usersApi.shelves : []);
+      funcLibrary(Array.isArray(usersApi.library) ? usersApi.library : []);
     })
     .catch((error) => console.error('error', error));
 }
