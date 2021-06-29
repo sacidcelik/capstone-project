@@ -21,14 +21,14 @@ export default function LibraryDashboard({
       {recentBooks.length > 0 &&
         recentBooks.map((book) => (
           <BookCard key={book.id} onClick={() => onRenderBookDetails(book)}>
-            <BookImage>
+            <div>
               <img
                 src={book.volumeInfo?.imageLinks?.thumbnail}
                 alt="book cover"
                 width="36"
                 height="48"
               />
-            </BookImage>
+            </div>
             <BookTitle>
               <p>{book.volumeInfo?.title}</p>
             </BookTitle>
@@ -71,8 +71,6 @@ const BookCard = styled.div`
   padding: 0.5rem;
   width: 100%;
 `;
-
-const BookImage = styled.div``;
 
 const BookTitle = styled.div`
   width: 60%;

@@ -34,7 +34,7 @@ export default function SearchResult({
           onSelectShelf={onSelectShelf}
         />
       )}
-      <SearchResultSection isStatic={isStatic}>
+      <section>
         {searchedBooks.map((book, index) => (
           <SearchResultCard
             key={index}
@@ -62,14 +62,10 @@ export default function SearchResult({
             />
           </SearchResultCard>
         ))}
-      </SearchResultSection>
+      </section>
     </>
   );
 }
-
-const SearchResultSection = styled.section`
-  /* padding-bottom: ${(props) => (props.isStatic ? '0px' : '7rem')}; */
-`;
 
 const SearchResultCard = styled.article`
   align-items: center;
