@@ -33,6 +33,7 @@ export default function Home({
         recentBooks={recentBooks}
         onRenderBookDetails={onRenderBookDetails}
       />
+      <LogoutButton>Log Out</LogoutButton>
     </HomePage>
   );
 }
@@ -47,6 +48,18 @@ const HomePage = styled.main`
 
 const SectionHeadline = styled.h4`
   margin: 1.5rem auto 1rem;
+`;
+
+const LogoutButton = styled.button`
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: red;
+  color: var(--background);
+  display: block;
+  font-size: 1.5rem;
+  height: 40px;
+  margin: 1rem auto;
+  width: 280px;
 `;
 
 Home.propTypes = {
