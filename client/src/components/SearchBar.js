@@ -17,7 +17,6 @@ export default function SearchBar({ query, setSearchQuery, focusSearch }) {
 }
 
 const SearchWrapper = styled.div`
-  width: 95%;
   height: 50px;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)

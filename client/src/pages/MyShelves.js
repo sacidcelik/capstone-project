@@ -19,7 +19,7 @@ export default function MyShelves({
 
   useEffect(() => {
     setBookImages(onGetShelfBooks(shelves[shelfIndex]));
-  }, [shelfIndex]);
+  }, [shelfIndex, shelves, onGetShelfBooks]);
 
   function goForward() {
     if (isShelfAfter()) setShelfIndex(shelfIndex + 1);

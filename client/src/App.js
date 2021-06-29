@@ -11,6 +11,7 @@ import MyBooks from './pages/MyBooks';
 import Header from './components/Header';
 import BookDetails from './components/BookDetails';
 import CreateShelf from './pages/CreateShelf';
+import getTodaysDate from './services/getDate';
 
 function App() {
   const [library, setLibrary] = useState([]);
@@ -29,6 +30,7 @@ function App() {
   }
 
   function addToLibrary(focusedBook) {
+    focusedBook.addToLibraryDate = getTodaysDate();
     setLibrary([...library, focusedBook]);
   }
 
@@ -76,9 +78,22 @@ function App() {
               return compartment;
             });
           }
+
           return column;
         });
       }
+      shelf.storedBooks = 0;
+      shelf.columns.forEach((column) =>
+        column.compartments.forEach((compartment) => {
+          const sum = compartment.storedBooks
+            ? compartment.storedBooks.reduce((acc, element) => {
+                if (element) acc++;
+                return acc;
+              }, 0)
+            : 0;
+          return (shelf.storedBooks += sum);
+        })
+      );
       return shelf;
     });
     setShelves(updatedShelves);
@@ -185,11 +200,14 @@ function App() {
       <Header />
       <Switch>
         <Route path="/home">
+          {view === 'details' && renderBookDetails(detailedBook)}
           <Home
             onToggleToAndFromLibrary={toggleToAndFromLibrary}
             isInLibrary={isInLibrary}
             shelves={shelves}
             onSelectShelf={addRefToBookAndShelf}
+            library={library}
+            onRenderBookDetails={renderBookDetailsHelper}
           />
         </Route>
         <Route exact path="/myshelves">
