@@ -28,7 +28,7 @@ function App() {
   const [isNewUser, setIsNewUser] = useState(false);
   const [users, setUsers] = useState([]);
   const [grantAccess, setGrantAccess] = useState(false);
-  const [activeUser, setActiveUser] = useState('');
+  const [activeUser, setActiveUser] = useState({});
 
   function toggleToAndFromLibrary(focusedBook) {
     isInLibrary(focusedBook)
@@ -206,9 +206,10 @@ function App() {
   }
 
   function checkForUser(user) {
-    if (user.length > 0)
+    if (user.name.length > 0)
       return users.some(
-        (existingUser) => existingUser.toLowerCase() === user.toLowerCase()
+        (existingUser) =>
+          existingUser.name.toLowerCase() === user.name.toLowerCase()
       );
   }
 
