@@ -1,18 +1,22 @@
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 import ShelfCreator from '../components/ShelfCreator';
 
 export default function FirstShelf({ onSaveShelf, activeUser, shelves }) {
+  const history = useHistory();
+
+  function handleFinishSetUp() {
+    history.replace('/home');
+  }
+
   return (
     <FirstShelfPage>
       <h3>{activeUser?.name}, Set Up Your First Shelf Here </h3>
       <ShelfCreator onSaveShelf={onSaveShelf}></ShelfCreator>
       {shelves.length > 0 && (
-        <Link to="/home">
-          <FinishButton>Finish Set Up</FinishButton>
-        </Link>
+        <FinishButton onClick={handleFinishSetUp}>Finish Set Up</FinishButton>
       )}
     </FirstShelfPage>
   );

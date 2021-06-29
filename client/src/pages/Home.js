@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
+import { useHistory } from 'react-router-dom';
 import GlobalSearch from '../components/GlobalSearch';
 import LibraryDashboard from '../components/LibraryDashboard';
 import ShelvesDashboard from '../components/ShelvesDashboard';
@@ -11,11 +12,18 @@ export default function Home({
   onSelectShelf,
   library,
   onRenderBookDetails,
+  onGrantAccess,
 }) {
   const recentBooks =
     library.length > 3
       ? library?.slice(library.length - 3, library.length).reverse()
       : library.reverse();
+  const history = useHistory();
+
+  function handleLogout() {
+    history.replace('/');
+    onGrantAccess(false);
+  }
 
   return (
     <HomePage>
@@ -33,7 +41,7 @@ export default function Home({
         recentBooks={recentBooks}
         onRenderBookDetails={onRenderBookDetails}
       />
-      <LogoutButton>Log Out</LogoutButton>
+      <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
     </HomePage>
   );
 }
@@ -53,12 +61,12 @@ const SectionHeadline = styled.h4`
 const LogoutButton = styled.button`
   border: none;
   border-radius: var(--border-radius);
-  background-color: red;
+  background-color: #cc1c1c;
   color: var(--background);
   display: block;
   font-size: 1.5rem;
   height: 40px;
-  margin: 1rem auto;
+  margin: 1.5rem auto;
   width: 280px;
 `;
 

@@ -304,6 +304,7 @@ function App() {
       />
     );
   }
+  console.log(grantAccess);
 
   return (
     <>
@@ -340,6 +341,7 @@ function App() {
             onSelectShelf={addRefToBookAndShelf}
             library={library}
             onRenderBookDetails={renderBookDetailsHelper}
+            onGrantAccess={setGrantAccess}
           />
           <NavFooter />
         </Route>
