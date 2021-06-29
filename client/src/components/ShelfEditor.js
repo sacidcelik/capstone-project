@@ -7,7 +7,7 @@ import CloseIcon from '../images/closeIcon.svg';
 import SaveAddButton from './SaveAddButton';
 import validateShelfSelection from '../lib/validateShelfSelection';
 
-export default function ShelfSelector({
+export default function ShelfEditor({
   isStatic,
   shelves,
   book,
@@ -73,34 +73,12 @@ export default function ShelfSelector({
 
   return (
     <ShelfSelectorCard isStatic={isStatic}>
+      <h3>Set new location</h3>
       <CloseButton
         src={CloseIcon}
         alt="Close Icon"
         onClick={() => onSetIsSelector(false)}
       />
-      <BookInformation>
-        <BookImageWrapper>
-          <img
-            src={
-              book.volumeInfo?.imageLinks?.thumbnail ||
-              book.volumeInfo?.imageLinks?.smallThumbnail
-            }
-            alt={book.volumeInfo?.title || 'Book Cover'}
-            width="128"
-            height="192"
-          />
-        </BookImageWrapper>
-
-        <BookSpecs>
-          <BookTitle>{book.volumeInfo?.title}</BookTitle>
-          {book.volumeInfo.subtitle && (
-            <BookSubTitle>{book.volumeInfo.subtitle}</BookSubTitle>
-          )}
-          <p>{book.volumeInfo?.authors?.[0]}</p>
-          <p>Released: {book.volumeInfo?.publishedDate?.substring(0, 4)}</p>
-          <p>ISBN: {book.volumeInfo?.industryIdentifiers[0]?.identifier}</p>
-        </BookSpecs>
-      </BookInformation>
       <ShelfSelectorForm onSubmit={handleSelectionSave}>
         <ShelfPicker>
           <div>
@@ -174,15 +152,15 @@ const ShelfSelectorCard = styled.article`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  height: ${(props) => (props.isStatic ? '350px' : '50vh')};
+  height: ${(props) => (props.isStatic ? '350px' : '25vh')};
   justify-content: center;
   margin: ${(props) => (props.isStatic ? '0 auto' : '50vh 50vw')};
   opacity: 0.95;
   padding: 1rem;
   position: ${(props) => (props.isStatic ? 'relative' : 'fixed')};
-  transform: ${(props) => (props.isStatic ? '' : 'translate(-53%, -100%)')};
-  width: ${(props) => (props.isStatic ? '338px' : '90vw')};
-  z-index: 100;
+  transform: ${(props) => (props.isStatic ? '' : 'translate(-50%, -100%)')};
+  width: ${(props) => (props.isStatic ? '338px' : '80vw')};
+  z-index: 10000;
 
   input,
   select {
@@ -228,57 +206,7 @@ const ShelfPicker = styled.section`
   margin-bottom: 1rem;
 `;
 
-const BookInformation = styled.section`
-  display: flex;
-  gap: 1rem;
-  justify-content: space-between;
-  width: 100%;
-`;
-
-const BookImageWrapper = styled.div`
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  height: 100%;
-  justify-content: flex-start;
-  width: 40%;
-
-  img {
-    box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
-      var(--box-shadow-blur) var(--box-shadow-color);
-    width: 102px;
-    height: 154px;
-  }
-`;
-
-const BookSpecs = styled.div`
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: flex-start;
-  width: 60%;
-
-  p {
-    margin-top: 0.8rem;
-  }
-`;
-
-const BookTitle = styled.h2`
-  font-size: 1.2rem;
-  max-height: 4.1rem;
-  overflow: hidden;
-`;
-
-const BookSubTitle = styled.h5`
-  margin: 0;
-  margin-top: 0.3rem;
-  max-height: 2rem;
-  overflow: hidden;
-`;
-
-ShelfSelector.propTypes = {
+ShelfEditor.propTypes = {
   shelves: PropTypes.array,
   book: PropTypes.object,
   onSetIsSelector: PropTypes.func,

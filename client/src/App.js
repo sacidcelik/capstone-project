@@ -41,7 +41,6 @@ function App() {
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
   const [isNewUser, setIsNewUser] = useState(false);
   const [grantAccess, setGrantAccess] = useState(false);
-
   useEffect(() => {
     getUsers(setUsers);
   }, []);
@@ -80,8 +79,7 @@ function App() {
   async function removeFromLibrary(focusedBook) {
     const bookWithObjectId = focusedBook._id
       ? focusedBook
-      : await findBookInLibrary(focusedBook);
-    console.log(bookWithObjectId);
+      : await isInLibrary(focusedBook);
     const remainingLibrary = library.filter(
       (book) => book._id !== bookWithObjectId._id
     );
@@ -145,13 +143,50 @@ function App() {
     updateRemoteLibrary(activeUser, updatedBooks, setLibrary);
   }
 
-  function findBookInLibrary(book) {
-    return library.find((existingBook) => existingBook.id === book.id);
+  function updateBooksInCompartment(property, selection, book) {
+    const bookToAdd = isInLibrary(book);
+    if (bookToAdd.shelfLocation) {
+      const shelfId = bookToAdd.shelfLocation.bookshelfId;
+      const columnId = bookToAdd.shelfLocation.columnId;
+      const compartmentId = bookToAdd.shelfLocation.compartmentId;
+      const storedBookId = bookToAdd._id;
+      fetch(
+        `/users/${activeUser._id}/shelves/${shelfId}/columns/${columnId}/compartment/${compartmentId}/storedBooks/${storedBookId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+        .then((result) => result.json())
+        .then((updatedUser) => {
+          const updatedShelves = addBookReferenceToCompartment(
+            property,
+            selection,
+            updatedUser.shelves,
+            bookToAdd
+          );
+          updateRemoteShelves(activeUser, updatedShelves, setShelves);
+        });
+    } else {
+      const updatedShelves = addBookReferenceToCompartment(
+        property,
+        selection,
+        shelves,
+        bookToAdd
+      );
+      updateRemoteShelves(activeUser, updatedShelves, setShelves);
+    }
   }
 
-  async function updateBooksInCompartment(property, selection, book) {
-    const bookToAdd = await findBookInLibrary(book);
-    const updatedShelves = await shelves.map((shelf) => {
+  function addBookReferenceToCompartment(
+    property,
+    selection,
+    shelves,
+    bookToAdd
+  ) {
+    shelves.map((shelf) => {
       if (shelf._id === selection.bookshelfId) {
         shelf.columns.map((column) => {
           if (column._id === selection.columnId) {
@@ -176,28 +211,30 @@ function App() {
       }
       return countBooksInShelf(shelf);
     });
-    updateRemoteShelves(activeUser, updatedShelves, setShelves);
+    return shelves;
   }
 
   function addRating(rating, bookToUpdate) {
     updateBook('rating', rating, bookToUpdate);
   }
 
-  function addRefToBookAndShelf(location, bookToUpdate) {
-    updateBook('shelfLocation', location, bookToUpdate);
+  async function addRefToBookAndShelf(location, bookToUpdate) {
     updateBooksInCompartment('storedBooks', location, bookToUpdate);
+    updateBook('shelfLocation', location, bookToUpdate);
   }
 
   function getBookLocation(book) {
-    if (book.shelfLocation) {
+    const updatedBook = isInLibrary(book);
+    if (updatedBook.shelfLocation && updatedBook.shelfLocation.bookshelfId) {
       const shelf = shelves.find(
-        (shelf) => shelf._id === book.shelfLocation.bookshelfId
+        (shelf) => shelf._id === updatedBook.shelfLocation.bookshelfId
       );
       const column = shelf.columns.find(
-        (column) => column._id === book.shelfLocation.columnId
+        (column) => column._id === updatedBook.shelfLocation.columnId
       );
       const compartment = column.compartments.find(
-        (compartment) => compartment._id === book.shelfLocation.compartmentId
+        (compartment) =>
+          compartment._id === updatedBook.shelfLocation.compartmentId
       );
       return `${shelf.name}, Column ${column.column}, Compartment ${compartment.compartment}`;
     } else {
@@ -301,10 +338,11 @@ function App() {
         onRemoveDetailView={() => setView('')}
         onAddRating={addRating}
         onGetBookLocation={getBookLocation}
+        shelves={shelves}
+        onSelectShelf={addRefToBookAndShelf}
       />
     );
   }
-  console.log(grantAccess);
 
   return (
     <>
@@ -362,7 +400,7 @@ function App() {
           <CreateShelf onSaveShelf={addShelf} />
           <NavFooter />
         </Route>
-        <Route path={`/myshelves/${detailedShelf.compartment.id}`}>
+        <Route path={`/myshelves/${detailedShelf.compartment._id}`}>
           <Header />
           {view === 'details' && renderBookDetails(detailedBook)}
           <CompartmentPage
