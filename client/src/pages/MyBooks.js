@@ -4,7 +4,7 @@ import Library from '../components/Library';
 import SearchBar from '../components/SearchBar';
 
 export default function MyBooks({ library, onRenderBookDetails }) {
-  const [libraryToDisplay, setLibraryToDisplay] = useState([]);
+  const [libraryToDisplay, setLibraryToDisplay] = useState(library);
   const [searchQuery, setSearchQuery] = useState('');
 
   function handleSearch(event) {
