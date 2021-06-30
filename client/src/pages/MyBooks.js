@@ -33,7 +33,7 @@ export default function MyBooks({ library, onRenderBookDetails }) {
       <h2>My Books</h2>
 
       <SearchBar
-        placeholder="Search your library"
+        placeholder="Search my library"
         query={searchQuery}
         onSearch={handleSearch}
       />
