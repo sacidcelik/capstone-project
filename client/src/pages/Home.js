@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import styled from 'styled-components/macro';
 import { useHistory } from 'react-router-dom';
 import GlobalSearch from '../components/GlobalSearch';
@@ -13,6 +13,7 @@ export default function Home({
   library,
   onRenderBookDetails,
   onGrantAccess,
+  activeUser,
 }) {
   const recentBooks =
     library.length > 3
@@ -28,6 +29,12 @@ export default function Home({
 
   return (
     <HomePage>
+      <h2>
+        {activeUser.name.charAt(activeUser.name.length - 1).toLowerCase() ===
+        's'
+          ? `${activeUser.name}' Library`
+          : `${activeUser.name}'s Library`}
+      </h2>
       <SectionHeadline>Add New Book</SectionHeadline>
       <GlobalSearch
         onToggleToAndFromLibrary={onToggleToAndFromLibrary}
@@ -50,6 +57,9 @@ export default function Home({
 const HomePage = styled.main`
   margin: 0 auto 7rem;
   width: 95%;
+  h2 {
+    text-align: center;
+  }
   a {
     text-decoration: none;
   }
@@ -79,4 +89,5 @@ Home.propTypes = {
   onSelectShelf: PropTypes.func,
   library: PropTypes.array,
   onRenderBookDetails: PropTypes.func,
+  activeUser: PropTypes.object,
 };
