@@ -17,6 +17,7 @@ import Access from './pages/Access';
 import FirstShelf from './pages/FirstShelf';
 import { saveToLocal, loadFromLocal } from './services/localStorage';
 import {
+  deleteRemoteBooksReference,
   getActiveUserData,
   getUsers,
   sendBook,
@@ -84,27 +85,18 @@ function App() {
       (book) => book._id !== bookWithObjectId._id
     );
     updateRemoteLibrary(activeUser, remainingLibrary, setLibrary);
-    if (bookWithObjectId.shelfLocation) {
-      const shelfId = bookWithObjectId.shelfLocation.bookshelfId;
-      const columnId = bookWithObjectId.shelfLocation.columnId;
-      const compartmentId = bookWithObjectId.shelfLocation.compartmentId;
-      const storedBookId = bookWithObjectId._id;
-      fetch(
-        `/users/${activeUser._id}/shelves/${shelfId}/columns/${columnId}/compartment/${compartmentId}/storedBooks/${storedBookId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-        .then((result) => result.json())
-        .then((updatedUser) => {
-          const updatedShelves = updatedUser.shelves.map((shelf) =>
-            countBooksInShelf(shelf)
-          );
-          updateRemoteShelves(activeUser, updatedShelves, setShelves);
-        });
+    if (
+      bookWithObjectId.shelfLocation &&
+      bookWithObjectId.shelfLocation.bookshelfId
+    ) {
+      const updatedUser = await deleteRemoteBooksReference(
+        activeUser,
+        bookWithObjectId
+      );
+      const updatedShelves = await updatedUser.shelves.map((shelf) =>
+        countBooksInShelf(shelf)
+      );
+      updateRemoteShelves(activeUser, updatedShelves, setShelves);
     }
   }
 
@@ -143,32 +135,20 @@ function App() {
     updateRemoteLibrary(activeUser, updatedBooks, setLibrary);
   }
 
-  function updateBooksInCompartment(property, selection, book) {
+  async function updateBooksInCompartment(property, selection, book) {
     const bookToAdd = isInLibrary(book);
-    if (bookToAdd.shelfLocation) {
-      const shelfId = bookToAdd.shelfLocation.bookshelfId;
-      const columnId = bookToAdd.shelfLocation.columnId;
-      const compartmentId = bookToAdd.shelfLocation.compartmentId;
-      const storedBookId = bookToAdd._id;
-      fetch(
-        `/users/${activeUser._id}/shelves/${shelfId}/columns/${columnId}/compartment/${compartmentId}/storedBooks/${storedBookId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-        .then((result) => result.json())
-        .then((updatedUser) => {
-          const updatedShelves = addBookReferenceToCompartment(
-            property,
-            selection,
-            updatedUser.shelves,
-            bookToAdd
-          );
-          updateRemoteShelves(activeUser, updatedShelves, setShelves);
-        });
+    if (bookToAdd.shelfLocation && bookToAdd.shelfLocation.bookshelfId) {
+      const updatedUser = await deleteRemoteBooksReference(
+        activeUser,
+        bookToAdd
+      );
+      const updatedShelves = await addBookReferenceToCompartment(
+        property,
+        selection,
+        updatedUser.shelves,
+        bookToAdd
+      );
+      updateRemoteShelves(activeUser, updatedShelves, setShelves);
     } else {
       const updatedShelves = addBookReferenceToCompartment(
         property,

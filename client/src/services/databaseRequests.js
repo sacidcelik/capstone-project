@@ -91,6 +91,23 @@ function updateRemoteShelves(activeUser, shelvesArray, func) {
     });
 }
 
+const deleteRemoteBooksReference = async (activeUser, book) => {
+  const shelfId = book.shelfLocation.bookshelfId;
+  const columnId = book.shelfLocation.columnId;
+  const compartmentId = book.shelfLocation.compartmentId;
+  const storedBookId = book._id;
+  const results = await fetch(
+    `/users/${activeUser._id}/shelves/${shelfId}/columns/${columnId}/compartment/${compartmentId}/storedBooks/${storedBookId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+  return await results.json();
+};
+
 export {
   getUsers,
   getActiveUserData,
@@ -99,4 +116,5 @@ export {
   sendShelf,
   updateRemoteLibrary,
   updateRemoteShelves,
+  deleteRemoteBooksReference,
 };
