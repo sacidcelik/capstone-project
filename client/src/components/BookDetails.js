@@ -176,6 +176,7 @@ const BookSubTitle = styled.h5`
 const BookSettings = styled.section`
   input:not([type='checkbox']),
   textarea {
+    background: white;
     border: none;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)

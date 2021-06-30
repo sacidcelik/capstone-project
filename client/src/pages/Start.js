@@ -16,10 +16,10 @@ export default function Start({ onSetIsNewUser }) {
       <img src={BookshelfLogo} alt="Bookshelf Logo" />
       <ButtonSection>
         <Link to="/accessPage" onClick={() => handleAccess(true)}>
-          <StartLoginButton isStart text="Start now" />
+          <StartLoginButton isStart text="START NOW" />
         </Link>
         <Link to="/accessPage" onClick={() => handleAccess(false)}>
-          <StartLoginButton text="Sign in" />
+          <StartLoginButton text="SIGN IN" />
         </Link>
       </ButtonSection>
     </StartPage>

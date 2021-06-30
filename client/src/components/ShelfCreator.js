@@ -187,7 +187,7 @@ export default function ShelfCreator({ onSaveShelf }) {
         <Shelf shelf={shelf} />
       </ShelfPreview>
       <SaveShelfButtonWrapper>
-        {shelf.columns.length >= 1 && <SaveAddButton text={'Save Shelf'} />}
+        {shelf.columns.length >= 1 && <SaveAddButton text={'SAVE SHELF'} />}
       </SaveShelfButtonWrapper>
     </ShelfArea>
   );

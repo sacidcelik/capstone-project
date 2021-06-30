@@ -17,19 +17,35 @@ export default createGlobalStyle`
     *::before,
     *::after {
         box-sizing: border-box;
+        font-family: 'Roboto', 'sans-serif';
     }
 
-    h1, h2, h3 {
+    h1, h2, h3, h4, h5 {
         line-height: 1.2;
+        font-weight: 400;
     }
 
     body, h1, h2, h3, p {
         margin: 0;
     }
 
+    h1 {
+        font-family: 'Noto Serif SC', 'serif';
+        font-weight: 200;
+        font-size: 3rem;
+    }
+
+    h2 {
+        font-weight: 300;
+    }
+
     body {
         line-height: 1.2;
-        font-family: sans-serif;
         background-color: var(--background);
+    }
+
+    button {
+        font-size: 1rem;
+        font-weight: 700;
     }
 `;

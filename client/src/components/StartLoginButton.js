@@ -11,7 +11,8 @@ const Button = styled.button`
   background-color: ${(props) =>
     props.isStart ? 'var(--primary)' : 'var(--secondary)'};
   color: ${(props) => (props.isStart ? 'black' : 'var(--background)')};
-  font-size: 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
   height: 40px;
   margin-bottom: 1rem;
   width: 280px;

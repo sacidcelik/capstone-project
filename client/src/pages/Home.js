@@ -16,8 +16,9 @@ export default function Home({
 }) {
   const recentBooks =
     library.length > 3
-      ? library?.slice(library.length - 3, library.length).reverse()
-      : library.reverse();
+      ? library.slice(library.length - 3, library.length).reverse()
+      : library.slice().reverse();
+
   const history = useHistory();
 
   function handleLogout() {
@@ -27,7 +28,7 @@ export default function Home({
 
   return (
     <HomePage>
-      <SectionHeadline>Add new book</SectionHeadline>
+      <SectionHeadline>Add New Book</SectionHeadline>
       <GlobalSearch
         onToggleToAndFromLibrary={onToggleToAndFromLibrary}
         isInLibrary={isInLibrary}
@@ -41,7 +42,7 @@ export default function Home({
         recentBooks={recentBooks}
         onRenderBookDetails={onRenderBookDetails}
       />
-      <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
+      <LogoutButton onClick={handleLogout}>LOG OUT</LogoutButton>
     </HomePage>
   );
 }
@@ -64,7 +65,8 @@ const LogoutButton = styled.button`
   background-color: #cc1c1c;
   color: var(--background);
   display: block;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
   height: 40px;
   margin: 1.5rem auto;
   width: 280px;
