@@ -100,39 +100,9 @@ function App() {
     }
   }
 
-  function countBooksInShelf(shelf) {
-    shelf.storedBooks = 0;
-    shelf.columns.forEach((column) =>
-      column.compartments.forEach((compartment) => {
-        const sum = compartment.storedBooks
-          ? compartment.storedBooks.reduce((acc, element) => {
-              if (element) acc++;
-              return acc;
-            }, 0)
-          : 0;
-        return (shelf.storedBooks += sum);
-      })
-    );
-    return shelf;
-  }
-
-  function isInLibrary(focusedBook) {
-    return library.find((book) => book.id === focusedBook.id);
-  }
-
-  function renderBookDetailsHelper(book) {
-    setDetailedBook(book);
-    setView('details');
-  }
-
-  function updateBook(property, value, bookToUpdate) {
-    const updatedBooks = library.map((book) => {
-      if (book.id === bookToUpdate.id) {
-        book[property] = value;
-      }
-      return book;
-    });
-    updateRemoteLibrary(activeUser, updatedBooks, setLibrary);
+  function addRefToBookAndShelf(location, bookToUpdate) {
+    updateBooksInCompartment('storedBooks', location, bookToUpdate);
+    updateBook('shelfLocation', location, bookToUpdate);
   }
 
   async function updateBooksInCompartment(property, selection, book) {
@@ -194,13 +164,43 @@ function App() {
     return shelves;
   }
 
-  function addRating(rating, bookToUpdate) {
-    updateBook('rating', rating, bookToUpdate);
+  function countBooksInShelf(shelf) {
+    shelf.storedBooks = 0;
+    shelf.columns.forEach((column) =>
+      column.compartments.forEach((compartment) => {
+        const sum = compartment.storedBooks
+          ? compartment.storedBooks.reduce((acc, element) => {
+              if (element) acc++;
+              return acc;
+            }, 0)
+          : 0;
+        return (shelf.storedBooks += sum);
+      })
+    );
+    return shelf;
   }
 
-  async function addRefToBookAndShelf(location, bookToUpdate) {
-    updateBooksInCompartment('storedBooks', location, bookToUpdate);
-    updateBook('shelfLocation', location, bookToUpdate);
+  function isInLibrary(focusedBook) {
+    return library.find((book) => book.id === focusedBook.id);
+  }
+
+  function renderBookDetailsHelper(book) {
+    setDetailedBook(book);
+    setView('details');
+  }
+
+  function updateBook(property, value, bookToUpdate) {
+    const updatedBooks = library.map((book) => {
+      if (book.id === bookToUpdate.id) {
+        book[property] = value;
+      }
+      return book;
+    });
+    updateRemoteLibrary(activeUser, updatedBooks, setLibrary);
+  }
+
+  function addRating(rating, bookToUpdate) {
+    updateBook('rating', rating, bookToUpdate);
   }
 
   function getBookLocation(book) {
