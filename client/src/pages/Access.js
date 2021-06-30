@@ -141,5 +141,5 @@ Access.propTypes = {
   isNewUser: PropTypes.bool,
   onHandleAccess: PropTypes.func,
   grantAccess: PropTypes.bool,
-  onCheckForUser: PropTypes.bool,
+  onCheckForUser: PropTypes.func,
 };

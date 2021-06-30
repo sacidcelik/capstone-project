@@ -38,6 +38,6 @@ const FinishButton = styled.button`
 
 FirstShelf.propTypes = {
   onSaveShelf: PropTypes.func,
-  activeUser: PropTypes.string,
+  activeUser: PropTypes.object,
   shelves: PropTypes.array,
 };
