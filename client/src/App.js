@@ -12,6 +12,9 @@ import Header from './components/Header';
 import BookDetails from './components/BookDetails';
 import CreateShelf from './pages/CreateShelf';
 import getTodaysDate from './services/getDate';
+import Start from './pages/Start';
+import Access from './pages/Access';
+import FirstShelf from './pages/FirstShelf';
 
 function App() {
   const [library, setLibrary] = useState([]);
@@ -22,6 +25,10 @@ function App() {
     compartment: { id: 123 },
   });
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
+  const [isNewUser, setIsNewUser] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [grantAccess, setGrantAccess] = useState(false);
+  const [activeUser, setActiveUser] = useState({});
 
   function toggleToAndFromLibrary(focusedBook) {
     isInLibrary(focusedBook)
@@ -183,6 +190,29 @@ function App() {
     setDetailedShelf(detailedShelfCompartment);
   }
 
+  function handleAccess(user) {
+    if (isNewUser) {
+      return checkForUser(user)
+        ? setGrantAccess(false)
+        : (setUsers([...users, user]),
+          setGrantAccess(true),
+          setActiveUser(user));
+    }
+    if (!isNewUser) {
+      return checkForUser(user)
+        ? (setGrantAccess(true), setActiveUser(user))
+        : setGrantAccess(false);
+    }
+  }
+
+  function checkForUser(user) {
+    if (user.name.length > 0)
+      return users.some(
+        (existingUser) =>
+          existingUser.name.toLowerCase() === user.name.toLowerCase()
+      );
+  }
+
   function renderBookDetails(book) {
     return (
       <BookDetails
@@ -197,9 +227,30 @@ function App() {
   return (
     <>
       <StyledToastContainer />
-      <Header />
+
       <Switch>
+        <Route exact path="/">
+          <Start onSetIsNewUser={setIsNewUser} />
+        </Route>
+        <Route exact path="/accessPage">
+          <Header noLink />
+          <Access
+            isNewUser={isNewUser}
+            onHandleAccess={handleAccess}
+            grantAccess={grantAccess}
+            onCheckForUser={checkForUser}
+          />
+        </Route>
+        <Route exact path="/firstShelf">
+          <Header noLink />
+          <FirstShelf
+            onSaveShelf={addShelf}
+            activeUser={activeUser}
+            shelves={shelves}
+          />
+        </Route>
         <Route path="/home">
+          <Header />
           {view === 'details' && renderBookDetails(detailedBook)}
           <Home
             onToggleToAndFromLibrary={toggleToAndFromLibrary}
@@ -209,8 +260,10 @@ function App() {
             library={library}
             onRenderBookDetails={renderBookDetailsHelper}
           />
+          <NavFooter />
         </Route>
         <Route exact path="/myshelves">
+          <Header />
           <MyShelves
             onSaveShelf={addShelf}
             shelves={shelves}
@@ -219,27 +272,33 @@ function App() {
             detailedCompartmentBooks={detailedCompartmentBooks}
             onGetShelfBooks={getShelfBookImages}
           />
+          <NavFooter />
         </Route>
         <Route path="/myshelves/createshelf">
+          <Header />
           <CreateShelf onSaveShelf={addShelf} />
+          <NavFooter />
         </Route>
         <Route path={`/myshelves/${detailedShelf.compartment.id}`}>
+          <Header />
           {view === 'details' && renderBookDetails(detailedBook)}
           <CompartmentPage
             onRenderBookDetails={renderBookDetailsHelper}
             detailedCompartmentBooks={detailedCompartmentBooks}
             detailedShelf={detailedShelf}
           />
+          <NavFooter />
         </Route>
         <Route path="/mybooks">
+          <Header />
           {view === 'details' && renderBookDetails(detailedBook)}
           <MyBooks
             library={library}
             onRenderBookDetails={renderBookDetailsHelper}
           />
+          <NavFooter />
         </Route>
       </Switch>
-      <NavFooter />
     </>
   );
 }
