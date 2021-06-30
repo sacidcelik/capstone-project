@@ -18,7 +18,7 @@ export default function LibraryDashboard({
           for a book.
         </h5>
       )}
-      {recentBooks?.length > 0 &&
+      {recentBooks.length > 0 &&
         recentBooks.map((book) => (
           <BookCard key={book.id} onClick={() => onRenderBookDetails(book)}>
             <div>

@@ -23,8 +23,8 @@ export default function Access({
     history.push('/');
   }
   const handleLoginRoute = useCallback(() => {
-    if (isNewUser && grantAccess) return history.push('/firstShelf');
-    if (!isNewUser && grantAccess) return history.push('/home');
+    if (isNewUser && grantAccess) return history.replace('/firstShelf');
+    if (!isNewUser && grantAccess) return history.replace('/home');
   }, [isNewUser, grantAccess, history]);
 
   useEffect(() => {
