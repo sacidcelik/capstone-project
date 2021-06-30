@@ -41,14 +41,14 @@ const StartPage = styled.main`
 `;
 
 const AppName = styled.h1`
-  margin-top: 8rem;
+  margin-top: 10rem;
 `;
 
 const ButtonSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 8rem;
+  margin-top: 10rem;
 `;
 const OrangeTriangle = styled.img`
   position: fixed;
