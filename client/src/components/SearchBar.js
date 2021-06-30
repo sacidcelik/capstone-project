@@ -1,14 +1,19 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function SearchBar({ query, setSearchQuery, focusSearch }) {
+export default function SearchBar({
+  query,
+  onSearch,
+  focusSearch,
+  placeholder,
+}) {
   return (
     <SearchWrapper>
       <SearchInput
         type="text"
-        placeholder="Search for your book"
+        placeholder={placeholder}
         value={query}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={onSearch}
         ref={focusSearch}
         data-test-id="search-bar"
       />
@@ -27,6 +32,7 @@ const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 `;
 
 const SearchInput = styled.input`
@@ -46,4 +52,5 @@ SearchBar.propTypes = {
   query: PropTypes.string,
   setQuery: PropTypes.func,
   focusSearch: PropTypes.object,
+  placeholder: PropTypes.string,
 };
