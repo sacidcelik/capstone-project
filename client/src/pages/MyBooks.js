@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useState } from 'react';
 import Library from '../components/Library';
 import SearchBar from '../components/SearchBar';
 
@@ -11,17 +12,17 @@ export default function MyBooks({ library, onRenderBookDetails }) {
     let searchTerm = event.target.value;
     setSearchQuery(searchTerm);
     searchTerm = searchTerm.toLowerCase();
-    console.log('term', searchTerm);
     if (searchTerm.length > 1) {
       const filteredLibrary = library.filter((book) => {
         return (
-          book.volumeInfo.authors[0].toLowerCase().includes(searchTerm) ||
-          book.volumeInfo.authors[1]?.toLowerCase().includes(searchTerm) ||
+          book.volumeInfo.authors
+            .toString()
+            .toLowerCase()
+            .includes(searchTerm) ||
           book.volumeInfo.title.toLowerCase().includes(searchTerm) ||
           book.volumeInfo.publishedDate.includes(searchTerm)
         );
       });
-      console.log('filtered', filteredLibrary);
       setLibraryToDisplay(filteredLibrary);
     } else {
       setLibraryToDisplay(library);
@@ -54,3 +55,8 @@ const MyBooksPage = styled.main`
   margin: 0 auto;
   width: 95%;
 `;
+
+MyBooks.propTypes = {
+  library: PropTypes.array,
+  onRenderBookDetails: PropTypes.func,
+};
