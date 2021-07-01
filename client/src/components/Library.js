@@ -16,11 +16,10 @@ export default function Library({ library, isStatic, onRenderBookDetails }) {
                 book.volumeInfo?.imageLinks?.thumbnail ||
                 book.volumeInfo?.imageLinks?.smallThumbnail
               }
-              alt="Book Cover"
+              alt={book.volumeInfo.title}
               width="102.4"
               height="159.2"
             />
-            <p>{book.volumeInfo?.title}</p>
           </BookCard>
         );
       })}
@@ -40,7 +39,7 @@ const BooksWrapper = styled.section`
 
 const BookCard = styled.article`
   align-items: center;
-  background: var(--primary);
+  background: var(--secondary);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
     var(--box-shadow-blur) var(--box-shadow-color);
