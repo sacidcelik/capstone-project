@@ -73,7 +73,7 @@ const SectionHeadline = styled.h4`
 const LogoutButton = styled.button`
   border: none;
   border-radius: var(--border-radius);
-  background-color: #cc1c1c;
+  background-color: var(--logout-remove);
   color: var(--background);
   display: block;
   font-size: 1.1rem;

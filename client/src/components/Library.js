@@ -17,8 +17,8 @@ export default function Library({ library, isStatic, onRenderBookDetails }) {
                 book.volumeInfo?.imageLinks?.smallThumbnail
               }
               alt={book.volumeInfo.title}
-              width="102.4"
-              height="159.2"
+              width="104"
+              height="165"
             />
           </BookCard>
         );
@@ -39,7 +39,7 @@ const BooksWrapper = styled.section`
 
 const BookCard = styled.article`
   align-items: center;
-  background: var(--secondary);
+  background: var(--primary);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
     var(--box-shadow-blur) var(--box-shadow-color);

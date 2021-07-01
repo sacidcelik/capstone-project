@@ -13,8 +13,19 @@ export default function FirstShelf({ onSaveShelf, activeUser, shelves }) {
 
   return (
     <FirstShelfPage>
-      <h3>{activeUser?.name}, Set Up Your First Shelf Here </h3>
-      <ShelfCreator onSaveShelf={onSaveShelf}></ShelfCreator>
+      <HeadlineSection>
+        {shelves.length === 0 ? (
+          <h3>{activeUser?.name}, set up your first bookshelf here: </h3>
+        ) : (
+          <>
+            <h3>Great Job, {activeUser?.name}! You are ready to proceed.</h3>
+            <h2>Enjoy Bookshelves!</h2>{' '}
+          </>
+        )}
+      </HeadlineSection>
+      {shelves.length < 1 && (
+        <ShelfCreator onSaveShelf={onSaveShelf}></ShelfCreator>
+      )}
       {shelves.length > 0 && (
         <FinishButton onClick={handleFinishSetUp}>FINISH SET UP</FinishButton>
       )}
@@ -22,11 +33,18 @@ export default function FirstShelf({ onSaveShelf, activeUser, shelves }) {
   );
 }
 const FirstShelfPage = styled.main`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  h3 {
-    text-align: center;
+  text-align: center;
+  width: 100%;
+`;
+
+const HeadlineSection = styled.section`
+  width: 95%;
+
+  h2 {
+    margin-top: 2rem;
   }
 `;
 
@@ -35,7 +53,8 @@ const FinishButton = styled.button`
   border-radius: var(--border-radius);
   background-color: var(--primary);
   height: 40px;
-  margin-bottom: 1rem;
+  position: absolute;
+  bottom: 2rem;
   width: 95%;
 `;
 

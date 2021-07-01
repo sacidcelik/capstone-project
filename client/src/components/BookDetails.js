@@ -78,7 +78,7 @@ export default function BookDetails({
                 book.volumeInfo?.imageLinks?.smallThumbnail
               }
               alt={book.volumeInfo?.title || 'Book Cover'}
-              width="128"
+              width="121"
               height="192"
             />
             <UnreadReadButton

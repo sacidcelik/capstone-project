@@ -19,6 +19,8 @@ export default createGlobalStyle`
   --tertiary-light: hsl(167, 38%, 85%);
   --tertiary-dark: hsl(167, 38%, 25%);
 
+  --logout-remove: hsl(0, 50%, 46%);
+
   --background: #f8f5f1;
   --box-shadow-offset-x: 5px;
   --box-shadow-offset-y: 5px;
