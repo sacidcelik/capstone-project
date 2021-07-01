@@ -32,6 +32,7 @@ const library = new Schema({
     columnId: String,
     compartmentId: String,
   },
+  readStatus: { isRead: Boolean, isReadDate: String },
 });
 
 export default library;
