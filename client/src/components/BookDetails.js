@@ -16,6 +16,8 @@ export default function BookDetails({
   onGetBookLocation,
   onSelectShelf,
   shelves,
+  onToogleBookIsRead,
+  bookIsRead,
 }) {
   const [isSelector, setIsSelector] = useState(false);
 
@@ -50,7 +52,10 @@ export default function BookDetails({
               width="128"
               height="192"
             />
-            <UnreadReadButton />
+            <UnreadReadButton
+              onToggleBookIsRead={() => onToogleBookIsRead(book)}
+              bookIsRead={bookIsRead(book)}
+            />
           </BookImageWrapper>
 
           <BookSpecs>
@@ -247,4 +252,9 @@ BookDetails.propTypes = {
   book: PropTypes.object,
   onRemoveDetailView: PropTypes.func,
   onAddRating: PropTypes.func,
+  onGetBookLocation: PropTypes.func,
+  onSelectShelf: PropTypes.func,
+  shelves: PropTypes.array,
+  onToogleBookIsRead: PropTypes.func,
+  bookIsRead: PropTypes.func,
 };

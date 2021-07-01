@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function UnreadReadButton({ isRead, onToggleRead }) {
+export default function UnreadReadButton({ bookIsRead, onToggleBookIsRead }) {
   return (
     <ToggleButton
       data-test-id="unread-read-button"
-      onClick={onToggleRead}
-      isRead={isRead}
+      onClick={onToggleBookIsRead}
+      isRead={bookIsRead}
     >
-      {isRead ? 'READ' : 'UNREAD'}
+      {bookIsRead ? 'READ' : 'UNREAD'}
     </ToggleButton>
   );
 }
@@ -22,3 +23,8 @@ const ToggleButton = styled.button`
   padding: 0.32rem 0.5rem 0.3rem 0.5rem;
   width: 102px;
 `;
+
+UnreadReadButton.propTypes = {
+  bookIsRead: PropTypes.bool,
+  onToggleBookIsRead: PropTypes.func,
+};

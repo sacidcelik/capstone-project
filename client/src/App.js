@@ -42,6 +42,7 @@ function App() {
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
   const [isNewUser, setIsNewUser] = useState(false);
   const [grantAccess, setGrantAccess] = useState(false);
+
   useEffect(() => {
     getUsers(setUsers);
   }, []);
@@ -69,8 +70,12 @@ function App() {
   }
 
   function addToLibrary(focusedBook) {
-    focusedBook.addToLibraryDate = getTodaysDate();
-    sendBook(activeUser, focusedBook, setLibrary);
+    const bookWithAddedInformation = {
+      ...focusedBook,
+      addToLibraryDate: getTodaysDate(),
+      readStatus: { isRead: false, isReadDate: '' },
+    };
+    sendBook(activeUser, bookWithAddedInformation, setLibrary);
   }
 
   function addShelf(shelf) {
@@ -182,6 +187,28 @@ function App() {
 
   function isInLibrary(focusedBook) {
     return library.find((book) => book.id === focusedBook.id);
+  }
+
+  function bookIsRead(focusedBook) {
+    const bookInLibrary = library.find((book) => book._id === focusedBook._id);
+    return bookInLibrary.readStatus ? bookInLibrary.readStatus.isRead : false;
+  }
+
+  function toggleBookIsRead(focusedBook) {
+    bookIsRead(focusedBook)
+      ? updateBookIsRead(focusedBook, false, '')
+      : updateBookIsRead(focusedBook, true, '');
+  }
+
+  function updateBookIsRead(bookToUpdate, status, date) {
+    const updatedBooks = library.map((book) => {
+      if (book._id === bookToUpdate._id) {
+        book.readStatus.isRead = status;
+        book.readStatus.isReadDate = date;
+      }
+      return book;
+    });
+    updateRemoteLibrary(activeUser, updatedBooks, setLibrary);
   }
 
   function renderBookDetailsHelper(book) {
@@ -320,6 +347,8 @@ function App() {
         onGetBookLocation={getBookLocation}
         shelves={shelves}
         onSelectShelf={addRefToBookAndShelf}
+        onToogleBookIsRead={toggleBookIsRead}
+        bookIsRead={bookIsRead}
       />
     );
   }
