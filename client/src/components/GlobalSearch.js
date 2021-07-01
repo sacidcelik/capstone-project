@@ -55,6 +55,7 @@ export default function GlobalSearch({
         onSearch={handleSearch}
         focusSearch={focusSearch}
         placeholder={placeholder}
+        setSearchQuery={setSearchQuery}
       />
       <SearchResult
         searchedBooks={searchedBooks}
