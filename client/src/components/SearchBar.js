@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 export default function SearchBar({
   query,
@@ -10,7 +10,7 @@ export default function SearchBar({
   return (
     <SearchWrapper>
       <SearchInput
-        type="text"
+        type="search"
         placeholder={placeholder}
         value={query}
         onChange={onSearch}
