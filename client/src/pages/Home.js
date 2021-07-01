@@ -91,9 +91,6 @@ Home.propTypes = {
   onSelectShelf: PropTypes.func,
   library: PropTypes.array,
   onRenderBookDetails: PropTypes.func,
-<<<<<<< HEAD
   activeUser: PropTypes.object,
-=======
   onLogout: PropTypes.func,
->>>>>>> main
 };
