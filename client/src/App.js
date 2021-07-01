@@ -81,8 +81,6 @@ function App() {
     sendBook(activeUser, bookWithAddedInformation, setLibrary);
   }
 
-  console.log('library', library);
-
   function addShelf(shelf) {
     sendShelf(activeUser, shelf, setShelves);
   }
