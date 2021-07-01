@@ -27,7 +27,7 @@ mongoose.connect(connectionString, {
 mongoose.set('returnOriginal', false);
 
 server.use(cors());
-server.use(express.json());
+server.use(express.json({ limit: '50mb' }));
 server.get('/health', (request, response) =>
   response.json({ status: 'alive' })
 );
