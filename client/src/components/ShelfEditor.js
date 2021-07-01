@@ -164,9 +164,9 @@ const ShelfSelectorCard = styled.article`
 
   input,
   select {
+    background: var(--background);
     border: 1px solid var(--primary);
     border-radius: var(--border-radius);
-    background: var(--background);
   }
 `;
 
