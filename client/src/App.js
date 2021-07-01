@@ -303,6 +303,10 @@ function App() {
     }
   }
 
+  function getUsersOnLogout() {
+    getUsers(setUsers);
+  }
+
   function checkForUser(user) {
     if (user.name.length > 0)
       return users.some(
@@ -361,6 +365,7 @@ function App() {
             onRenderBookDetails={renderBookDetailsHelper}
             onGrantAccess={setGrantAccess}
             activeUser={activeUser}
+            onLogout={getUsersOnLogout}
           />
           <NavFooter />
         </Route>
