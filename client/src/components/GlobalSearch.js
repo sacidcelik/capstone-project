@@ -10,10 +10,15 @@ export default function GlobalSearch({
   isInLibrary,
   shelves,
   onSelectShelf,
+  placeholder,
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchedBooks, setSearchedBooks] = useState([]);
   const focusSearch = useRef(null);
+
+  function handleSearch(event) {
+    setSearchQuery(event.target.value);
+  }
 
   useEffect(() => {
     focusSearch.current.focus();
@@ -47,8 +52,9 @@ export default function GlobalSearch({
     <>
       <SearchBar
         query={searchQuery}
-        setSearchQuery={setSearchQuery}
+        onSearch={handleSearch}
         focusSearch={focusSearch}
+        placeholder={placeholder}
       />
       <SearchResult
         searchedBooks={searchedBooks}
@@ -63,4 +69,5 @@ export default function GlobalSearch({
 GlobalSearch.propTypes = {
   onToggleToAndFromLibrary: PropTypes.func,
   isInLibrary: PropTypes.func,
+  placeholder: PropTypes.string,
 };

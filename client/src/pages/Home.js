@@ -43,6 +43,7 @@ export default function Home({
         isInLibrary={isInLibrary}
         shelves={shelves}
         onSelectShelf={onSelectShelf}
+        placeholder="Search for my book"
       />
       <SectionHeadline>My Bookshelves</SectionHeadline>
       <ShelvesDashboard shelves={shelves} />
