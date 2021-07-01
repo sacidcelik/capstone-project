@@ -303,7 +303,6 @@ function App() {
       />
     );
   }
-  console.log(grantAccess);
 
   return (
     <>
