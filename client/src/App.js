@@ -1,6 +1,6 @@
 import NavFooter from './components/NavFooter';
 import { Switch, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,20 +15,52 @@ import getTodaysDate from './services/getDate';
 import Start from './pages/Start';
 import Access from './pages/Access';
 import FirstShelf from './pages/FirstShelf';
+import { saveToLocal, loadFromLocal } from './services/localStorage';
+import {
+  getActiveUserData,
+  getUsers,
+  sendBook,
+  sendShelf,
+  sendUser,
+  updateRemoteLibrary,
+  updateRemoteShelves,
+} from './services/databaseRequests';
 
 function App() {
-  const [library, setLibrary] = useState([]);
-  const [shelves, setShelves] = useState([]);
+  const [activeUser, setActiveUser] = useState(
+    loadFromLocal('activeUser') ?? {}
+  );
+  const [library, setLibrary] = useState(loadFromLocal('library') ?? []);
+  const [shelves, setShelves] = useState(loadFromLocal('shelves') ?? []);
+  const [users, setUsers] = useState([]);
   const [view, setView] = useState('');
   const [detailedBook, setDetailedBook] = useState({});
   const [detailedShelf, setDetailedShelf] = useState({
-    compartment: { id: 123 },
+    compartment: { id: '' },
   });
   const [detailedCompartmentBooks, setDetailedCompartmentBooks] = useState([]);
   const [isNewUser, setIsNewUser] = useState(false);
-  const [users, setUsers] = useState([]);
   const [grantAccess, setGrantAccess] = useState(false);
-  const [activeUser, setActiveUser] = useState({});
+
+  useEffect(() => {
+    getUsers(setUsers);
+  }, []);
+
+  useEffect(() => {
+    getActiveUserData(activeUser, setShelves, setLibrary);
+  }, [activeUser]);
+
+  useEffect(() => {
+    saveToLocal('library', library);
+  }, [library]);
+
+  useEffect(() => {
+    saveToLocal('shelves', shelves);
+  }, [shelves]);
+
+  useEffect(() => {
+    saveToLocal('activeUser', activeUser);
+  }, [activeUser]);
 
   function toggleToAndFromLibrary(focusedBook) {
     isInLibrary(focusedBook)
@@ -38,14 +70,59 @@ function App() {
 
   function addToLibrary(focusedBook) {
     focusedBook.addToLibraryDate = getTodaysDate();
-    setLibrary([...library, focusedBook]);
+    sendBook(activeUser, focusedBook, setLibrary);
   }
 
-  function removeFromLibrary(focusedBook) {
+  function addShelf(shelf) {
+    sendShelf(activeUser, shelf, setShelves);
+  }
+
+  async function removeFromLibrary(focusedBook) {
+    const bookWithObjectId = focusedBook._id
+      ? focusedBook
+      : await findBookInLibrary(focusedBook);
     const remainingLibrary = library.filter(
-      (book) => book.id !== focusedBook.id
+      (book) => book._id !== bookWithObjectId._id
     );
-    setLibrary(remainingLibrary);
+    updateRemoteLibrary(activeUser, remainingLibrary, setLibrary);
+    if (bookWithObjectId.shelfLocation) {
+      const shelfId = bookWithObjectId.shelfLocation.bookshelfId;
+      const columnId = bookWithObjectId.shelfLocation.columnId;
+      const compartmentId = bookWithObjectId.shelfLocation.compartmentId;
+      const storedBookId = bookWithObjectId._id;
+      fetch(
+        `/users/${activeUser._id}/shelves/${shelfId}/columns/${columnId}/compartment/${compartmentId}/storedBooks/${storedBookId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+        .then((result) => result.json())
+        .then((updatedUser) => {
+          const updatedShelves = updatedUser.shelves.map((shelf) =>
+            countBooksInShelf(shelf)
+          );
+          updateRemoteShelves(activeUser, updatedShelves, setShelves);
+        });
+    }
+  }
+
+  function countBooksInShelf(shelf) {
+    shelf.storedBooks = 0;
+    shelf.columns.forEach((column) =>
+      column.compartments.forEach((compartment) => {
+        const sum = compartment.storedBooks
+          ? compartment.storedBooks.reduce((acc, element) => {
+              if (element) acc++;
+              return acc;
+            }, 0)
+          : 0;
+        return (shelf.storedBooks += sum);
+      })
+    );
+    return shelf;
   }
 
   function isInLibrary(focusedBook) {
@@ -64,54 +141,45 @@ function App() {
       }
       return book;
     });
-    setLibrary(updatedBooks);
+    updateRemoteLibrary(activeUser, updatedBooks, setLibrary);
   }
 
-  function updateBooksInCompartment(property, selection, book) {
-    const updatedShelves = shelves.map((shelf) => {
-      if (shelf.id === selection.bookshelfId) {
+  function findBookInLibrary(book) {
+    return library.find((existingBook) => existingBook.id === book.id);
+  }
+
+  async function updateBooksInCompartment(property, selection, book) {
+    const bookToAdd = await findBookInLibrary(book);
+    const updatedShelves = await shelves.map((shelf) => {
+      if (shelf._id === selection.bookshelfId) {
         shelf.columns.map((column) => {
-          if (column.id === selection.columnId) {
+          if (column._id === selection.columnId) {
             column.compartments.map((compartment) => {
-              if (compartment.id === selection.compartmentId) {
+              if (compartment._id === selection.compartmentId) {
                 let existingBooks;
                 compartment[property]
                   ? (existingBooks = compartment[property])
                   : (existingBooks = []);
                 existingBooks.length === 0
-                  ? (compartment[property] = [book.id])
-                  : (compartment[property] = [...existingBooks, book.id]);
+                  ? (compartment[property] = [{ id: bookToAdd._id }])
+                  : (compartment[property] = [
+                      ...existingBooks,
+                      { id: bookToAdd._id },
+                    ]);
               }
               return compartment;
             });
           }
-
           return column;
         });
       }
-      shelf.storedBooks = 0;
-      shelf.columns.forEach((column) =>
-        column.compartments.forEach((compartment) => {
-          const sum = compartment.storedBooks
-            ? compartment.storedBooks.reduce((acc, element) => {
-                if (element) acc++;
-                return acc;
-              }, 0)
-            : 0;
-          return (shelf.storedBooks += sum);
-        })
-      );
-      return shelf;
+      return countBooksInShelf(shelf);
     });
-    setShelves(updatedShelves);
+    updateRemoteShelves(activeUser, updatedShelves, setShelves);
   }
 
   function addRating(rating, bookToUpdate) {
     updateBook('rating', rating, bookToUpdate);
-  }
-
-  function addShelf(shelf) {
-    setShelves([...shelves, shelf]);
   }
 
   function addRefToBookAndShelf(location, bookToUpdate) {
@@ -122,13 +190,13 @@ function App() {
   function getBookLocation(book) {
     if (book.shelfLocation) {
       const shelf = shelves.find(
-        (shelf) => shelf.id === book.shelfLocation.bookshelfId
+        (shelf) => shelf._id === book.shelfLocation.bookshelfId
       );
       const column = shelf.columns.find(
-        (column) => column.id === book.shelfLocation.columnId
+        (column) => column._id === book.shelfLocation.columnId
       );
       const compartment = column.compartments.find(
-        (compartment) => compartment.id === book.shelfLocation.compartmentId
+        (compartment) => compartment._id === book.shelfLocation.compartmentId
       );
       return `${shelf.name}, Column ${column.column}, Compartment ${compartment.compartment}`;
     } else {
@@ -139,9 +207,9 @@ function App() {
   function getCompartmentBooks(storedBookIds) {
     const storedBooks = [];
     if (storedBookIds && storedBookIds.length > 0) {
-      storedBookIds.map((bookId) =>
+      storedBookIds.map((storedBook) =>
         library.map((book) => {
-          if (book.id === bookId) storedBooks.push(book);
+          if (book._id === storedBook.id) storedBooks.push(book);
           return storedBooks;
         })
       );
@@ -164,9 +232,9 @@ function App() {
       });
       shelfBooks.map((columnBooks, shelfBooksColumnIndex) =>
         columnBooks.map((compartmentBooks, compartmentIndex) => {
-          compartmentBooks.map((bookId, bookIndex) =>
+          compartmentBooks.map((compartmentBook, bookIndex) =>
             library.map((book) => {
-              if (book.id === bookId) {
+              if (book._id === compartmentBook.id) {
                 shelfBooks[shelfBooksColumnIndex][compartmentIndex][bookIndex] =
                   book.volumeInfo?.imageLinks?.thumbnail;
                 return shelfBooks;
@@ -190,17 +258,29 @@ function App() {
     setDetailedShelf(detailedShelfCompartment);
   }
 
+  async function getActiveUser(user) {
+    if (isNewUser) {
+      const newActiveUser = await sendUser(user);
+      setActiveUser(newActiveUser);
+    }
+    if (!isNewUser) {
+      const newActiveUser = await users.find(
+        (existingUser) => existingUser.name === user.name
+      );
+
+      setActiveUser(newActiveUser);
+    }
+  }
+
   function handleAccess(user) {
     if (isNewUser) {
       return checkForUser(user)
         ? setGrantAccess(false)
-        : (setUsers([...users, user]),
-          setGrantAccess(true),
-          setActiveUser(user));
+        : (setGrantAccess(true), getActiveUser(user));
     }
     if (!isNewUser) {
       return checkForUser(user)
-        ? (setGrantAccess(true), setActiveUser(user))
+        ? (setGrantAccess(true), getActiveUser(user))
         : setGrantAccess(false);
     }
   }

@@ -7,7 +7,7 @@ export default function Library({ library, isStatic, onRenderBookDetails }) {
       {library.map((book) => {
         return (
           <BookCard
-            key={book.id}
+            key={book._id}
             data-test-id="library-book"
             onClick={() => onRenderBookDetails(book)}
           >
