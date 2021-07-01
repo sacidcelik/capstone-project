@@ -84,7 +84,7 @@ export default function Shelf({
                   <BookImageWrapper>
                     <LinkStyled
                       key={compartmentIndex}
-                      to={`${url}/${compartment.id}`}
+                      to={`${url}/${compartment._id}`}
                       onClick={() =>
                         compartmentClickHandler(shelf, column, compartment)
                       }
