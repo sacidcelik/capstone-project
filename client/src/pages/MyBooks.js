@@ -25,7 +25,7 @@ export default function MyBooks({ library, onRenderBookDetails }) {
       setLibraryToDisplay(library);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery]);
+  }, [searchQuery, library]);
 
   function handleSearch(event) {
     setSearchQuery(event.target.value.toLowerCase());

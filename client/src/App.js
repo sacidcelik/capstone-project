@@ -72,11 +72,16 @@ function App() {
   function addToLibrary(focusedBook) {
     const bookWithAddedInformation = {
       ...focusedBook,
+      lentStatus: { isLent: false, lentTo: '', lentDate: '' },
+      userNotes: '',
       addToLibraryDate: getTodaysDate(),
       readStatus: { isRead: false, isReadDate: '' },
+      rating: 0,
     };
     sendBook(activeUser, bookWithAddedInformation, setLibrary);
   }
+
+  console.log('library', library);
 
   function addShelf(shelf) {
     sendShelf(activeUser, shelf, setShelves);
@@ -294,6 +299,17 @@ function App() {
     }
   }
 
+  function addLentStatusAndNotes(bookToUpdate, lentStatus, userNotes) {
+    const updatedBooks = library.map((book) => {
+      if (book.id === bookToUpdate.id) {
+        book.lentStatus = lentStatus;
+        book.userNotes = userNotes;
+      }
+      return book;
+    });
+    updateRemoteLibrary(activeUser, updatedBooks, setLibrary);
+  }
+
   function provideDetailedShelfHelper(shelf, column, compartment) {
     const detailedShelfCompartment = {
       shelf: shelf,
@@ -338,6 +354,11 @@ function App() {
       );
   }
 
+  function getBookRating(book) {
+    const libraryBook = isInLibrary(book);
+    return libraryBook.rating;
+  }
+
   function renderBookDetails(book) {
     return (
       <BookDetails
@@ -349,6 +370,8 @@ function App() {
         onSelectShelf={addRefToBookAndShelf}
         onToogleBookIsRead={toggleBookIsRead}
         bookIsRead={bookIsRead}
+        onAddLentStatusAndNotes={addLentStatusAndNotes}
+        onGetBookRating={getBookRating}
       />
     );
   }
