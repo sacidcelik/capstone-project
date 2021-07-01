@@ -13,6 +13,7 @@ export default function Home({
   library,
   onRenderBookDetails,
   onGrantAccess,
+  onLogout,
 }) {
   const recentBooks =
     library.length > 3
@@ -23,6 +24,7 @@ export default function Home({
   function handleLogout() {
     history.replace('/');
     onGrantAccess(false);
+    onLogout();
   }
 
   return (
@@ -77,4 +79,5 @@ Home.propTypes = {
   onSelectShelf: PropTypes.func,
   library: PropTypes.array,
   onRenderBookDetails: PropTypes.func,
+  onLogout: PropTypes.func,
 };
