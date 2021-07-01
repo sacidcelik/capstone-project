@@ -19,8 +19,6 @@ export default createGlobalStyle`
   --tertiary-light: hsl(167, 38%, 85%);
   --tertiary-dark: hsl(167, 38%, 25%);
 
-
-
   --background: #f8f5f1;
   --box-shadow-offset-x: 5px;
   --box-shadow-offset-y: 5px;
