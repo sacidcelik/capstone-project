@@ -60,12 +60,9 @@ export default function ShelfSelector({
     if (validateShelfSelection(selection)) {
       onSelectShelf(selection, book);
       onSetIsSelector(false);
-      toast.success('Book added to Shelf!', {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
+      toast.success('Book added to shelf!');
     } else {
       toast.error('Please choose a shelf, column and compartment', {
-        position: toast.POSITION.BOTTOM_CENTER,
         toastId: 'validationError',
       });
     }

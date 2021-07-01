@@ -58,15 +58,12 @@ export default function ShelfCreator({ onSaveShelf }) {
     event.preventDefault();
     if (validateShelf(shelf)) {
       onSaveShelf(shelf);
-      toast.success('Shelf Added!', {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
+      toast.success('Shelf added!');
       setShelf(initialShelf);
     } else {
       toast.error(
         'Please specifiy a name, the number of columns and a color.',
         {
-          position: toast.POSITION.BOTTOM_CENTER,
           toastId: 'validationError',
         }
       );

@@ -376,7 +376,11 @@ function App() {
 
   return (
     <>
-      <StyledToastContainer />
+      <StyledToastContainer
+        position="bottom-center"
+        hideProgressBar={true}
+        autoClose={2500}
+      />
 
       <Switch>
         <Route exact path="/">
