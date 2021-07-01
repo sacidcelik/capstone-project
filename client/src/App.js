@@ -364,6 +364,7 @@ function App() {
             library={library}
             onRenderBookDetails={renderBookDetailsHelper}
             onGrantAccess={setGrantAccess}
+            activeUser={activeUser}
             onLogout={getUsersOnLogout}
           />
           <NavFooter />

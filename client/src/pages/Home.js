@@ -13,12 +13,14 @@ export default function Home({
   library,
   onRenderBookDetails,
   onGrantAccess,
+  activeUser,
   onLogout,
 }) {
   const recentBooks =
     library.length > 3
-      ? library?.slice(library.length - 3, library.length).reverse()
-      : library.reverse();
+      ? library.slice(library.length - 3, library.length).reverse()
+      : library.slice().reverse();
+
   const history = useHistory();
 
   function handleLogout() {
@@ -29,7 +31,13 @@ export default function Home({
 
   return (
     <HomePage>
-      <SectionHeadline>Add new book</SectionHeadline>
+      <h2>
+        {activeUser.name.charAt(activeUser.name.length - 1).toLowerCase() ===
+        's'
+          ? `${activeUser.name}' Library`
+          : `${activeUser.name}'s Library`}
+      </h2>
+      <SectionHeadline>Add New Book</SectionHeadline>
       <GlobalSearch
         onToggleToAndFromLibrary={onToggleToAndFromLibrary}
         isInLibrary={isInLibrary}
@@ -43,7 +51,7 @@ export default function Home({
         recentBooks={recentBooks}
         onRenderBookDetails={onRenderBookDetails}
       />
-      <LogoutButton onClick={handleLogout}>Log Out</LogoutButton>
+      <LogoutButton onClick={handleLogout}>LOG OUT</LogoutButton>
     </HomePage>
   );
 }
@@ -51,6 +59,9 @@ export default function Home({
 const HomePage = styled.main`
   margin: 0 auto 7rem;
   width: 95%;
+  h2 {
+    text-align: center;
+  }
   a {
     text-decoration: none;
   }
@@ -66,7 +77,8 @@ const LogoutButton = styled.button`
   background-color: #cc1c1c;
   color: var(--background);
   display: block;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
   height: 40px;
   margin: 1.5rem auto;
   width: 280px;
@@ -79,5 +91,6 @@ Home.propTypes = {
   onSelectShelf: PropTypes.func,
   library: PropTypes.array,
   onRenderBookDetails: PropTypes.func,
+  activeUser: PropTypes.object,
   onLogout: PropTypes.func,
 };

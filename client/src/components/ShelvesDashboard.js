@@ -14,9 +14,14 @@ export default function ShelvesDashboard({ shelves, isStatic }) {
                 index < 3 && (
                   <Shelf key={shelf._id}>
                     {shelf.name}:{' '}
-                    {shelf.storedBooks
-                      ? `${shelf.storedBooks} Books`
-                      : '0 Books'}
+                    {shelf.storedBooks ? (
+                      <span>
+                        {shelf.storedBooks}
+                        {shelf.storedBooks > 1 ? ' Books' : ' Book'}
+                      </span>
+                    ) : (
+                      <span> 0 Books</span>
+                    )}
                   </Shelf>
                 )
             )}
@@ -50,8 +55,12 @@ const ShelfList = styled.ol`
 `;
 
 const Shelf = styled.li`
-  margin: 0.5rem 1rem 1rem;
+  margin: 0.5rem 1.2rem 1rem;
   padding: 0;
+
+  span {
+    font-style: italic;
+  }
 `;
 
 ShelvesDashboard.propTypes = {

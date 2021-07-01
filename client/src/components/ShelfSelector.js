@@ -161,7 +161,7 @@ export default function ShelfSelector({
             </select>
           </div>
         </ShelfPicker>
-        <SaveAddButton text="Save" />
+        <SaveAddButton text="SAVE" />
       </ShelfSelectorForm>
     </ShelfSelectorCard>
   );

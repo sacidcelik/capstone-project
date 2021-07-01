@@ -107,7 +107,7 @@ const DetailsCard = styled.article`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  height: ${(props) => (props.isStatic ? '650px' : '85vh')};
+  height: ${(props) => (props.isStatic ? '650px' : '83vh')};
   margin: ${(props) => (props.isStatic ? '0 auto' : '50vh 50vw')};
   opacity: 0.95;
   padding: 1rem;
@@ -176,6 +176,7 @@ const BookSubTitle = styled.h5`
 const BookSettings = styled.section`
   input:not([type='checkbox']),
   textarea {
+    background: white;
     border: none;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)

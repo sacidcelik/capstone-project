@@ -19,7 +19,7 @@ export default function AddAndRemoveButton({
       data-test-id="add-and-remove-button"
       isInLibrary={isInLibrary}
     >
-      {isInLibrary ? 'Remove' : 'Add'}
+      {isInLibrary ? 'REMOVE' : 'ADD'}
     </ToggleButton>
   );
 }
@@ -29,8 +29,8 @@ const ToggleButton = styled.button`
   color: var(--background);
   border: none;
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
-    var(--box-shadow-blur) var(--box-shadow-color);
+  font-size: 0.9rem;
+  font-weight: 700;
   padding: 0.3rem 0.5rem 0.33rem 0.5rem;
   width: 80px;
 `;

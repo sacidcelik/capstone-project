@@ -15,7 +15,7 @@ export default function Access({
 }) {
   const initialUser = { name: '' };
   const [user, setUser] = useState(initialUser);
-  const buttonText = () => (isNewUser ? 'Create User' : 'Sign In');
+  const buttonText = () => (isNewUser ? 'CREATE USER' : 'SIGN IN');
 
   const history = useHistory();
 

@@ -139,7 +139,7 @@ export default function ShelfEditor({
             </select>
           </div>
         </ShelfPicker>
-        <SaveAddButton text="Save" />
+        <SaveAddButton text="SAVE" />
       </ShelfSelectorForm>
     </ShelfSelectorCard>
   );

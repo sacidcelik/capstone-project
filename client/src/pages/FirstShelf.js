@@ -16,7 +16,7 @@ export default function FirstShelf({ onSaveShelf, activeUser, shelves }) {
       <h3>{activeUser?.name}, Set Up Your First Shelf Here </h3>
       <ShelfCreator onSaveShelf={onSaveShelf}></ShelfCreator>
       {shelves.length > 0 && (
-        <FinishButton onClick={handleFinishSetUp}>Finish Set Up</FinishButton>
+        <FinishButton onClick={handleFinishSetUp}>FINISH SET UP</FinishButton>
       )}
     </FirstShelfPage>
   );
@@ -34,10 +34,9 @@ const FinishButton = styled.button`
   border: none;
   border-radius: var(--border-radius);
   background-color: var(--primary);
-  font-size: 1.5rem;
   height: 40px;
   margin-bottom: 1rem;
-  width: 280px;
+  width: 95%;
 `;
 
 FirstShelf.propTypes = {

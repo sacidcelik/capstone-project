@@ -69,7 +69,7 @@ export default function MyShelves({
         </>
       )}
       <LinkStyled to="/myshelves/createshelf">
-        <SaveAddButton text={'Add New Shelf'} />
+        <SaveAddButton text={'ADD NEW SHELF'} />
       </LinkStyled>
     </ShelfPage>
   );
