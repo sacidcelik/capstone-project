@@ -80,10 +80,10 @@ export default function Access({
         <BackArrow /> <p>Back</p>
       </BackNav>
       <h3>
-        Enter your name here{' '}
+        Enter your name here
         {isNewUser
-          ? 'to create a new user'
-          : 'to sign in and access your bookshelves'}
+          ? ' to create a new user'
+          : ' to sign in and access your bookshelves'}
       </h3>
       <Form onSubmit={handleFormSubmit}>
         <NameInput
