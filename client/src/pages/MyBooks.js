@@ -15,9 +15,11 @@ export default function MyBooks({ library, onRenderBookDetails }) {
           book.volumeInfo.authors
             .toString()
             .toLowerCase()
-            .includes(searchQuery) ||
-          book.volumeInfo.title.toLowerCase().includes(searchQuery) ||
-          book.volumeInfo.publishedDate.includes(searchQuery)
+            .includes(searchQuery.toLowerCase()) ||
+          book.volumeInfo.title
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          book.volumeInfo.publishedDate.includes(searchQuery.toLowerCase())
         );
       });
       setLibraryToDisplay(filteredLibrary);
@@ -28,7 +30,7 @@ export default function MyBooks({ library, onRenderBookDetails }) {
   }, [searchQuery, library]);
 
   function handleSearch(event) {
-    setSearchQuery(event.target.value.toLowerCase());
+    setSearchQuery(event.target.value);
   }
 
   return (
