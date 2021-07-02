@@ -63,4 +63,24 @@ export default createGlobalStyle`
         font-size: 1rem;
         font-weight: 700;
     }
+
+
+
+.container,
+#interactive.viewport {
+  width: 400px;
+  height: 300px;
+}
+
+#interactive.viewport canvas,
+video {
+  width: 400px;
+  height: 300px;
+}
+
+#interactive.viewport canvas.drawingBuffer,
+video.drawingBuffer {
+  width: 400px;
+  height: 300px;
+}
 `;

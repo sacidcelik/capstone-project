@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
+import CameraIcon from '../images/cameraIcon.svg';
 import CloseIcon from '../images/closeIcon.svg';
 
 export default function SearchBar({
@@ -9,6 +10,7 @@ export default function SearchBar({
   focusSearch,
   placeholder,
   setSearchQuery,
+  setCamera,
 }) {
   function handleRemove(event) {
     if (event.key === 'Escape') {
@@ -33,6 +35,9 @@ export default function SearchBar({
           <img src={CloseIcon} alt="Clear Search Icon" width="20" height="20" />
         </div>
       )}
+      <div onClick={() => setCamera((prevCamera) => !prevCamera)}>
+        <img src={CameraIcon} alt="Scan Book Icon" width="20" height="20" />
+      </div>
     </SearchWrapper>
   );
 }

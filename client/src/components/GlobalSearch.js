@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
-
+import styled from 'styled-components';
 import getBooks from '../services/getDataFromAPI';
+import Scanner from './Scanner';
 import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
 
@@ -14,6 +15,12 @@ export default function GlobalSearch({
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchedBooks, setSearchedBooks] = useState([]);
+  const [camera, setCamera] = useState(false);
+
+  function onDetected(result) {
+    setSearchQuery('isbn ' + result);
+    setCamera(false);
+  }
   const focusSearch = useRef(null);
 
   function handleSearch(event) {
@@ -56,7 +63,13 @@ export default function GlobalSearch({
         focusSearch={focusSearch}
         placeholder={placeholder}
         setSearchQuery={setSearchQuery}
+        setCamera={setCamera}
       />
+      {camera && (
+        <CameraSection>
+          <Scanner camera={camera} onDetected={onDetected} />
+        </CameraSection>
+      )}
       <SearchResult
         searchedBooks={searchedBooks}
         onToggleToAndFromLibrary={onToggleToAndFromLibrary}
@@ -67,6 +80,11 @@ export default function GlobalSearch({
     </>
   );
 }
+const CameraSection = styled.section`
+  height: 40vh;
+  width: 80%;
+`;
+
 GlobalSearch.propTypes = {
   onToggleToAndFromLibrary: PropTypes.func,
   isInLibrary: PropTypes.func,
