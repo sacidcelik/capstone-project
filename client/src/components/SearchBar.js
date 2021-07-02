@@ -1,12 +1,22 @@
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
+
+import CloseIcon from '../images/closeIcon.svg';
 
 export default function SearchBar({
   query,
   onSearch,
   focusSearch,
   placeholder,
+  setSearchQuery,
 }) {
+  function handleRemove(event) {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      setSearchQuery('');
+    }
+  }
+
   return (
     <SearchWrapper>
       <SearchInput
@@ -16,7 +26,13 @@ export default function SearchBar({
         onChange={onSearch}
         ref={focusSearch}
         data-test-id="search-bar"
+        onKeyDown={handleRemove}
       />
+      {query !== '' && (
+        <div onClick={() => setSearchQuery('')}>
+          <img src={CloseIcon} alt="Clear Search Icon" width="20" height="20" />
+        </div>
+      )}
     </SearchWrapper>
   );
 }
@@ -33,6 +49,13 @@ const SearchWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+
+  div {
+    height: 40%;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -53,4 +76,5 @@ SearchBar.propTypes = {
   setQuery: PropTypes.func,
   focusSearch: PropTypes.object,
   placeholder: PropTypes.string,
+  setSearchQuery: PropTypes.func,
 };
