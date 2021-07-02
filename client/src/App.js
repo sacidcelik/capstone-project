@@ -215,7 +215,8 @@ function App() {
   }
 
   function renderBookDetailsHelper(book) {
-    setDetailedBook(book);
+    const updatedBook = isInLibrary(book);
+    setDetailedBook(updatedBook);
     setView('details');
   }
 
