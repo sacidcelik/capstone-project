@@ -43,7 +43,7 @@ export default function Access({
       isNewUser &&
         (onCheckForUser(user)
           ? toast.error(
-              'User already exists. If this is your user name, please go back and Sign In',
+              'User already exists. If this is your user name, please click the "Back" arrow and sign in',
               {
                 toastId: 'signInError',
               }
@@ -83,7 +83,7 @@ export default function Access({
       <Form onSubmit={handleFormSubmit}>
         <NameInput
           type="name"
-          placeholder="Your Name"
+          placeholder="Your name"
           onChange={inputChangeHandler}
           value={user.name}
         />

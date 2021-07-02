@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import GlobalSearch from '../components/GlobalSearch';
 import LibraryDashboard from '../components/LibraryDashboard';
 import ShelvesDashboard from '../components/ShelvesDashboard';
@@ -37,17 +37,21 @@ export default function Home({
           ? `${activeUser.name}' Library`
           : `${activeUser.name}'s Library`}
       </h2>
-      <SectionHeadline>Add New Book</SectionHeadline>
+      <SectionHeadline>Add new book</SectionHeadline>
       <GlobalSearch
         onToggleToAndFromLibrary={onToggleToAndFromLibrary}
         isInLibrary={isInLibrary}
         shelves={shelves}
         onSelectShelf={onSelectShelf}
-        placeholder="Search for my book"
+        placeholder="Search for title, author or any keyword"
       />
-      <SectionHeadline>My Bookshelves</SectionHeadline>
+      <Link to="/myshelves">
+        <SectionHeadline>My Bookshelves</SectionHeadline>{' '}
+      </Link>
       <ShelvesDashboard shelves={shelves} />
-      <SectionHeadline>My Library</SectionHeadline>
+      <Link to="/mybooks">
+        <SectionHeadline>My Books</SectionHeadline>
+      </Link>
       <LibraryDashboard
         recentBooks={recentBooks}
         onRenderBookDetails={onRenderBookDetails}
@@ -64,6 +68,7 @@ const HomePage = styled.main`
     text-align: center;
   }
   a {
+    color: inherit;
     text-decoration: none;
   }
 `;

@@ -94,7 +94,7 @@ export default function ShelfSelector({
             <BookSubTitle>{book.volumeInfo.subtitle}</BookSubTitle>
           )}
           <p>{book.volumeInfo?.authors?.[0]}</p>
-          <p>Released: {book.volumeInfo?.publishedDate?.substring(0, 4)}</p>
+          <p>Released in {book.volumeInfo?.publishedDate?.substring(0, 4)}</p>
           <p>ISBN: {book.volumeInfo?.industryIdentifiers[0]?.identifier}</p>
         </BookSpecs>
       </BookInformation>
@@ -167,7 +167,10 @@ const ShelfSelectorCard = styled.article`
   align-items: center;
   background-color: var(--background);
   border-radius: var(--border-radius);
-  box-shadow: 0 0 100vw 100vh rgba(0, 0, 0, 0.5);
+  box-shadow: ${(props) =>
+    props.isStatic
+      ? 'var(--box-shadow-offset-x) var(--box-shadow-offset-y) var(--box-shadow-blur) var(--box-shadow-color);'
+      : '0 0 100px 100px rgba(0, 0, 0, 0.5)'};
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;

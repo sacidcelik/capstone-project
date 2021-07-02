@@ -94,7 +94,7 @@ export default function ShelfCreator({ onSaveShelf }) {
             value={shelf.columns.length}
             data-test-id="column-picker"
           >
-            <option value="0">-Columns-</option>
+            <option value="0">-Select-</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -111,7 +111,7 @@ export default function ShelfCreator({ onSaveShelf }) {
             onChange={updateShelf}
             data-test-id="color-picker"
           >
-            <option value="">-Color-</option>
+            <option value="">-Select-</option>
             <option value="black">Black</option>
             <option value="white">White</option>
             <option value="wood">Wood</option>

@@ -3,24 +3,31 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 import ShelfCreator from '../components/ShelfCreator';
+import { toast } from 'react-toastify';
 
 export default function FirstShelf({ onSaveShelf, activeUser, shelves }) {
   const history = useHistory();
 
   function handleFinishSetUp() {
     history.replace('/home');
+    toast.dismiss();
   }
 
   return (
     <FirstShelfPage>
       <HeadlineSection>
         {shelves.length === 0 ? (
-          <h3>{activeUser?.name}, set up your first bookshelf here: </h3>
+          <h3>
+            Hello {activeUser?.name}! <br /> Please set up your first bookshelf:{' '}
+          </h3>
         ) : (
-          <>
-            <h3>Great Job, {activeUser?.name}! You are ready to proceed.</h3>
+          <SuccessHeadline>
+            <h3>
+              That's a great bookshelf, {activeUser?.name}! <br />
+              You are ready to proceed.
+            </h3>
             <h2>Enjoy Bookshelves!</h2>{' '}
-          </>
+          </SuccessHeadline>
         )}
       </HeadlineSection>
       {shelves.length < 1 && (
@@ -48,13 +55,17 @@ const HeadlineSection = styled.section`
   }
 `;
 
+const SuccessHeadline = styled.section`
+  margin-top: 10rem;
+`;
+
 const FinishButton = styled.button`
   border: none;
   border-radius: var(--border-radius);
   background-color: var(--primary);
   height: 40px;
   position: absolute;
-  bottom: 2rem;
+  bottom: 5rem;
   width: 95%;
 `;
 

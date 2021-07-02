@@ -38,7 +38,7 @@ export default function MyShelves({
 
   return (
     <ShelfPage>
-      <h2>My Shelves</h2>
+      <h2>My Bookshelves</h2>
       {shelves.length < 1 && (
         <NoShelvesMessage>You currently have no shelves.</NoShelvesMessage>
       )}

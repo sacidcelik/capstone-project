@@ -8,13 +8,18 @@ export default function NavFooter({ isStatic }) {
   return (
     <NavWrapper isStatic={isStatic}>
       <NavLink to="/home">
-        <HomeButtonStyled title="Home" role="img" />
+        <HomeButtonStyled title="Home" role="img" width="50" height="50" />
       </NavLink>
       <NavLink to="/myshelves">
-        <ShelfButtonStyled title="My Shelves" role="img" />
+        <ShelfButtonStyled
+          title="My Shelves"
+          role="img"
+          width="50"
+          height="43"
+        />
       </NavLink>
       <NavLink to="/mybooks">
-        <BooksButtonStyled title="My Books" role="img" />
+        <BooksButtonStyled title="My Books" role="img" width="57" height="49" />
       </NavLink>
     </NavWrapper>
   );
@@ -34,8 +39,6 @@ const NavWrapper = styled.footer`
 `;
 
 const HomeButtonStyled = styled(HomeButton)`
-  height: 50px;
-  width: 50px;
   .active & path {
     fill: var(--tertiary);
     stroke: none;
@@ -43,8 +46,6 @@ const HomeButtonStyled = styled(HomeButton)`
 `;
 
 const ShelfButtonStyled = styled(ShelfButton)`
-  height: 43px;
-  width: 50px;
   .active & path,
   .active & rect {
     fill: var(--tertiary);
@@ -56,8 +57,6 @@ const ShelfButtonStyled = styled(ShelfButton)`
 `;
 
 const BooksButtonStyled = styled(BooksButton)`
-  height: 54px;
-  width: 63px;
   .active & path {
     fill: var(--tertiary);
     stroke: none;
