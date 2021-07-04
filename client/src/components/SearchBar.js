@@ -7,7 +7,6 @@ import CloseIcon from '../images/closeIcon.svg';
 export default function SearchBar({
   query,
   onSearch,
-  focusSearch,
   placeholder,
   setSearchQuery,
   setCamera,
@@ -26,7 +25,6 @@ export default function SearchBar({
         placeholder={placeholder}
         value={query}
         onChange={onSearch}
-        ref={focusSearch}
         data-test-id="search-bar"
         onKeyDown={handleRemove}
       />

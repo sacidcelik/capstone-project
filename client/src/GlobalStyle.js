@@ -67,21 +67,21 @@ export default createGlobalStyle`
 
 
 #interactive.viewport {
-  width: 300px;
   height: 200px;
+  width: 300px;
 }
 
 #interactive.viewport canvas,
 video {
-  width: 300px;
   height: 200px;
+  left: 13px;
   position: absolute;
   top: 75px;
-  left: 13px;
+  width: 300px;
 }
 
 #interactive.viewport canvas.drawingBuffer,
 video.drawingBuffer {
-  width: 300px;
   height: 200px;
+  width: 300px;
 }`;

@@ -9,9 +9,9 @@ const Scanner = ({ onDetected }) => {
   };
 
   useEffect(() => {
-    Quagga.init(config, (err) => {
-      if (err) {
-        console.log(err, 'error msg');
+    Quagga.init(config, (error) => {
+      if (error) {
+        console.log(error, 'error msg');
       }
       Quagga.start();
       return () => {
@@ -19,9 +19,8 @@ const Scanner = ({ onDetected }) => {
       };
     });
 
-    //detecting boxes on stream
     Quagga.onProcessed((result) => {
-      var drawingCtx = Quagga.canvas.ctx.overlay,
+      const drawingCtx = Quagga.canvas.ctx.overlay,
         drawingCanvas = Quagga.canvas.dom.overlay;
 
       if (result) {
@@ -63,14 +62,10 @@ const Scanner = ({ onDetected }) => {
     });
 
     Quagga.onDetected(detected);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    // If you do not specify a target,
-    // QuaggaJS would look for an element that matches
-    // the CSS selector #interactive.viewport
-    <div id="interactive" className="viewport" />
-  );
+  return <div id="interactive" className="viewport" />;
 };
 
 export default Scanner;

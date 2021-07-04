@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import getBooks from '../services/getDataFromAPI';
 import Scanner from './Scanner';
@@ -18,16 +18,9 @@ export default function GlobalSearch({
   const [searchedBooks, setSearchedBooks] = useState([]);
   const [camera, setCamera] = useState(false);
 
-  const focusSearch = useRef(null);
-
   function handleSearch(event) {
     setSearchQuery(event.target.value);
   }
-
-  useEffect(() => {
-    focusSearch.current.focus();
-  }, []);
-
   useEffect(() => {
     const sleep = (ms) => {
       return new Promise((resolve) => setTimeout(resolve, ms));
@@ -53,7 +46,7 @@ export default function GlobalSearch({
   }, [searchQuery]);
 
   function onDetected(result) {
-    setSearchQuery(result);
+    setSearchQuery('isbn ' + result);
     setCamera(false);
   }
 
@@ -62,14 +55,13 @@ export default function GlobalSearch({
       <SearchBar
         query={searchQuery}
         onSearch={handleSearch}
-        focusSearch={focusSearch}
         placeholder={placeholder}
         setSearchQuery={setSearchQuery}
         setCamera={setCamera}
       />
       {camera && (
         <CameraSection>
-          <p>Align your book's EAN barcode with the camera</p>
+          <p>Align your book's EAN barcode with the camera:</p>
           <CloseButton
             src={CloseIcon}
             alt="Close Icon"
@@ -100,10 +92,10 @@ const CameraSection = styled.section`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: 350px;
-  left: 16px;
+  height: 300px;
   padding-top: 1rem;
-  position: absolute;
+  position: fixed;
+  transform: translate(5%);
   width: 325px;
   z-index: 100;
 
