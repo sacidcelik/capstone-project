@@ -66,21 +66,22 @@ export default createGlobalStyle`
 
 
 
-.container,
 #interactive.viewport {
-  width: 400px;
-  height: 300px;
+  width: 300px;
+  height: 200px;
 }
 
 #interactive.viewport canvas,
 video {
-  width: 400px;
-  height: 300px;
+  width: 300px;
+  height: 200px;
+  position: absolute;
+  top: 75px;
+  left: 13px;
 }
 
 #interactive.viewport canvas.drawingBuffer,
 video.drawingBuffer {
-  width: 400px;
-  height: 300px;
-}
-`;
+  width: 300px;
+  height: 200px;
+}`;

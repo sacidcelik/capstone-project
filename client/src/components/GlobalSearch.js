@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import getBooks from '../services/getDataFromAPI';
 import Scanner from './Scanner';
 import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
+import CloseIcon from '../images/closeIcon.svg';
 
 export default function GlobalSearch({
   onToggleToAndFromLibrary,
@@ -57,7 +58,7 @@ export default function GlobalSearch({
   }
 
   return (
-    <>
+    <GlobalSearchSection>
       <SearchBar
         query={searchQuery}
         onSearch={handleSearch}
@@ -68,6 +69,12 @@ export default function GlobalSearch({
       />
       {camera && (
         <CameraSection>
+          <p>Align your book's EAN barcode with the camera</p>
+          <CloseButton
+            src={CloseIcon}
+            alt="Close Icon"
+            onClick={() => setCamera(false)}
+          />
           <Scanner onDetected={onDetected} />
         </CameraSection>
       )}
@@ -78,12 +85,36 @@ export default function GlobalSearch({
         shelves={shelves}
         onSelectShelf={onSelectShelf}
       />
-    </>
+    </GlobalSearchSection>
   );
 }
+
+const GlobalSearchSection = styled.section`
+  position: relative;
+`;
 const CameraSection = styled.section`
-  height: 300px;
-  width: 400px;
+  align-items: center;
+  background: var(--background);
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 100px 100px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 350px;
+  left: 16px;
+  padding-top: 1rem;
+  position: absolute;
+  width: 325px;
+  z-index: 100;
+
+  p {
+    text-align: center;
+  }
+`;
+const CloseButton = styled.img`
+  position: absolute;
+  right: -10px;
+  top: -10px;
 `;
 
 GlobalSearch.propTypes = {

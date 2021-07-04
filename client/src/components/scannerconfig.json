@@ -2,11 +2,17 @@
   "inputStream": {
     "type": "LiveStream",
     "constraints": {
-      "width": { "min": 450 },
-      "height": { "min": 300 },
+      "width": { "min": 300 },
+      "height": { "min": 200 },
       "facingMode": "environment",
-      "aspectRatio": { "min": 1, "max": 2 }
-    }
+      "aspectRatio": { "min": 1.5 }
+    },
+    "area": {
+            "top": "0%", 
+            "right": "0%", 
+            "left": "0%",
+            "bottom": "0%"
+          }
   },
   "locator": {
     "patchSize": "medium",
