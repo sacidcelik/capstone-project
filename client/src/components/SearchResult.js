@@ -42,10 +42,13 @@ export default function SearchResult({
             data-test-id="search-result"
           >
             <img
-              src={book.volumeInfo?.imageLinks?.thumbnail}
+              src={
+                book.volumeInfo?.imageLinks?.thumbnail ||
+                book.volumeInfo?.imageLinks?.smallThumbnail
+              }
               width="58"
               height="90"
-              alt={book.volumeInfo.title || 'Book Cover'}
+              alt={'Book Cover'}
             />
             <BookInfo>
               <BookTitle>
