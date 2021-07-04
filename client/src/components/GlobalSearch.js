@@ -17,10 +17,6 @@ export default function GlobalSearch({
   const [searchedBooks, setSearchedBooks] = useState([]);
   const [camera, setCamera] = useState(false);
 
-  function onDetected(result) {
-    setSearchQuery('isbn ' + result);
-    setCamera(false);
-  }
   const focusSearch = useRef(null);
 
   function handleSearch(event) {
@@ -55,6 +51,11 @@ export default function GlobalSearch({
     };
   }, [searchQuery]);
 
+  function onDetected(result) {
+    setSearchQuery(result);
+    setCamera(false);
+  }
+
   return (
     <>
       <SearchBar
@@ -67,7 +68,7 @@ export default function GlobalSearch({
       />
       {camera && (
         <CameraSection>
-          <Scanner camera={camera} onDetected={onDetected} />
+          <Scanner onDetected={onDetected} />
         </CameraSection>
       )}
       <SearchResult

@@ -2,8 +2,11 @@ import config from './scannerconfig.json';
 import Quagga from 'quagga';
 import { useEffect } from 'react';
 
-const Scanner = (props) => {
-  const { onDetected, camera } = props;
+const Scanner = ({ onDetected }) => {
+  const detected = (result) => {
+    onDetected(result.codeResult.code);
+    Quagga.offDetected();
+  };
 
   useEffect(() => {
     Quagga.init(config, (err) => {
@@ -61,14 +64,6 @@ const Scanner = (props) => {
 
     Quagga.onDetected(detected);
   }, []);
-
-  useEffect(() => {
-    if (!camera) return Quagga.stop();
-  }, [camera]);
-
-  const detected = (result) => {
-    onDetected(result.codeResult.code);
-  };
 
   return (
     // If you do not specify a target,
