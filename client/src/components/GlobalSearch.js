@@ -18,9 +18,6 @@ export default function GlobalSearch({
   const [searchedBooks, setSearchedBooks] = useState([]);
   const [camera, setCamera] = useState(false);
 
-  function handleSearch(event) {
-    setSearchQuery(event.target.value);
-  }
   useEffect(() => {
     const sleep = (ms) => {
       return new Promise((resolve) => setTimeout(resolve, ms));
@@ -48,6 +45,10 @@ export default function GlobalSearch({
   function onDetected(result) {
     setSearchQuery('isbn ' + result);
     setCamera(false);
+  }
+
+  function handleSearch(event) {
+    setSearchQuery(event.target.value);
   }
 
   return (

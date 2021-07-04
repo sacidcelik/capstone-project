@@ -6,7 +6,13 @@ const getBooks = async (searchQuery) => {
       body: JSON.stringify({ searchQuery }),
     });
     const bookData = await searchResults.json();
-    return bookData.items;
+    const books = await bookData.items;
+    const httpsBooks = await books.map((book) => {
+      book.volumeInfo.imageLinks.thumbnail =
+        book.volumeInfo.imageLinks.thumbnail.replace(/^http:\/\//, 'https://');
+      return book;
+    });
+    return httpsBooks;
   }
 };
 

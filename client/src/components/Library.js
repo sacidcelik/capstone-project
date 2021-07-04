@@ -12,10 +12,7 @@ export default function Library({ library, isStatic, onRenderBookDetails }) {
             onClick={() => onRenderBookDetails(book)}
           >
             <img
-              src={
-                book.volumeInfo?.imageLinks?.thumbnail ||
-                book.volumeInfo?.imageLinks?.smallThumbnail
-              }
+              src={book.volumeInfo?.imageLinks?.thumbnail}
               alt={book.volumeInfo.title}
               width="104"
               height="165"

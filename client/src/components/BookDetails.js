@@ -75,10 +75,7 @@ export default function BookDetails({
         <BookInformation>
           <BookImageWrapper>
             <img
-              src={
-                book.volumeInfo?.imageLinks?.thumbnail ||
-                book.volumeInfo?.imageLinks?.smallThumbnail
-              }
+              src={book.volumeInfo?.imageLinks?.thumbnail}
               alt={book.volumeInfo?.title || 'Book Cover'}
               width="121"
               height="192"
