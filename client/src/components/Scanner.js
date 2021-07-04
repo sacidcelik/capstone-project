@@ -11,7 +11,7 @@ const Scanner = ({ onDetected }) => {
   useEffect(() => {
     Quagga.init(config, (error) => {
       if (error) {
-        console.log(error, 'error msg');
+        console.error(error);
       }
       Quagga.start();
       return () => {

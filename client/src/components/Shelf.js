@@ -26,7 +26,6 @@ export default function Shelf({
 
     columns.forEach((column, columnIndex) => {
       dimensions.push([]);
-      console.log(column.childNodes);
       column.childNodes.forEach((compartment) =>
         dimensions[columnIndex].push({
           height: compartment.clientHeight,
@@ -37,8 +36,6 @@ export default function Shelf({
     });
     setCompartmentDimensions(dimensions);
   }
-
-  console.log(compartmentDimensions);
 
   function checkForHeight(value) {
     return shelf.columns.some((column) => column.height === value);
