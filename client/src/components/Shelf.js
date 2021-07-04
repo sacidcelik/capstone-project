@@ -22,20 +22,23 @@ export default function Shelf({
   function determineCompartmentRenderDimensions() {
     setCompartmentDimensions([]);
     const columns = document?.querySelectorAll('#column');
-    const height = [];
+    const dimensions = [];
 
     columns.forEach((column, columnIndex) => {
-      height.push([]);
+      dimensions.push([]);
+      console.log(column.childNodes);
       column.childNodes.forEach((compartment) =>
-        height[columnIndex].push({
+        dimensions[columnIndex].push({
           height: compartment.clientHeight,
           width: compartment.clientWidth,
           fitsWidth: Math.floor(compartment.clientWidth / 50),
         })
       );
     });
-    setCompartmentDimensions(height);
+    setCompartmentDimensions(dimensions);
   }
+
+  console.log(compartmentDimensions);
 
   function checkForHeight(value) {
     return shelf.columns.some((column) => column.height === value);

@@ -41,7 +41,7 @@ const HeaderWrapper = styled.header`
   position: ${(props) => (props.isStatic ? 'static' : 'sticky')};
   top: 0;
   width: ${(props) => (props.isStatic ? '414px' : '100vw')};
-  z-index: 10000;
+  z-index: 100;
 
   a {
     text-decoration: none;

@@ -181,7 +181,7 @@ const DetailsCard = styled.article`
   position: ${(props) => (props.isStatic ? 'relative' : 'fixed')};
   transform: ${(props) => (props.isStatic ? '' : 'translate(-50%, -65%)')};
   width: ${(props) => (props.isStatic ? '338px' : '90vw')};
-  z-index: 100;
+  z-index: 101;
 
   form {
     button {
