@@ -82,8 +82,8 @@ export default function GlobalSearch({
   );
 }
 const CameraSection = styled.section`
-  height: 40vh;
-  width: 80%;
+  height: 300px;
+  width: 400px;
 `;
 
 GlobalSearch.propTypes = {
