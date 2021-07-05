@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
+import CameraIcon from '../images/cameraIcon.svg';
 import CloseIcon from '../images/closeIcon.svg';
 
 export default function SearchBar({
   query,
   onSearch,
-  focusSearch,
   placeholder,
   setSearchQuery,
+  setCamera,
+  isGlobal,
 }) {
   function handleRemove(event) {
     if (event.key === 'Escape') {
@@ -24,13 +26,17 @@ export default function SearchBar({
         placeholder={placeholder}
         value={query}
         onChange={onSearch}
-        ref={focusSearch}
         data-test-id="search-bar"
         onKeyDown={handleRemove}
       />
       {query !== '' && (
         <div onClick={() => setSearchQuery('')}>
           <img src={CloseIcon} alt="Clear Search Icon" width="20" height="20" />
+        </div>
+      )}
+      {isGlobal && (
+        <div onClick={() => setCamera((prevCamera) => !prevCamera)}>
+          <img src={CameraIcon} alt="Scan Book Icon" width="20" height="20" />
         </div>
       )}
     </SearchWrapper>

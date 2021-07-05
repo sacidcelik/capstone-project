@@ -75,10 +75,7 @@ export default function BookDetails({
         <BookInformation>
           <BookImageWrapper>
             <img
-              src={
-                book.volumeInfo?.imageLinks?.thumbnail ||
-                book.volumeInfo?.imageLinks?.smallThumbnail
-              }
+              src={book.volumeInfo?.imageLinks?.thumbnail}
               alt={book.volumeInfo?.title || 'Book Cover'}
               width="121"
               height="192"
@@ -135,13 +132,15 @@ export default function BookDetails({
                 <input
                   type="name"
                   name="lentTo"
-                  placeholder="Name"
+                  placeholder="Lent To:"
+                  disabled={!lentStatus.isLent}
                   onChange={updateForm}
                   value={lentStatus.lentTo}
                 />
                 <input
                   type="date"
                   name="lentDate"
+                  disabled={!lentStatus.isLent}
                   onChange={updateForm}
                   value={lentStatus.lentDate}
                 />
@@ -184,7 +183,7 @@ const DetailsCard = styled.article`
   position: ${(props) => (props.isStatic ? 'relative' : 'fixed')};
   transform: ${(props) => (props.isStatic ? '' : 'translate(-50%, -65%)')};
   width: ${(props) => (props.isStatic ? '338px' : '90vw')};
-  z-index: 100;
+  z-index: 101;
 
   form {
     button {
@@ -308,6 +307,9 @@ const LentWrapper = styled.section`
     }
     input[type='date'] {
       font-family: sans-serif;
+    }
+    input:disabled {
+      background: lightgrey;
     }
   }
 `;

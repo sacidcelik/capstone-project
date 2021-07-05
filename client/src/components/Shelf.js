@@ -22,19 +22,19 @@ export default function Shelf({
   function determineCompartmentRenderDimensions() {
     setCompartmentDimensions([]);
     const columns = document?.querySelectorAll('#column');
-    const height = [];
+    const dimensions = [];
 
     columns.forEach((column, columnIndex) => {
-      height.push([]);
+      dimensions.push([]);
       column.childNodes.forEach((compartment) =>
-        height[columnIndex].push({
+        dimensions[columnIndex].push({
           height: compartment.clientHeight,
           width: compartment.clientWidth,
           fitsWidth: Math.floor(compartment.clientWidth / 50),
         })
       );
     });
-    setCompartmentDimensions(height);
+    setCompartmentDimensions(dimensions);
   }
 
   function checkForHeight(value) {

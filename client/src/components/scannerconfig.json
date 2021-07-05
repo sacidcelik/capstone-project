@@ -1,0 +1,24 @@
+{
+  "inputStream": {
+    "type": "LiveStream",
+    "constraints": {
+      "facingMode": "environment"
+    },
+    "area": {
+            "top": "0%", 
+            "right": "0%", 
+            "left": "0%",
+            "bottom": "0%"
+          }
+  },
+  "locator": {
+    "patchSize": "medium",
+    "halfSample": true
+  },
+  "numOfWorkers": 2,
+  "frequency": 10,
+  "decoder": {
+    "readers": ["ean_reader"]
+  },
+  "locate": true
+}
