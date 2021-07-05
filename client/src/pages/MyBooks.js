@@ -38,7 +38,7 @@ export default function MyBooks({ library, onRenderBookDetails }) {
 
   function filterForUnread() {
     if (filteredView !== 'Unread') {
-      const filteredLibrary = library.filter((book) => book.readStatus.isRead);
+      const filteredLibrary = library.filter((book) => !book.readStatus.isRead);
       setLibraryToDisplay(filteredLibrary);
       setFilteredView('Unread');
     } else {
@@ -127,7 +127,7 @@ const FilterButton = styled.button`
     props.isActive ? 'var(--primary)' : 'var(--secondary)'};
   border: none;
   border-radius: var(--border-radius);
-  color: ${(props) => (props.isStart ? 'black' : 'var(--background)')};
+  color: ${(props) => (props.isActive ? 'black' : 'var(--background)')};
   padding: 0.32rem 0.5rem 0.3rem 0.5rem;
   width: 30%;
 `;
