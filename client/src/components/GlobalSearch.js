@@ -43,7 +43,7 @@ export default function GlobalSearch({
   }, [searchQuery]);
 
   function onDetected(result) {
-    setSearchQuery('isbn ' + result);
+    setSearchQuery('isbn:' + result);
     setCamera(false);
   }
 
