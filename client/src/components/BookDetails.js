@@ -18,11 +18,40 @@ export default function BookDetails({
   shelves,
   onToogleBookIsRead,
   bookIsRead,
+  onAddLentStatusAndNotes,
+  onGetBookRating,
 }) {
   const [isSelector, setIsSelector] = useState(false);
+  const [lentStatus, setLentStatus] = useState(book.lentStatus);
+  const [userNotes, setUserNotes] = useState(book.userNotes);
 
   function editHandler() {
     setIsSelector(!isSelector);
+  }
+
+  function updateForm(event) {
+    const fieldName = event.target.name;
+    let fieldValue = event.target.value;
+
+    if (event.target.type === 'checkbox') {
+      fieldValue = event.target.checked;
+      if (event.target.checked === false)
+        return setLentStatus({
+          [fieldName]: fieldValue,
+          lentTo: '',
+          lentDate: '',
+        });
+    }
+
+    fieldName.includes('notes')
+      ? setUserNotes(fieldValue)
+      : setLentStatus({ ...lentStatus, [fieldName]: fieldValue });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onAddLentStatusAndNotes(book, lentStatus, userNotes);
+    onRemoveDetailView();
   }
 
   return (
@@ -72,7 +101,11 @@ export default function BookDetails({
           <RatingWrapper>
             <p>Rating: </p>
             <RatingStarWrapper>
-              <BookRating onAddRating={onAddRating} book={book} />
+              <BookRating
+                onAddRating={onAddRating}
+                book={book}
+                onGetBookRating={onGetBookRating}
+              />
             </RatingStarWrapper>
           </RatingWrapper>
           <LocationWrapper>
@@ -86,19 +119,46 @@ export default function BookDetails({
               />
             </div>
           </LocationWrapper>
-          <LentWrapper>
-            <p>Lent:</p>
-            <div>
-              <input type="checkbox" /> <input type="name" placeholder="Name" />
-              <input type="date" />
-            </div>
-          </LentWrapper>
-          <NotesWrapper>
-            <p>Notes:</p>
-            <div>
-              <textarea placeholder="Your notes" />
-            </div>
-          </NotesWrapper>
+          <form onSubmit={handleSubmit}>
+            <LentWrapper>
+              <p>Lent:</p>
+              <div>
+                <input
+                  type="checkbox"
+                  name="isLent"
+                  onChange={updateForm}
+                  checked={lentStatus.isLent}
+                  value={lentStatus.isLent}
+                />{' '}
+                <input
+                  type="name"
+                  name="lentTo"
+                  placeholder="Name"
+                  onChange={updateForm}
+                  value={lentStatus.lentTo}
+                />
+                <input
+                  type="date"
+                  name="lentDate"
+                  onChange={updateForm}
+                  value={lentStatus.lentDate}
+                />
+              </div>
+            </LentWrapper>
+            <NotesWrapper>
+              <p>Notes:</p>
+              <div>
+                <textarea
+                  placeholder="Your notes"
+                  onChange={updateForm}
+                  value={userNotes}
+                  name="notes"
+                />
+              </div>
+            </NotesWrapper>
+            {(userNotes !== book.userNotes ||
+              lentStatus !== book.lentStatus) && <button>SAVE</button>}
+          </form>
         </BookSettings>
       </DetailsCard>
     </>
@@ -112,7 +172,7 @@ const DetailsCard = styled.article`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  height: ${(props) => (props.isStatic ? '650px' : '83vh')};
+  height: ${(props) => (props.isStatic ? '650px' : '')};
   margin: ${(props) => (props.isStatic ? '0 auto' : '50vh 50vw')};
   opacity: 0.95;
   padding: 1rem;
@@ -120,6 +180,19 @@ const DetailsCard = styled.article`
   transform: ${(props) => (props.isStatic ? '' : 'translate(-50%, -65%)')};
   width: ${(props) => (props.isStatic ? '338px' : '90vw')};
   z-index: 100;
+
+  form {
+    button {
+      background: var(--tertiary);
+      color: var(--background);
+      border: none;
+      border-radius: var(--border-radius);
+      height: 30px;
+      margin-top: 1rem;
+      padding: 0.32rem 0.5rem 0.3rem 0.5rem;
+      width: 100%;
+    }
+  }
 `;
 
 const CloseButton = styled.img`
@@ -257,4 +330,6 @@ BookDetails.propTypes = {
   shelves: PropTypes.array,
   onToogleBookIsRead: PropTypes.func,
   bookIsRead: PropTypes.func,
+  onAddLentStatusAndNotes: PropTypes.func,
+  onGetBookRating: PropTypes.func,
 };

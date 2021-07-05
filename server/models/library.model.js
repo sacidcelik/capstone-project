@@ -33,6 +33,8 @@ const library = new Schema({
     compartmentId: String,
   },
   readStatus: { isRead: Boolean, isReadDate: String },
+  lentStatus: { isLent: Boolean, lentTo: String, lentDate: String },
+  userNotes: String,
 });
 
 export default library;
