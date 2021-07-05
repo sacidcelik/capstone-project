@@ -1,10 +1,14 @@
-# Bookshelves App
+# Bookshelves
 
-## Overview
+Final project at neuefische web dev bootcamp
 
-Bookshelves is an app to build your own bookshelves digitally and search for or scan your books to catalog them in your digital bookshelves.
+## Description
 
-![Bookshelves Screenshot](https://user-images.githubusercontent.com/82387427/124472957-08140380-dd9f-11eb-9879-2754fff03702.png)
+Bookshelves lets you digitize your personal library. Create virtual versions of your bookshelves and add your books to them. Rate your books, mark them as read or lent or save notes for future reference. Your bookshelves – available anytime.
+
+![Bookshelves Animated GIF](https://user-images.githubusercontent.com/82387427/124492814-3d2b5080-ddb5-11eb-9534-2845b62db525.gif)
+
+Try it here: https://bookshelves-nf.herokuapp.com/ (optimized for iPhone 6/7/8)
 
 ## Installation
 
