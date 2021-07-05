@@ -10,6 +10,7 @@ export default function SearchBar({
   placeholder,
   setSearchQuery,
   setCamera,
+  isGlobal,
 }) {
   function handleRemove(event) {
     if (event.key === 'Escape') {
@@ -33,9 +34,11 @@ export default function SearchBar({
           <img src={CloseIcon} alt="Clear Search Icon" width="20" height="20" />
         </div>
       )}
-      <div onClick={() => setCamera((prevCamera) => !prevCamera)}>
-        <img src={CameraIcon} alt="Scan Book Icon" width="20" height="20" />
-      </div>
+      {isGlobal && (
+        <div onClick={() => setCamera((prevCamera) => !prevCamera)}>
+          <img src={CameraIcon} alt="Scan Book Icon" width="20" height="20" />
+        </div>
+      )}
     </SearchWrapper>
   );
 }

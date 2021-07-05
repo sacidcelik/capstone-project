@@ -59,6 +59,7 @@ export default function GlobalSearch({
         placeholder={placeholder}
         setSearchQuery={setSearchQuery}
         setCamera={setCamera}
+        isGlobal
       />
       {camera && (
         <CameraSection>

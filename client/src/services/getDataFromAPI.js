@@ -7,7 +7,7 @@ const getBooks = async (searchQuery) => {
     });
     const bookData = await searchResults.json();
     const books = await bookData.items;
-    const httpsBooks = await books.map((book) => {
+    const httpsBooks = await books?.map((book) => {
       if (book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.thumbnail) {
         book.volumeInfo.imageLinks.thumbnail =
           book.volumeInfo?.imageLinks?.thumbnail.replace(
