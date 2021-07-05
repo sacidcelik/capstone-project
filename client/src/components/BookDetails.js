@@ -132,13 +132,15 @@ export default function BookDetails({
                 <input
                   type="name"
                   name="lentTo"
-                  placeholder="Name"
+                  placeholder="Lent To:"
+                  disabled={!lentStatus.isLent}
                   onChange={updateForm}
                   value={lentStatus.lentTo}
                 />
                 <input
                   type="date"
                   name="lentDate"
+                  disabled={!lentStatus.isLent}
                   onChange={updateForm}
                   value={lentStatus.lentDate}
                 />
@@ -305,6 +307,9 @@ const LentWrapper = styled.section`
     }
     input[type='date'] {
       font-family: sans-serif;
+    }
+    input:disabled {
+      background: lightgrey;
     }
   }
 `;
