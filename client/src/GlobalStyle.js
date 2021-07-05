@@ -3,9 +3,24 @@ import { createGlobalStyle } from 'styled-components';
 export default createGlobalStyle`
 
 :root {
-  --primary: #e9896a;
-  --secondary: #343f56;
-  --tertiary: #387c6d;
+  --primary: hsl(15, 74%, 66%);
+  --primary-lightest:  hsl(15, 74%, 96%);
+  --primary-light: hsl(15, 74%, 75%);
+  --primary-dark:  hsl(15, 74%, 25%);
+
+
+  --secondary: hsl(221, 25%, 27%);
+  --secondary-lightest: hsl(221, 25%, 96%);
+  --secondary-light:hsl(221, 25%, 85%);
+  --secondary-dark: hsl(221, 25%, 25%);
+
+  --tertiary: hsl(167, 38%, 35%);
+  --tertiary-lightest: hsl(167, 38%, 96%);
+  --tertiary-light: hsl(167, 38%, 85%);
+  --tertiary-dark: hsl(167, 38%, 25%);
+
+  --logout-remove: hsl(0, 50%, 46%);
+
   --background: #f8f5f1;
   --box-shadow-offset-x: 5px;
   --box-shadow-offset-y: 5px;

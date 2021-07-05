@@ -7,6 +7,7 @@ import CloseIcon from '../images/closeIcon.svg';
 import EditPencil from '../images/editPencil.svg';
 
 import BookRating from './BookRating';
+import { toast } from 'react-toastify';
 
 export default function BookDetails({
   book,
@@ -52,6 +53,7 @@ export default function BookDetails({
     event.preventDefault();
     onAddLentStatusAndNotes(book, lentStatus, userNotes);
     onRemoveDetailView();
+    toast.success('Successfully updated your book!');
   }
 
   return (
@@ -78,7 +80,7 @@ export default function BookDetails({
                 book.volumeInfo?.imageLinks?.smallThumbnail
               }
               alt={book.volumeInfo?.title || 'Book Cover'}
-              width="128"
+              width="121"
               height="192"
             />
             <UnreadReadButton
@@ -93,7 +95,7 @@ export default function BookDetails({
               <BookSubTitle>{book.volumeInfo.subtitle}</BookSubTitle>
             )}
             <p>{book.volumeInfo?.authors?.[0]}</p>
-            <p>Released: {book.volumeInfo?.publishedDate?.substring(0, 4)}</p>
+            <p>Released in {book.volumeInfo?.publishedDate?.substring(0, 4)}</p>
             <p>ISBN: {book.volumeInfo?.industryIdentifiers[0]?.identifier}</p>
           </BookSpecs>
         </BookInformation>
@@ -168,7 +170,10 @@ export default function BookDetails({
 const DetailsCard = styled.article`
   background-color: var(--background);
   border-radius: var(--border-radius);
-  box-shadow: 0 0 100vw 100vh rgba(0, 0, 0, 0.5);
+  box-shadow: ${(props) =>
+    props.isStatic
+      ? 'var(--box-shadow-offset-x) var(--box-shadow-offset-y) var(--box-shadow-blur) var(--box-shadow-color);'
+      : '0 0 100px 100px rgba(0, 0, 0, 0.5)'};
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;

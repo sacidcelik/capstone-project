@@ -25,7 +25,8 @@ export default function AddAndRemoveButton({
 }
 
 const ToggleButton = styled.button`
-  background: ${(props) => (props.isInLibrary ? '#CC1C1C' : 'var(--tertiary)')};
+  background: ${(props) =>
+    props.isInLibrary ? 'var(--logout-remove)' : 'var(--tertiary)'};
   color: var(--background);
   border: none;
   border-radius: var(--border-radius);

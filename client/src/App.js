@@ -1,7 +1,7 @@
 import NavFooter from './components/NavFooter';
 import { Switch, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
@@ -218,6 +218,7 @@ function App() {
     const updatedBook = isInLibrary(book);
     setDetailedBook(updatedBook);
     setView('details');
+    toast.dismiss();
   }
 
   function updateBook(property, value, bookToUpdate) {
@@ -381,7 +382,11 @@ function App() {
 
   return (
     <>
-      <StyledToastContainer />
+      <StyledToastContainer
+        position="bottom-center"
+        hideProgressBar={true}
+        autoClose={2500}
+      />
 
       <Switch>
         <Route exact path="/">

@@ -16,11 +16,10 @@ export default function Library({ library, isStatic, onRenderBookDetails }) {
                 book.volumeInfo?.imageLinks?.thumbnail ||
                 book.volumeInfo?.imageLinks?.smallThumbnail
               }
-              alt="Book Cover"
-              width="102.4"
-              height="159.2"
+              alt={book.volumeInfo.title}
+              width="104"
+              height="165"
             />
-            <p>{book.volumeInfo?.title}</p>
           </BookCard>
         );
       })}

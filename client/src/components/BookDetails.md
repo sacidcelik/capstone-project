@@ -1,6 +1,8 @@
 ```jsx
 const book = {
   rating: 1,
+  lentStatus: { isLent: true, lentTo: 'James', lentDate: '2021-06-22' },
+  userNotes: 'My favorite!',
   volumeInfo: {
     title: 'Die Furcht des Weisen / Band 1',
     subtitle: 'Die Königsmörder-Chronik. Zweiter Tag',
@@ -19,5 +21,8 @@ const book = {
   isStatic
   onAddRating={() => true}
   onGetBookLocation={() => true}
+  bookIsRead={() => true}
+  onGetBookRating={() => true}
+  onToogleBookIsRead={() => true}
 />;
 ```

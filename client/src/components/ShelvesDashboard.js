@@ -17,10 +17,10 @@ export default function ShelvesDashboard({ shelves, isStatic }) {
                     {shelf.storedBooks ? (
                       <span>
                         {shelf.storedBooks}
-                        {shelf.storedBooks > 1 ? ' Books' : ' Book'}
+                        {shelf.storedBooks > 1 ? ' books' : ' book'}
                       </span>
                     ) : (
-                      <span> 0 Books</span>
+                      <span> 0 books</span>
                     )}
                   </Shelf>
                 )

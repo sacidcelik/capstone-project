@@ -148,7 +148,11 @@ export default function Shelf({
                         ?.height <= 57 ||
                         compartmentDimensions?.[columnIndex]?.[compartmentIndex]
                           ?.fitsWidth === 0) && (
-                        <p>{compartment?.storedBooks?.length}</p>
+                        <p>
+                          {compartment.storedBooks &&
+                            compartment.storedBooks.length > 0 &&
+                            compartment?.storedBooks?.length}
+                        </p>
                       )}
                     </LinkStyled>
                   </BookImageWrapper>

@@ -43,33 +43,28 @@ export default function Access({
       isNewUser &&
         (onCheckForUser(user)
           ? toast.error(
-              'User already exists. If this is your user name, please go back and Sign In',
+              'User already exists. If this is your user name, please click the "Back" arrow and sign in',
               {
                 toastId: 'signInError',
-                position: toast.POSITION.BOTTOM_CENTER,
               }
             )
-          : toast.success('Created new user', {
+          : toast.success('Successfully logged in', {
               toastId: 'signInSuccess',
-              position: toast.POSITION.BOTTOM_CENTER,
             }));
       !isNewUser &&
         (onCheckForUser(user)
           ? toast.success('Successfully logged in', {
               toastId: 'signInSuccess',
-              position: toast.POSITION.BOTTOM_CENTER,
             })
           : toast.error(
               'User is not known, please check your user name or return and click "Start Now".',
               {
                 toastId: 'signInError',
-                position: toast.POSITION.BOTTOM_CENTER,
               }
             ));
     } else {
       toast.error('Enter a user name', {
         toastId: 'userNameError',
-        position: toast.POSITION.BOTTOM_CENTER,
       });
     }
   }
@@ -88,7 +83,7 @@ export default function Access({
       <Form onSubmit={handleFormSubmit}>
         <NameInput
           type="name"
-          placeholder="Your Name"
+          placeholder="Your name"
           onChange={inputChangeHandler}
           value={user.name}
         />
