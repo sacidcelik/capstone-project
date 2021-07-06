@@ -60,6 +60,7 @@ export default createGlobalStyle`
     }
 
     button {
+        cursor: pointer;
         font-size: 1rem;
         font-weight: 700;
     }

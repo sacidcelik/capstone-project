@@ -190,6 +190,7 @@ const ShelfSelectorCard = styled.article`
 `;
 
 const CloseButton = styled.img`
+  cursor: pointer;
   position: absolute;
   right: -10px;
   top: -10px;

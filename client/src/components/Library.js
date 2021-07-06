@@ -40,6 +40,7 @@ const BookCard = styled.article`
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow-offset-x) var(--box-shadow-offset-y)
     var(--box-shadow-blur) var(--box-shadow-color);
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 1rem;

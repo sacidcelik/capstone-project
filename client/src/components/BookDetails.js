@@ -200,6 +200,7 @@ const DetailsCard = styled.article`
 `;
 
 const CloseButton = styled.img`
+  cursor: pointer;
   position: absolute;
   right: -10px;
   top: -10px;
@@ -282,6 +283,9 @@ const LocationWrapper = styled.section`
     align-items: center;
     margin-top: 0.5rem;
     gap: 0.5rem;
+  }
+  img {
+    cursor: pointer;
   }
 `;
 

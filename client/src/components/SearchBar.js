@@ -62,6 +62,10 @@ const SearchWrapper = styled.div`
     align-items: center;
     padding: 1rem;
   }
+
+  img {
+    cursor: pointer;
+  }
 `;
 
 const SearchInput = styled.input`

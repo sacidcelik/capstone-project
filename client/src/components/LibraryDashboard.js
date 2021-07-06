@@ -63,6 +63,7 @@ const BookCard = styled.div`
   align-items: center;
   background: var(--background);
   border-radius: var(--border-radius);
+  cursor: pointer;
   display: flex;
   gap: 1rem;
   justify-content: flex-start;

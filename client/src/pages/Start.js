@@ -45,10 +45,15 @@ const AppName = styled.h1`
 `;
 
 const ButtonSection = styled.section`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 1rem;
   margin-top: 8rem;
+
+  a {
+    height: 40px;
+  }
 `;
 const OrangeTriangle = styled.img`
   position: fixed;
