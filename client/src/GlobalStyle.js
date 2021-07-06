@@ -73,7 +73,7 @@ export default createGlobalStyle`
 
 #interactive.viewport canvas,
 video {
-  height: 200px;
+ height: 200px;
  width: 300px;
 }
 

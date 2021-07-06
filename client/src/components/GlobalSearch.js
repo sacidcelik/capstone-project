@@ -95,7 +95,7 @@ const CameraSection = styled.section`
   flex-direction: column;
   gap: 1rem;
   height: 300px;
-  padding-top: 1rem;
+  justify-content: center;
   position: fixed;
   transform: translate(3%);
   width: 90%;
