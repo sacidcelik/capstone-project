@@ -1,6 +1,6 @@
 # Bookshelves
 
-Final project at neuefische web dev bootcamp
+Final project at neuefische web dev bootcamp 4/2021 - 7/2021
 
 ## Description
 

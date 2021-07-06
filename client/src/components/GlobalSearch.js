@@ -97,8 +97,8 @@ const CameraSection = styled.section`
   height: 300px;
   padding-top: 1rem;
   position: fixed;
-  transform: translate(5%);
-  width: 325px;
+  transform: translate(3%);
+  width: 90%;
   z-index: 100;
 
   p {

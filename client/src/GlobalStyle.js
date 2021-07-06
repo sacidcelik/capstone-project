@@ -74,10 +74,7 @@ export default createGlobalStyle`
 #interactive.viewport canvas,
 video {
   height: 200px;
-  left: 13px;
-  position: absolute;
-  top: 75px;
-  width: 300px;
+ width: 300px;
 }
 
 #interactive.viewport canvas.drawingBuffer,
