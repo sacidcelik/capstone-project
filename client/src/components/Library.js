@@ -59,6 +59,7 @@ const BookCard = styled.article`
 `;
 
 Library.propTypes = {
+  isStatic: PropTypes.bool,
   library: PropTypes.array,
   onRenderBookDetails: PropTypes.func,
 };

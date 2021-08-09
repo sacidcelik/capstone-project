@@ -1,6 +1,6 @@
+import { Link, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 import getShelfBorders from '../lib/shelfBorders';
@@ -246,9 +246,9 @@ const BookCountBubble = styled.div`
   width: 3rem;
 `;
 Shelf.propTypes = {
-  shelf: PropTypes.object,
+  bookImages: PropTypes.array,
+  isSaved: PropTypes.bool,
   onGetCompartmentBooks: PropTypes.func,
   onProvideDetailedShelf: PropTypes.func,
-  isSaved: PropTypes.bool,
-  bookImages: PropTypes.array,
+  shelf: PropTypes.object,
 };

@@ -1,4 +1,5 @@
 import config from './scannerconfig.json';
+import PropTypes from 'prop-types';
 import Quagga from 'quagga';
 import { useEffect } from 'react';
 
@@ -69,3 +70,7 @@ const Scanner = ({ onDetected }) => {
 };
 
 export default Scanner;
+
+Scanner.propTypes = {
+  onDetected: PropTypes.func,
+};

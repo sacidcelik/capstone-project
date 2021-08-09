@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
+import { useEffect, useState } from 'react';
+import CloseIcon from '../images/closeIcon.svg';
 import getBooks from '../services/getDataFromAPI';
 import Scanner from './Scanner';
 import SearchBar from './SearchBar';
 import SearchResult from './SearchResult';
-import CloseIcon from '../images/closeIcon.svg';
 
 export default function GlobalSearch({
-  onToggleToAndFromLibrary,
   isInLibrary,
-  shelves,
-  onSelectShelf,
   placeholder,
+  onSelectShelf,
+  onToggleToAndFromLibrary,
+  shelves,
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchedBooks, setSearchedBooks] = useState([]);
@@ -112,7 +112,9 @@ const CloseButton = styled.img`
 `;
 
 GlobalSearch.propTypes = {
-  onToggleToAndFromLibrary: PropTypes.func,
   isInLibrary: PropTypes.func,
+  onSelectShelf: PropTypes.func,
+  onToggleToAndFromLibrary: PropTypes.func,
   placeholder: PropTypes.string,
+  shelves: PropTypes.array,
 };

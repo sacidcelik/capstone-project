@@ -1,20 +1,23 @@
-import NavFooter from './components/NavFooter';
-import { Switch, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import styled from 'styled-components';
 import 'react-toastify/dist/ReactToastify.css';
-import Home from './pages/Home';
-import CompartmentPage from './pages/CompartmentPage';
-import MyShelves from './pages/MyShelves';
-import MyBooks from './pages/MyBooks';
-import Header from './components/Header';
+import styled from 'styled-components/macro';
+import { Switch, Route } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import { useEffect, useState } from 'react';
+
 import BookDetails from './components/BookDetails';
-import CreateShelf from './pages/CreateShelf';
-import getTodaysDate from './services/getDate';
-import Start from './pages/Start';
+import Header from './components/Header';
+import NavFooter from './components/NavFooter';
+
 import Access from './pages/Access';
+import CompartmentPage from './pages/CompartmentPage';
+import CreateShelf from './pages/CreateShelf';
+import Home from './pages/Home';
+import MyBooks from './pages/MyBooks';
+import MyShelves from './pages/MyShelves';
 import FirstShelf from './pages/FirstShelf';
+import Start from './pages/Start';
+
+import getTodaysDate from './services/getDate';
 import { saveToLocal, loadFromLocal } from './services/localStorage';
 import {
   deleteRemoteBooksReference,

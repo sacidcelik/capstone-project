@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 import BookshelfIcon from '../images/bookshelfLogo.svg';
@@ -47,3 +48,8 @@ const HeaderWrapper = styled.header`
     text-decoration: none;
   }
 `;
+
+Header.propTypes = {
+  isStatic: PropTypes.bool,
+  noLink: PropTypes.bool,
+};

@@ -3,7 +3,7 @@ import Rating from 'react-rating';
 import styled from 'styled-components/macro';
 
 import { ReactComponent as RatingStar } from '../images/ratingStar.svg';
-export default function BookRating({ onAddRating, book, onGetBookRating }) {
+export default function BookRating({ book, onAddRating, onGetBookRating }) {
   return (
     <Rating
       emptySymbol={<RatingStar style={{ marginRight: '0.5rem' }} />}
@@ -22,7 +22,7 @@ const RatingStarFull = styled(RatingStar)`
 `;
 
 BookRating.propTypes = {
-  onAddRating: PropTypes.func,
   book: PropTypes.object,
+  onAddRating: PropTypes.func,
   onGetBookRating: PropTypes.func,
 };

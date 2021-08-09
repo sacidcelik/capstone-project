@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import { useEffect, useState } from 'react';
 
-import SaveAddButton from '../components/SaveAddButton';
-import Shelf from '../components/Shelf';
 import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
 import { ReactComponent as ForwardArrow } from '../images/arrowForward.svg';
+import SaveAddButton from '../components/SaveAddButton';
+import Shelf from '../components/Shelf';
 
 export default function MyShelves({
-  shelves,
   onGetCompartmentBooks,
-  onProvideDetailedShelf,
   onGetShelfBooks,
+  onProvideDetailedShelf,
+  shelves,
 }) {
   const [shelfIndex, setShelfIndex] = useState(0);
   const [bookImages, setBookImages] = useState([]);
@@ -119,7 +119,8 @@ const LinkStyled = styled(Link)`
 `;
 
 MyShelves.propTypes = {
-  shelves: PropTypes.array,
   onGetCompartmentBooks: PropTypes.func,
+  onGetShelfBooks: PropTypes.func,
   onProvideDetailedShelf: PropTypes.func,
+  shelves: PropTypes.array,
 };

@@ -1,11 +1,11 @@
-import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
+import { useHistory } from 'react-router-dom';
 
 import ShelfCreator from '../components/ShelfCreator';
 import { toast } from 'react-toastify';
 
-export default function FirstShelf({ onSaveShelf, activeUser, shelves }) {
+export default function FirstShelf({ activeUser, onSaveShelf, shelves }) {
   const history = useHistory();
 
   function handleFinishSetUp() {
@@ -70,7 +70,7 @@ const FinishButton = styled.button`
 `;
 
 FirstShelf.propTypes = {
-  onSaveShelf: PropTypes.func,
   activeUser: PropTypes.object,
+  onSaveShelf: PropTypes.func,
   shelves: PropTypes.array,
 };

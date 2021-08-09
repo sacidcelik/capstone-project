@@ -64,5 +64,6 @@ const Shelf = styled.li`
 `;
 
 ShelvesDashboard.propTypes = {
+  isStatic: PropTypes.bool,
   shelves: PropTypes.array,
 };

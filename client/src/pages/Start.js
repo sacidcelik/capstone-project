@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
-import StartLoginButton from '../components/StartLoginButton';
 import BookshelfLogo from '../images/bookshelfLogo.svg';
+import StartLoginButton from '../components/StartLoginButton';
 import TriangleOrange from '../images/frontPageTriangleOrange.svg';
 import TriangleGreen from '../images/frontPageTriangleGreen.svg';
 

@@ -1,8 +1,9 @@
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
+import { ReactComponent as BooksButton } from '../images/navBooks.svg';
 import { ReactComponent as HomeButton } from '../images/navHome.svg';
 import { ReactComponent as ShelfButton } from '../images/navShelves.svg';
-import { ReactComponent as BooksButton } from '../images/navBooks.svg';
 
 export default function NavFooter({ isStatic }) {
   return (
@@ -62,3 +63,7 @@ const BooksButtonStyled = styled(BooksButton)`
     stroke: none;
   }
 `;
+
+NavFooter.propTypes = {
+  isStatic: PropTypes.bool,
+};

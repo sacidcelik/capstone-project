@@ -6,15 +6,15 @@ import LibraryDashboard from '../components/LibraryDashboard';
 import ShelvesDashboard from '../components/ShelvesDashboard';
 
 export default function Home({
-  onToggleToAndFromLibrary,
-  isInLibrary,
-  shelves,
-  onSelectShelf,
-  library,
-  onRenderBookDetails,
-  onGrantAccess,
   activeUser,
+  isInLibrary,
+  library,
+  onGrantAccess,
   onLogout,
+  onRenderBookDetails,
+  onSelectShelf,
+  onToggleToAndFromLibrary,
+  shelves,
 }) {
   const recentBooks =
     library.length > 3
@@ -91,12 +91,13 @@ const LogoutButton = styled.button`
 `;
 
 Home.propTypes = {
-  onToggleToAndFromLibrary: PropTypes.func,
-  isInLibrary: PropTypes.func,
-  shelves: PropTypes.array,
-  onSelectShelf: PropTypes.func,
-  library: PropTypes.array,
-  onRenderBookDetails: PropTypes.func,
   activeUser: PropTypes.object,
+  isInLibrary: PropTypes.func,
+  library: PropTypes.array,
+  onGrantAccess: PropTypes.func,
   onLogout: PropTypes.func,
+  onRenderBookDetails: PropTypes.func,
+  onSelectShelf: PropTypes.func,
+  onToggleToAndFromLibrary: PropTypes.func,
+  shelves: PropTypes.array,
 };

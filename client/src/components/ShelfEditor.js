@@ -8,11 +8,11 @@ import SaveAddButton from './SaveAddButton';
 import validateShelfSelection from '../lib/validateShelfSelection';
 
 export default function ShelfEditor({
-  isStatic,
-  shelves,
   book,
-  onSetIsSelector,
+  isStatic,
   onSelectShelf,
+  onSetIsSelector,
+  shelves,
 }) {
   const initialSelection = {
     bookshelfId: '',
@@ -205,8 +205,9 @@ const ShelfPicker = styled.section`
 `;
 
 ShelfEditor.propTypes = {
-  shelves: PropTypes.array,
   book: PropTypes.object,
-  onSetIsSelector: PropTypes.func,
+  isStatic: PropTypes.bool,
+  shelves: PropTypes.array,
   onSelectShelf: PropTypes.func,
+  onSetIsSelector: PropTypes.func,
 };

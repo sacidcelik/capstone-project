@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 export default function LibraryDashboard({
+  isStatic,
   recentBooks,
   onRenderBookDetails,
-  isStatic,
 }) {
   return (
     <LibraryCard isStatic={isStatic}>
@@ -86,6 +86,7 @@ const AddedDate = styled.div`
 `;
 
 LibraryDashboard.propTypes = {
+  isStatic: PropTypes.bool,
   recentBooks: PropTypes.array,
   onRenderBookDetails: PropTypes.func,
 };

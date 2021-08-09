@@ -82,9 +82,10 @@ const SearchInput = styled.input`
 `;
 
 SearchBar.propTypes = {
-  query: PropTypes.string,
-  setQuery: PropTypes.func,
-  focusSearch: PropTypes.object,
+  isGlobal: PropTypes.bool,
+  onSearch: PropTypes.func,
   placeholder: PropTypes.string,
+  query: PropTypes.string,
+  setCamera: PropTypes.func,
   setSearchQuery: PropTypes.func,
 };

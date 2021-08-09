@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
+import { toast } from 'react-toastify';
 import { useState } from 'react';
-import UnreadReadButton from './UnreadReadButton';
-import ShelfEditor from './ShelfEditor';
-import CloseIcon from '../images/closeIcon.svg';
-import EditPencil from '../images/editPencil.svg';
 
 import BookRating from './BookRating';
-import { toast } from 'react-toastify';
+import CloseIcon from '../images/closeIcon.svg';
+import EditPencil from '../images/editPencil.svg';
+import UnreadReadButton from './UnreadReadButton';
+import ShelfEditor from './ShelfEditor';
 
 export default function BookDetails({
   book,
@@ -334,13 +334,14 @@ const NotesWrapper = styled.section`
 
 BookDetails.propTypes = {
   book: PropTypes.object,
-  onRemoveDetailView: PropTypes.func,
+  bookIsRead: PropTypes.func,
+  isStatic: PropTypes.bool,
+  onAddLentStatusAndNotes: PropTypes.func,
   onAddRating: PropTypes.func,
   onGetBookLocation: PropTypes.func,
-  onSelectShelf: PropTypes.func,
-  shelves: PropTypes.array,
-  onToogleBookIsRead: PropTypes.func,
-  bookIsRead: PropTypes.func,
-  onAddLentStatusAndNotes: PropTypes.func,
   onGetBookRating: PropTypes.func,
+  onRemoveDetailView: PropTypes.func,
+  onSelectShelf: PropTypes.func,
+  onToogleBookIsRead: PropTypes.func,
+  shelves: PropTypes.array,
 };

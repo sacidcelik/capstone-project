@@ -6,9 +6,9 @@ import Library from '../components/Library';
 import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
 
 export default function CompartmentPage({
-  onRenderBookDetails,
   detailedCompartmentBooks,
   detailedShelf,
+  onRenderBookDetails,
 }) {
   const history = useHistory();
 
@@ -56,7 +56,7 @@ const CompartmentWrapper = styled.section`
   }
 `;
 CompartmentPage.propTypes = {
-  onRenderBookDetails: PropTypes.func,
   detailedCompartmentBooks: PropTypes.array,
   detailedShelf: PropTypes.object,
+  onRenderBookDetails: PropTypes.func,
 };

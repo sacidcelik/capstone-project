@@ -8,10 +8,10 @@ import { ReactComponent as BackArrow } from '../images/arrowBackward.svg';
 import { toast } from 'react-toastify';
 
 export default function Access({
-  isNewUser,
-  onHandleAccess,
   grantAccess,
+  isNewUser,
   onCheckForUser,
+  onHandleAccess,
 }) {
   const initialUser = { name: '' };
   const [user, setUser] = useState(initialUser);
@@ -133,8 +133,8 @@ const NameInput = styled.input`
 `;
 
 Access.propTypes = {
-  isNewUser: PropTypes.bool,
-  onHandleAccess: PropTypes.func,
   grantAccess: PropTypes.bool,
+  isNewUser: PropTypes.bool,
   onCheckForUser: PropTypes.func,
+  onHandleAccess: PropTypes.func,
 };

@@ -6,12 +6,12 @@ import AddAndRemoveButton from './AddAndRemoveButton';
 import ShelfSelector from './ShelfSelector';
 
 export default function SearchResult({
-  searchedBooks,
   isStatic,
-  onToggleToAndFromLibrary,
   isInLibrary,
-  shelves,
+  onToggleToAndFromLibrary,
   onSelectShelf,
+  searchedBooks,
+  shelves,
 }) {
   const [isSelector, setIsSelector] = useState(false);
   const [selectedBook, setSelectedBook] = useState({});
@@ -114,9 +114,10 @@ const BookTitle = styled.div`
 `;
 
 SearchResult.propTypes = {
-  searchedBooks: PropTypes.array,
-  onToggleToAndFromLibrary: PropTypes.func,
   isInLibrary: PropTypes.func,
-  shelves: PropTypes.array,
+  isStatic: PropTypes.bool,
   onSelectShelf: PropTypes.func,
+  onToggleToAndFromLibrary: PropTypes.func,
+  searchedBooks: PropTypes.array,
+  shelves: PropTypes.array,
 };

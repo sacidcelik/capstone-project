@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 export default function AddAndRemoveButton({
-  onToggleToAndFromLibrary,
   isInLibrary,
-  onSetIsSelector,
   onProvideBook,
+  onSetIsSelector,
+  onToggleToAndFromLibrary,
 }) {
   function handleClick() {
     onToggleToAndFromLibrary();
@@ -37,6 +37,8 @@ const ToggleButton = styled.button`
 `;
 
 AddAndRemoveButton.propTypes = {
-  onToggleToAndFromLibrary: PropTypes.func,
   isInLibrary: PropTypes.object,
+  onProvideBook: PropTypes.func,
+  onSetIsSelector: PropTypes.func,
+  onToggleToAndFromLibrary: PropTypes.func,
 };

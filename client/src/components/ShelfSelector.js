@@ -8,11 +8,11 @@ import SaveAddButton from './SaveAddButton';
 import validateShelfSelection from '../lib/validateShelfSelection';
 
 export default function ShelfSelector({
-  isStatic,
-  shelves,
   book,
-  onSetIsSelector,
+  isStatic,
   onSelectShelf,
+  onSetIsSelector,
+  shelves,
 }) {
   const initialSelection = {
     bookshelfId: '',
@@ -277,8 +277,9 @@ const BookSubTitle = styled.h5`
 `;
 
 ShelfSelector.propTypes = {
-  shelves: PropTypes.array,
   book: PropTypes.object,
-  onSetIsSelector: PropTypes.func,
+  isStatic: PropTypes.bool,
   onSelectShelf: PropTypes.func,
+  onSetIsSelector: PropTypes.func,
+  shelves: PropTypes.array,
 };
